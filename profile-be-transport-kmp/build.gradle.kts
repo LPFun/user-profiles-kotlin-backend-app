@@ -12,5 +12,5 @@ repositories {
 dependencies {
     implementation(kotlin("stdlib"))
     implementation(project(":profile-be-common"))
-    implementation(project(":profile-transport-kmp"))
+    implementation(project(":profile-transport-kmp-models"))
 }

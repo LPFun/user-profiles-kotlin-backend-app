@@ -1,7 +1,7 @@
 rootProject.name = "user-profile-mp"
 
 include("profile-be-common")
-include("profile-transport-kmp")
+include("profile-transport-kmp-models")
 include("profile-transport-common")
 
 pluginManagement{
