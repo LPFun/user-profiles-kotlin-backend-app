@@ -3,6 +3,7 @@ package com.lpfun.backend.common.model.profile
 import java.time.LocalDate
 
 data class ProfilePersonalData(
+        var profileId: String = "",
         var firstName: String = "",
         var middleName: String = "",
         var lastName: String = "",
@@ -11,7 +12,9 @@ data class ProfilePersonalData(
         var email: String = "",
         var bday: LocalDate = LocalDate.MIN,
         var locationModel: LocationModel = LocationModel.NONE,
-) : ProfileBase()
+) : ProfileBase(
+        id = profileId
+)
 
 
 data class LocationModel(
