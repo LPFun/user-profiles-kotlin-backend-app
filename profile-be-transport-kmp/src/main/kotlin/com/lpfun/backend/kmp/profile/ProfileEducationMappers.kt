@@ -23,7 +23,6 @@ fun ProfileEducation.resultItem() = KmpProfileEducationResponse(
 /*
     Mappers to kmp models
  */
-
 fun ProfileEducation.toKmp() = KmpProfileEducation(
         mainEducation = mainEducation.toKmpEducationList(),
         additionalEducation = additionalEducation.toKmpAdditionalEducation()
@@ -49,7 +48,6 @@ private fun MutableList<EducationModel>.toKmpEducationList(): MutableList<KmpEdu
 /*
     Mappers to common models
  */
-
 fun KmpProfileEducationGet.toModel() = ProfileEducation(
         profileId = profileId ?: ""
 )
@@ -73,10 +71,10 @@ private fun MutableList<KmpAdditionalEducationModel>?.toAdditionalEducationList(
 private fun MutableList<KmpEducationModel>?.toModelEducationList(): MutableList<EducationModel> {
     return this?.map {
         EducationModel(
-                it.university ?: "",
-                it.department ?: "",
-                it.specialty ?: "",
-                it.yearOfCompletion ?: ""
+                university = it.university ?: "",
+                department = it.department ?: "",
+                specialty = it.specialty ?: "",
+                yearOfCompletion = it.yearOfCompletion ?: ""
         )
     }?.toMutableList() ?: mutableListOf()
 }
