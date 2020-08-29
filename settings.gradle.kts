@@ -1,6 +1,6 @@
 rootProject.name = "user-profile-mp"
 
-include("profile-common")
+include("profile-be-common")
 include("profile-transport-kmp")
 include("profile-transport-common")
 
