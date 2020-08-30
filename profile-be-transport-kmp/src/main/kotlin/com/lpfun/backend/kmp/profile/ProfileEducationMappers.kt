@@ -34,6 +34,7 @@ fun ProfileContext.resultItem() = KmpProfileEducationResponse(
     Mappers to kmp models
  */
 fun ProfileEducation.toKmp() = KmpProfileEducation(
+        id = id,
         mainEducation = mainEducation.toKmpEducationList(),
         additionalEducation = additionalEducation.toKmpAdditionalEducation()
 )
@@ -60,7 +61,7 @@ private fun MutableList<EducationModel>.toKmpEducationList(): MutableList<KmpEdu
  */
 
 fun KmpProfileEducationSave.toModel() = ProfileEducation(
-        profileId = id ?: "",
+        id = id ?: "",
         mainEducation = mainEducation.toModelEducationList(),
         additionalEducation = additionalEducation.toAdditionalEducationList(),
 )

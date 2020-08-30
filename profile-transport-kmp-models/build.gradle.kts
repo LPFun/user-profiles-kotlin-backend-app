@@ -8,8 +8,6 @@ version = rootProject.version
 
 repositories {
     mavenCentral()
-    // for kotlinx-datetime:0.1.0
-    maven(url = "https://kotlin.bintray.com/kotlinx/")
 }
 
 kotlin {
@@ -25,12 +23,10 @@ kotlin {
 
     sourceSets {
         val serializationVersion: String by project
-        val dateTimeVersion: String by project
 
         val commonMain by getting {
             dependencies {
                 implementation(kotlin("stdlib-common"))
-                implementation("org.jetbrains.kotlinx:kotlinx-datetime:$dateTimeVersion")
                 implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime:$serializationVersion")
             }
         }

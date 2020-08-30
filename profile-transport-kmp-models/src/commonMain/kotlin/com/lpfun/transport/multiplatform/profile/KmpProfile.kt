@@ -1,9 +1,9 @@
 package com.lpfun.transport.multiplatform.profile
 
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.Transient
 
 @Serializable
 abstract class KmpProfile(
-        var id: String = "",
-        var userId: String = "",
+        @Transient open var id: String? = null
 )
