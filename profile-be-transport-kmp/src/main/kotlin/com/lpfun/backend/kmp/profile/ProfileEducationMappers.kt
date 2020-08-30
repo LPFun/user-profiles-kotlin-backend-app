@@ -2,21 +2,31 @@ package com.lpfun.backend.kmp.profile
 
 import com.lpfun.backend.common.model.profile.AdditionalEducationModel
 import com.lpfun.backend.common.model.profile.EducationModel
+import com.lpfun.backend.common.model.profile.ProfileContext
 import com.lpfun.backend.common.model.profile.ProfileEducation
 import com.lpfun.transport.multiplatform.profile.KmpProfileResponseStatus
+import com.lpfun.transport.multiplatform.profile.education.KmpProfileEducationDelete
 import com.lpfun.transport.multiplatform.profile.education.KmpProfileEducationGet
 import com.lpfun.transport.multiplatform.profile.education.KmpProfileEducationResponse
-import com.lpfun.transport.multiplatform.profile.education.KmpProfileEducationUpdate
+import com.lpfun.transport.multiplatform.profile.education.KmpProfileEducationSave
 import com.lpfun.transport.multiplatform.profile.education.model.KmpAdditionalEducationModel
 import com.lpfun.transport.multiplatform.profile.education.model.KmpEducationModel
 import com.lpfun.transport.multiplatform.profile.education.model.KmpProfileEducation
 
-fun setQuery(get: KmpProfileEducationGet) = get.toModel()
+fun ProfileContext.setQuery(get: KmpProfileEducationGet) = this.apply {
+    requestProfileId = get.profileId ?: ""
+}
 
-fun setQuery(update: KmpProfileEducationUpdate) = update.toModel()
+fun ProfileContext.setQuery(save: KmpProfileEducationSave) = this.apply {
+    requestProfile = save.toModel()
+}
 
-fun ProfileEducation.resultItem() = KmpProfileEducationResponse(
-        data = this.toKmp(),
+fun ProfileContext.setQuery(del: KmpProfileEducationDelete) = this.apply {
+    requestProfileId = del.profileId ?: ""
+}
+
+fun ProfileContext.resultItem() = KmpProfileEducationResponse(
+        data = (responseProfile as ProfileEducation).toKmp(),
         status = KmpProfileResponseStatus.SUCCESS
 )
 
@@ -48,11 +58,8 @@ private fun MutableList<EducationModel>.toKmpEducationList(): MutableList<KmpEdu
 /*
     Mappers to common models
  */
-fun KmpProfileEducationGet.toModel() = ProfileEducation(
-        profileId = profileId ?: ""
-)
 
-fun KmpProfileEducationUpdate.toModel() = ProfileEducation(
+fun KmpProfileEducationSave.toModel() = ProfileEducation(
         profileId = id ?: "",
         mainEducation = mainEducation.toModelEducationList(),
         additionalEducation = additionalEducation.toAdditionalEducationList(),
