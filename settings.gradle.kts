@@ -1,9 +1,5 @@
 rootProject.name = "user-profile-mp"
 
-include("profile-be-common")
-include("profile-transport-kmp-models")
-include("profile-transport-common")
-
 pluginManagement{
     plugins {
         val kotlinVersion: String by settings
@@ -13,4 +9,9 @@ pluginManagement{
         kotlin("plugin.serialization") version kotlinVersion apply false
     }
 }
+
 include("profile-be-transport-kmp")
+include("profile-be-common")
+include("profile-transport-kmp-models")
+include("profile-transport-common")
+include("profile-be-app-jetty")

@@ -22,7 +22,7 @@ fun ProfileContext.setQuery(save: KmpProfileEducationSave) = this.apply {
 }
 
 fun ProfileContext.setQuery(del: KmpProfileEducationDelete) = this.apply {
-    requestProfileId = del.profileId ?: ""
+    requestProfileId = del.id ?: ""
 }
 
 fun ProfileContext.resultItem() = KmpProfileEducationResponse(

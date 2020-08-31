@@ -1,0 +1,24 @@
+GET http://localhost:8080/profile/education/?id=123
+Content-Type: application/json
+
+{
+  "id": 123
+}
+
+###
+
+PUT http://localhost:8080/profile/education/
+Content-Type: application/json
+
+{
+  "id": 1234
+}
+
+###
+
+DELETE http://localhost:8080/profile/education/
+Content-Type: application/json
+
+{
+  "id": 123
+}
