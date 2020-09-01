@@ -3,7 +3,7 @@ package com.lpfun.backend.kmp.profile
 import com.lpfun.backend.common.model.profile.AdditionalEducationModel
 import com.lpfun.backend.common.model.profile.EducationModel
 import com.lpfun.backend.common.model.profile.ProfileEducation
-import com.lpfun.transport.multiplatform.profile.education.KmpProfileEducationSave
+import com.lpfun.transport.multiplatform.profile.education.KmpProfileEducationUpdate
 import com.lpfun.transport.multiplatform.profile.education.model.KmpAdditionalEducationModel
 import com.lpfun.transport.multiplatform.profile.education.model.KmpEducationModel
 import org.junit.Test
@@ -13,18 +13,18 @@ internal class ProfileEducationMappersTest {
 
     @Test
     fun kmpToModel() {
-        val kmpProfileEducation = KmpProfileEducationSave(
-                id = "121",
-                mainEducation = getTestKmpEducationModel(),
-                additionalEducation = getTestKmpAdditionalModel()
+        val kmpProfileEducation = KmpProfileEducationUpdate(
+            profileId = "121",
+            mainEducation = getTestKmpEducationModel(),
+            additionalEducation = getTestKmpAdditionalModel()
         )
 
         val profileEducationModel = kmpProfileEducation.toModel()
 
         assertEquals("121", profileEducationModel.id)
         assertEquals(
-                getTestEducationModel(),
-                profileEducationModel.mainEducation
+            getTestEducationModel(),
+            profileEducationModel.mainEducation
         )
         assertEquals(
                 getTestAdditionalEducationModel(),

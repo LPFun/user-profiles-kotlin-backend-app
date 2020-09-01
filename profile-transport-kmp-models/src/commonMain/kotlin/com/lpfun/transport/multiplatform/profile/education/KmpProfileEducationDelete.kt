@@ -4,7 +4,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class KmpProfileEducationDelete(
-    var id: String? = null,
+    var profileId: String? = null,
     var debug: KmpDebug? = null
 ) {
     @Serializable

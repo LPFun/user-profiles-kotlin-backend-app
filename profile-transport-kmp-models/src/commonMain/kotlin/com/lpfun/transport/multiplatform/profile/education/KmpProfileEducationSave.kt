@@ -3,14 +3,10 @@ package com.lpfun.transport.multiplatform.profile.education
 import com.lpfun.transport.multiplatform.profile.education.model.KmpAdditionalEducationModel
 import com.lpfun.transport.multiplatform.profile.education.model.KmpEducationModel
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.Transient
 
 @Serializable
-data class KmpProfileEducationSave(
-        var id: String? = null,
-        var mainEducation: MutableList<KmpEducationModel>? = null,
-        var additionalEducation: MutableList<KmpAdditionalEducationModel>? = null,
-        var debug: KmpDebug? = null
-) {
-    @Serializable
-    class KmpDebug
-}
+abstract class KmpProfileEducationSave(
+    @Transient open var mainEducation: MutableList<KmpEducationModel>? = null,
+    @Transient open var additionalEducation: MutableList<KmpAdditionalEducationModel>? = null,
+)

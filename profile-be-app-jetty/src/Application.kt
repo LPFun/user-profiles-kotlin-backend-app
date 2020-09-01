@@ -1,7 +1,7 @@
 package com.lpfun
 
 import com.lpfun.transport.multiplatform.profile.education.KmpProfileEducationDelete
-import com.lpfun.transport.multiplatform.profile.education.KmpProfileEducationSave
+import com.lpfun.transport.multiplatform.profile.education.KmpProfileEducationUpdate
 import io.ktor.application.*
 import io.ktor.features.*
 import io.ktor.http.*
@@ -40,7 +40,7 @@ fun Application.module(testing: Boolean = false) {
                     call.respond(service.get(profileId))
                 }
                 put {
-                    val body = call.receiveOrNull<KmpProfileEducationSave>()
+                    val body = call.receiveOrNull<KmpProfileEducationUpdate>()
                     body?.let {
                         call.respond(service.update(body))
                     } ?: call.respond(HttpStatusCode.BadRequest)

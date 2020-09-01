@@ -5,10 +5,7 @@ import com.lpfun.backend.common.model.profile.EducationModel
 import com.lpfun.backend.common.model.profile.ProfileContext
 import com.lpfun.backend.common.model.profile.ProfileEducation
 import com.lpfun.transport.multiplatform.profile.KmpProfileResponseStatus
-import com.lpfun.transport.multiplatform.profile.education.KmpProfileEducationDelete
-import com.lpfun.transport.multiplatform.profile.education.KmpProfileEducationGet
-import com.lpfun.transport.multiplatform.profile.education.KmpProfileEducationResponse
-import com.lpfun.transport.multiplatform.profile.education.KmpProfileEducationSave
+import com.lpfun.transport.multiplatform.profile.education.*
 import com.lpfun.transport.multiplatform.profile.education.model.KmpAdditionalEducationModel
 import com.lpfun.transport.multiplatform.profile.education.model.KmpEducationModel
 import com.lpfun.transport.multiplatform.profile.education.model.KmpProfileEducation
@@ -22,37 +19,37 @@ fun ProfileContext.setQuery(save: KmpProfileEducationSave) = this.apply {
 }
 
 fun ProfileContext.setQuery(del: KmpProfileEducationDelete) = this.apply {
-    requestProfileId = del.id ?: ""
+    requestProfileId = del.profileId ?: ""
 }
 
 fun ProfileContext.resultItem() = KmpProfileEducationResponse(
-        data = (responseProfile as ProfileEducation).toKmp(),
-        status = KmpProfileResponseStatus.SUCCESS
+    data = (responseProfile as ProfileEducation).toKmp(),
+    status = KmpProfileResponseStatus.SUCCESS
 )
 
 /*
     Mappers to kmp models
  */
 fun ProfileEducation.toKmp() = KmpProfileEducation(
-        id = id,
-        mainEducation = mainEducation.toKmpEducationList(),
-        additionalEducation = additionalEducation.toKmpAdditionalEducation()
+    id = id,
+    mainEducation = mainEducation.toKmpEducationList(),
+    additionalEducation = additionalEducation.toKmpAdditionalEducation()
 )
 
 private fun MutableList<AdditionalEducationModel>.toKmpAdditionalEducation() = this.map {
     KmpAdditionalEducationModel(
-            nameOfInstitution = it.nameOfInstitution,
-            courseName = it.courseName,
-            yearOfCompletion = it.yearOfCompletion
+        nameOfInstitution = it.nameOfInstitution,
+        courseName = it.courseName,
+        yearOfCompletion = it.yearOfCompletion
     )
 }.toMutableList()
 
 private fun MutableList<EducationModel>.toKmpEducationList(): MutableList<KmpEducationModel>? = this.map {
     KmpEducationModel(
-            university = it.university,
-            department = it.department,
-            specialty = it.specialty,
-            yearOfCompletion = it.yearOfCompletion
+        university = it.university,
+        department = it.department,
+        specialty = it.specialty,
+        yearOfCompletion = it.yearOfCompletion
     )
 }.toMutableList()
 
@@ -61,17 +58,17 @@ private fun MutableList<EducationModel>.toKmpEducationList(): MutableList<KmpEdu
  */
 
 fun KmpProfileEducationSave.toModel() = ProfileEducation(
-        id = id ?: "",
-        mainEducation = mainEducation.toModelEducationList(),
-        additionalEducation = additionalEducation.toAdditionalEducationList(),
+    id = if (this is KmpProfileEducationUpdate) profileId ?: "" else "",
+    mainEducation = mainEducation.toModelEducationList(),
+    additionalEducation = additionalEducation.toAdditionalEducationList(),
 )
 
 private fun MutableList<KmpAdditionalEducationModel>?.toAdditionalEducationList(): MutableList<AdditionalEducationModel> {
     return this?.map {
         AdditionalEducationModel(
-                nameOfInstitution = it.nameOfInstitution ?: "",
-                courseName = it.courseName ?: "",
-                yearOfCompletion = it.yearOfCompletion ?: ""
+            nameOfInstitution = it.nameOfInstitution ?: "",
+            courseName = it.courseName ?: "",
+            yearOfCompletion = it.yearOfCompletion ?: ""
         )
     }?.toMutableList() ?: mutableListOf()
 }
@@ -79,10 +76,10 @@ private fun MutableList<KmpAdditionalEducationModel>?.toAdditionalEducationList(
 private fun MutableList<KmpEducationModel>?.toModelEducationList(): MutableList<EducationModel> {
     return this?.map {
         EducationModel(
-                university = it.university ?: "",
-                department = it.department ?: "",
-                specialty = it.specialty ?: "",
-                yearOfCompletion = it.yearOfCompletion ?: ""
+            university = it.university ?: "",
+            department = it.department ?: "",
+            specialty = it.specialty ?: "",
+            yearOfCompletion = it.yearOfCompletion ?: ""
         )
     }?.toMutableList() ?: mutableListOf()
 }

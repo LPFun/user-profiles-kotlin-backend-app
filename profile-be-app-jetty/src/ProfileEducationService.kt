@@ -5,7 +5,7 @@ import com.lpfun.backend.kmp.profile.resultItem
 import com.lpfun.backend.kmp.profile.setQuery
 import com.lpfun.transport.multiplatform.profile.education.KmpProfileEducationDelete
 import com.lpfun.transport.multiplatform.profile.education.KmpProfileEducationGet
-import com.lpfun.transport.multiplatform.profile.education.KmpProfileEducationSave
+import com.lpfun.transport.multiplatform.profile.education.KmpProfileEducationUpdate
 import kotlinx.coroutines.runBlocking
 
 class ProfileEducationService {
@@ -39,12 +39,12 @@ class ProfileEducationService {
             .resultItem()
     }
 
-    fun update(query: KmpProfileEducationSave) = runBlocking {
+    fun update(query: KmpProfileEducationUpdate) = runBlocking {
         val context = ProfileContext()
         context
             .setQuery(query)
             .apply {
-                profileEducationModel.id = query.id ?: ""
+                profileEducationModel.id = query.profileId ?: ""
                 responseProfile = profileEducationModel
             }
             .resultItem()
