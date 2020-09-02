@@ -6,7 +6,6 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class KmpProfileEducationCreate(
-    var id: String? = null,
     override var mainEducation: MutableList<KmpEducationModel>? = null,
     override var additionalEducation: MutableList<KmpAdditionalEducationModel>? = null,
     var debug: KmpDebug? = null

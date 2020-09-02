@@ -1,5 +1,6 @@
 package com.lpfun
 
+import com.lpfun.transport.multiplatform.profile.education.KmpProfileEducationCreate
 import com.lpfun.transport.multiplatform.profile.education.KmpProfileEducationDelete
 import com.lpfun.transport.multiplatform.profile.education.KmpProfileEducationUpdate
 import io.ktor.application.*
@@ -21,6 +22,7 @@ fun Application.module(testing: Boolean = false) {
         method(HttpMethod.Get)
         method(HttpMethod.Put)
         method(HttpMethod.Delete)
+        method(HttpMethod.Post)
         anyHost()
     }
     install(ContentNegotiation) {
@@ -50,6 +52,12 @@ fun Application.module(testing: Boolean = false) {
                     val body = call.receiveOrNull<KmpProfileEducationDelete>()
                     body?.let {
                         call.respond(service.delete(body))
+                    } ?: call.respond(HttpStatusCode.BadRequest)
+                }
+                post {
+                    val body = call.receiveOrNull<KmpProfileEducationCreate>()
+                    body?.let {
+                        call.respond(service.create(body))
                     } ?: call.respond(HttpStatusCode.BadRequest)
                 }
             }

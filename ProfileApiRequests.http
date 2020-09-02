@@ -22,3 +22,18 @@ Content-Type: application/json
 {
   "id": 123
 }
+
+###
+
+POST http://localhost:8080/profile/education/
+Content-Type: application/json
+
+{
+  "additionalEducation": [
+    {
+      "nameOfInstitution": "OTUS",
+      "courseName": "Kotlin",
+      "yearOfCompletion": "2020"
+    }
+  ]
+}
