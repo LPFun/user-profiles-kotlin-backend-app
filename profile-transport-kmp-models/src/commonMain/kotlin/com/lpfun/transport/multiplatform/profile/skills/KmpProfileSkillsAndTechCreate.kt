@@ -3,8 +3,7 @@ package com.lpfun.transport.multiplatform.profile.skills
 import com.lpfun.transport.multiplatform.profile.skills.model.KmpSpecializationModel
 import kotlinx.serialization.Serializable
 
-data class KmpProfileSkillsAndTechUpdate(
-    var id: String? = null,
+data class KmpProfileSkillsAndTechCreate(
     override var specialization: KmpSpecializationModel? = null,
     override var operatingSystems: MutableSet<String>? = null,
     override var dataBases: MutableSet<String>? = null,
