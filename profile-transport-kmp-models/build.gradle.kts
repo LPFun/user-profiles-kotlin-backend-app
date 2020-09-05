@@ -24,11 +24,13 @@ kotlin {
 
     sourceSets {
         val serializationVersion: String by project
+        val kotlinDatetime: String by project
 
         val commonMain by getting {
             dependencies {
 //                implementation(kotlin("stdlib-common"))
                 api("org.jetbrains.kotlinx:kotlinx-serialization-core:$serializationVersion")
+                implementation("org.jetbrains.kotlinx:kotlinx-datetime:$kotlinDatetime")
             }
         }
         val commonTest by getting {

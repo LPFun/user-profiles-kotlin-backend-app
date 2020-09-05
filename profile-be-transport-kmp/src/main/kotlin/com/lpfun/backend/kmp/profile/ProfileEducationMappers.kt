@@ -4,8 +4,10 @@ import com.lpfun.backend.common.model.profile.AdditionalEducationModel
 import com.lpfun.backend.common.model.profile.EducationModel
 import com.lpfun.backend.common.model.profile.ProfileContext
 import com.lpfun.backend.common.model.profile.ProfileEducation
-import com.lpfun.transport.multiplatform.profile.KmpProfileResponseStatus
-import com.lpfun.transport.multiplatform.profile.education.*
+import com.lpfun.transport.multiplatform.profile.education.KmpProfileEducationDelete
+import com.lpfun.transport.multiplatform.profile.education.KmpProfileEducationGet
+import com.lpfun.transport.multiplatform.profile.education.KmpProfileEducationSave
+import com.lpfun.transport.multiplatform.profile.education.KmpProfileEducationUpdate
 import com.lpfun.transport.multiplatform.profile.education.model.KmpAdditionalEducationModel
 import com.lpfun.transport.multiplatform.profile.education.model.KmpEducationModel
 import com.lpfun.transport.multiplatform.profile.education.model.KmpProfileEducation
@@ -21,11 +23,6 @@ fun ProfileContext.setQuery(save: KmpProfileEducationSave) = this.apply {
 fun ProfileContext.setQuery(del: KmpProfileEducationDelete) = this.apply {
     requestProfileId = del.profileId ?: ""
 }
-
-fun ProfileContext.resultItem() = KmpProfileEducationResponse(
-    data = (responseProfile as ProfileEducation).toKmp(),
-    status = KmpProfileResponseStatus.SUCCESS
-)
 
 /*
     Mappers to kmp models

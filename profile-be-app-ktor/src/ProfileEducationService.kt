@@ -3,15 +3,13 @@ package com.lpfun
 import com.lpfun.backend.common.model.profile.*
 import com.lpfun.backend.kmp.profile.resultItem
 import com.lpfun.backend.kmp.profile.setQuery
-import com.lpfun.transport.multiplatform.profile.education.KmpProfileEducationCreate
-import com.lpfun.transport.multiplatform.profile.education.KmpProfileEducationDelete
-import com.lpfun.transport.multiplatform.profile.education.KmpProfileEducationGet
-import com.lpfun.transport.multiplatform.profile.education.KmpProfileEducationUpdate
+import com.lpfun.backend.kmp.profile.toModel
+import com.lpfun.transport.multiplatform.profile.education.*
 import kotlinx.coroutines.runBlocking
 import java.util.*
 
 class ProfileEducationService {
-    private val profileEducationModel = ProfileEducation(
+    private var profileEducationModel = ProfileEducation(
         id = "123",
         mainEducation = mutableListOf(
             EducationModel(
@@ -38,7 +36,7 @@ class ProfileEducationService {
                 responseProfile = profileEducationModel
                 responseProfileStatus = ProfileContextStatus.SUCCESS
             }
-            .resultItem()
+            .resultItem<KmpProfileEducationResponse>()
     }
 
     fun create(query: KmpProfileEducationCreate) = runBlocking {
@@ -46,10 +44,11 @@ class ProfileEducationService {
         context
             .setQuery(query)
             .apply {
-                responseProfile = (requestProfile as ProfileEducation).copy(id = UUID.randomUUID().toString())
+                profileEducationModel = (requestProfile as ProfileEducation).copy(id = UUID.randomUUID().toString())
+                responseProfile = profileEducationModel
                 responseProfileStatus = ProfileContextStatus.SUCCESS
             }
-            .resultItem()
+            .resultItem<KmpProfileEducationResponse>()
     }
 
     fun update(query: KmpProfileEducationUpdate) = runBlocking {
@@ -57,10 +56,13 @@ class ProfileEducationService {
         context
             .setQuery(query)
             .apply {
-                profileEducationModel.id = query.profileId ?: ""
-                responseProfile = profileEducationModel
+                requestProfileId = profileEducationModel.id
+                responseProfile = query.toModel().apply {
+                    id = requestProfileId
+                }
+                responseProfileStatus = ProfileContextStatus.SUCCESS
             }
-            .resultItem()
+            .resultItem<KmpProfileEducationResponse>()
     }
 
     fun delete(query: KmpProfileEducationDelete) = runBlocking {
@@ -71,6 +73,6 @@ class ProfileEducationService {
                 responseProfile = ProfileEducation()
                 responseProfileStatus = ProfileContextStatus.SUCCESS
             }
-            .resultItem()
+            .resultItem<KmpProfileEducationResponse>()
     }
 }
