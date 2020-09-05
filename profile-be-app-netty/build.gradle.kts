@@ -32,7 +32,7 @@ dependencies {
     implementation("io.ktor:ktor-client-core:$ktorVersion")
     implementation("ch.qos.logback:logback-classic:$logbackVersion")
     implementation("io.ktor:ktor-serialization:$ktorVersion")
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime:$serializationVersion")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:$serializationVersion")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion")
     testImplementation("io.ktor:ktor-server-tests:$ktorVersion")
 }

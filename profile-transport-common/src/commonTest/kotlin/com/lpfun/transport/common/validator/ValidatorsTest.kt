@@ -8,21 +8,21 @@ import kotlin.test.assertTrue
 
 internal class ValidatorsTest {
     @Test
-    fun `name success test`() {
+    fun nameSuccessTest() {
         val testData = "Александр"
         val validator = ProfileNameValidator(testData).validate(testData)
         assertTrue(validator.isOk)
     }
 
     @Test
-    fun `name fail test`() {
+    fun nameFailTest() {
         val testData = ""
         val validator = ProfileNameValidator(testData).validate(testData)
         assertFalse(validator.isOk)
     }
 
     @Test
-    fun `length success test`() {
+    fun lengthSuccessTest() {
         val testStr: StringBuilder = StringBuilder()
         (0..10).forEach {
             testStr.append(it)
@@ -32,7 +32,7 @@ internal class ValidatorsTest {
     }
 
     @Test
-    fun `length fail test`() {
+    fun lengthFailTest() {
         val testStr: StringBuilder = StringBuilder()
         (0 until 10).forEach {
             testStr.append(it)
