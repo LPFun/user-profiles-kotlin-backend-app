@@ -20,3 +20,5 @@ inline fun <reified T> ProfileContext.resultItem(): KmpProfileResponse {
         )
     }
 }
+
+fun String?.toModelString() = this?.takeIf { it.isNotBlank() } ?: ""

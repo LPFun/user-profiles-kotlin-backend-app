@@ -62,8 +62,6 @@ private fun String?.toModelDate(): LocalDate {
     }
 }
 
-private fun String?.toModelString() = this?.takeIf { it.isNotBlank() } ?: ""
-
 private fun KmpLocationModel?.toModel() = LocationModel(
     country = this?.country.toModelString(),
     city = this?.city.toModelString()
