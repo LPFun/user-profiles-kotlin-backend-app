@@ -2,10 +2,7 @@ package com.lpfun.backend.kmp.profile
 
 import com.lpfun.backend.common.model.profile.ProfileContext
 import com.lpfun.backend.common.model.profile.ProfileEducation
-import com.lpfun.transport.multiplatform.profile.education.KmpProfileEducationCreate
-import com.lpfun.transport.multiplatform.profile.education.KmpProfileEducationDelete
-import com.lpfun.transport.multiplatform.profile.education.KmpProfileEducationGet
-import com.lpfun.transport.multiplatform.profile.education.KmpProfileEducationUpdate
+import com.lpfun.transport.multiplatform.profile.education.*
 import com.lpfun.transport.multiplatform.profile.education.model.KmpAdditionalEducationModel
 import kotlinx.coroutines.runBlocking
 import kotlin.test.Test
@@ -39,7 +36,7 @@ internal class KmpProfileEducationBackendTest {
     fun `call get in controller`() {
         val context = ProfileContext()
         val result = runBlocking {
-            businessLayer.get(context.setQuery(getRequest)).resultItem()
+            businessLayer.get(context.setQuery(getRequest)).resultItem<KmpProfileEducationResponse>()
         }
         assertEquals("test-id", result.data.id)
     }
@@ -48,7 +45,7 @@ internal class KmpProfileEducationBackendTest {
     fun `call create in controller`() {
         val context = ProfileContext()
         val result = runBlocking {
-            businessLayer.create(context.setQuery(create)).resultItem()
+            businessLayer.create(context.setQuery(create)).resultItem<KmpProfileEducationResponse>()
         }
         assertEquals(result.data.id, "test-id")
         assertEquals(
@@ -65,7 +62,7 @@ internal class KmpProfileEducationBackendTest {
     fun `call update in controller`() {
         val context = ProfileContext()
         val result = runBlocking {
-            businessLayer.update(context.setQuery(update)).resultItem()
+            businessLayer.update(context.setQuery(update)).resultItem<KmpProfileEducationResponse>()
         }
         assertEquals(
             result.data.additionalEducation!![0],
@@ -82,7 +79,7 @@ internal class KmpProfileEducationBackendTest {
     fun `call delete in controller`() {
         val context = ProfileContext()
         val result = runBlocking {
-            businessLayer.delete(context.setQuery(delete)).resultItem()
+            businessLayer.delete(context.setQuery(delete)).resultItem<KmpProfileEducationResponse>()
         }
         assertEquals(result.data.id, "delete-id")
     }
