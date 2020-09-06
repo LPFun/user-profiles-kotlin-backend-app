@@ -3,5 +3,8 @@ package com.lpfun.backend.common.model.profile
 enum class ProfileContextStatus {
     NONE,
     ERROR,
-    SUCCESS,
+    SUCCESS;
+
+    val isError
+        get() = this == ERROR
 }
