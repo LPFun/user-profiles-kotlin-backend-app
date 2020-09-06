@@ -1,0 +1,3 @@
+package com.lpfun.profile.skillsandtech
+
+class ProfileSkillsAndTechService

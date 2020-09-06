@@ -1,23 +1,33 @@
 package com.lpfun
 
-import com.lpfun.transport.multiplatform.profile.education.KmpProfileEducationCreate
-import com.lpfun.transport.multiplatform.profile.education.KmpProfileEducationDelete
-import com.lpfun.transport.multiplatform.profile.education.KmpProfileEducationUpdate
+import com.lpfun.di.profileModule
+import com.lpfun.profile.education.ProfileEducationService
+import com.lpfun.profile.education.profileEducationRoute
+import com.lpfun.profile.personaldata.ProfilePersonalDataService
+import com.lpfun.profile.personaldata.profilePersonalDataRoute
+import com.lpfun.profile.skillsandtech.ProfileSkillsAndTechService
+import com.lpfun.profile.skillsandtech.profileSkillsAndTechRoute
 import io.ktor.application.*
 import io.ktor.features.*
 import io.ktor.http.*
 import io.ktor.http.content.*
-import io.ktor.request.*
 import io.ktor.response.*
 import io.ktor.routing.*
 import io.ktor.serialization.*
 import io.ktor.server.netty.*
+import org.kodein.di.generic.instance
+import org.kodein.di.ktor.kodein
 
 fun main(args: Array<String>): Unit = EngineMain.main(args)
 
 @Suppress("unused") // Referenced in application.conf
 @JvmOverloads
 fun Application.module(testing: Boolean = false) {
+
+    kodein {
+        import(profileModule)
+    }
+
     install(CORS) {
         method(HttpMethod.Get)
         method(HttpMethod.Put)
@@ -32,36 +42,15 @@ fun Application.module(testing: Boolean = false) {
         gzip()
     }
 
-    val service = ProfileEducationService()
+    val educationService by kodein().instance<ProfileEducationService>()
+    val personalDataService by kodein().instance<ProfilePersonalDataService>()
+    val skillsAndTechService by kodein().instance<ProfileSkillsAndTechService>()
 
     routing {
         route("/profile") {
-            route("/education") {
-                get {
-                    val profileId = call.request.queryParameters["id"] ?: ""
-                    call.respond(service.get(profileId))
-                }
-                put {
-                    val body = call.receiveOrNull<KmpProfileEducationUpdate>()
-                    body?.let {
-                        call.respond(service.update(body))
-                    } ?: call.respond(HttpStatusCode.BadRequest)
-
-                }
-                delete {
-                    val body = call.receiveOrNull<KmpProfileEducationDelete>()
-                    body?.let {
-                        call.respond(service.delete(body))
-                    } ?: call.respond(HttpStatusCode.BadRequest)
-                }
-                post {
-                    val body = call.receiveOrNull<KmpProfileEducationCreate>()
-                    body?.let {
-                        call.respond(service.create(body))
-                    } ?: call.respond(HttpStatusCode.BadRequest)
-                }
-            }
-
+            profileEducationRoute(educationService)
+            profilePersonalDataRoute(personalDataService)
+            profileSkillsAndTechRoute(skillsAndTechService)
         }
         get("/") {
             call.respondText("HELLO WORLD!", contentType = ContentType.Text.Plain)
@@ -73,4 +62,6 @@ fun Application.module(testing: Boolean = false) {
         }
     }
 }
+
+
 

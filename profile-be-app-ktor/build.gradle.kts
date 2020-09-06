@@ -1,8 +1,11 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 val ktorVersion: String by project
 val kotlinVersion: String by project
 val logbackVersion: String by project
 val serializationVersion: String by project
 val coroutinesVersion: String by project
+val compileKotlin: KotlinCompile by tasks
 
 plugins {
     application
@@ -23,6 +26,8 @@ repositories {
     maven { url = uri("https://kotlin.bintray.com/ktor") }
 }
 
+compileKotlin.kotlinOptions.jvmTarget = "1.8"
+
 dependencies {
     implementation(project(":profile-be-common"))
     implementation(project(":profile-transport-kmp-models"))
@@ -34,6 +39,10 @@ dependencies {
     implementation("io.ktor:ktor-serialization:$ktorVersion")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:$serializationVersion")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion")
+    implementation("org.kodein.di:kodein-di-generic-jvm:6.5.5")
+
+    implementation("org.kodein.di:kodein-di-framework-ktor-server-jvm:6.5.5")
+
     testImplementation("io.ktor:ktor-server-tests:$ktorVersion")
 }
 
