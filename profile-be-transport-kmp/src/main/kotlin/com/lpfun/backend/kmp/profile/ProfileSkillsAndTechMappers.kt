@@ -7,6 +7,7 @@ import com.lpfun.transport.multiplatform.profile.skills.KmpProfileSkillsAndTechD
 import com.lpfun.transport.multiplatform.profile.skills.KmpProfileSkillsAndTechGet
 import com.lpfun.transport.multiplatform.profile.skills.KmpProfileSkillsAndTechSave
 import com.lpfun.transport.multiplatform.profile.skills.KmpProfileSkillsAndTechUpdate
+import com.lpfun.transport.multiplatform.profile.skills.model.KmpProfileSkillsAndTech
 import com.lpfun.transport.multiplatform.profile.skills.model.KmpSpecializationModel
 
 fun ProfileContext.setQuery(get: KmpProfileSkillsAndTechGet) = this.apply {
@@ -20,6 +21,17 @@ fun ProfileContext.setQuery(save: KmpProfileSkillsAndTechSave) = this.apply {
 fun ProfileContext.setQuery(delete: KmpProfileSkillsAndTechDelete) = this.apply {
     requestProfileId = delete.profileId ?: ""
 }
+
+fun ProfileSkillsAndTech.toKmp() = KmpProfileSkillsAndTech(
+    specialization = specialization.toKmp(),
+    operatingSystems = operatingSystems,
+    dataBases = dataBases
+)
+
+private fun SpecializationModel.toKmp() = KmpSpecializationModel(
+    category = category,
+    subCategory = subCategory
+)
 
 private fun KmpProfileSkillsAndTechSave.toModel() = ProfileSkillsAndTech(
     profileId = if (this is KmpProfileSkillsAndTechUpdate) id ?: "" else "",

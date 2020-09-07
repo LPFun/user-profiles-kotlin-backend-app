@@ -6,6 +6,7 @@ val logbackVersion: String by project
 val serializationVersion: String by project
 val coroutinesVersion: String by project
 val compileKotlin: KotlinCompile by tasks
+val kotlinDatetime: String by project
 
 plugins {
     application
@@ -37,6 +38,7 @@ dependencies {
     implementation("io.ktor:ktor-client-core:$ktorVersion")
     implementation("ch.qos.logback:logback-classic:$logbackVersion")
     implementation("io.ktor:ktor-serialization:$ktorVersion")
+    implementation("org.jetbrains.kotlinx:kotlinx-datetime:$kotlinDatetime")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:$serializationVersion")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion")
     implementation("org.kodein.di:kodein-di-generic-jvm:6.5.5")

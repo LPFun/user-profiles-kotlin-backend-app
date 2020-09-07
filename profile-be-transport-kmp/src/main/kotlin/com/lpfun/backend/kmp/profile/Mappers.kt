@@ -4,10 +4,12 @@ import com.lpfun.backend.common.model.error.IProfileError
 import com.lpfun.backend.common.model.profile.ProfileContext
 import com.lpfun.backend.common.model.profile.ProfileEducation
 import com.lpfun.backend.common.model.profile.ProfilePersonalData
+import com.lpfun.backend.common.model.profile.ProfileSkillsAndTech
 import com.lpfun.transport.multiplatform.profile.KmpProfileError
 import com.lpfun.transport.multiplatform.profile.KmpProfileResponseStatus
 import com.lpfun.transport.multiplatform.profile.education.KmpProfileEducationResponse
 import com.lpfun.transport.multiplatform.profile.personal.KmpProfilePersonalDataResponse
+import com.lpfun.transport.multiplatform.profile.skills.KmpProfileSkillsAndTechResponse
 
 inline fun <reified T> ProfileContext.resultItem(): T {
     return when (T::class) {
@@ -16,11 +18,17 @@ inline fun <reified T> ProfileContext.resultItem(): T {
             status = kmpStatus(),
             errors = errors.map { it.toKmp() }
         ) as T
-        else -> KmpProfilePersonalDataResponse(
+        KmpProfileSkillsAndTechResponse::class -> KmpProfileSkillsAndTechResponse(
+            data = (responseProfile as ProfileSkillsAndTech).toKmp(),
+            status = kmpStatus(),
+            errors = errors.map { it.toKmp() }
+        ) as T
+        KmpProfilePersonalDataResponse::class -> KmpProfilePersonalDataResponse(
             data = (responseProfile as ProfilePersonalData).toKmp(),
             status = kmpStatus(),
             errors = errors.map { it.toKmp() }
         ) as T
+        else -> throw IllegalArgumentException()
     }
 }
 

@@ -40,7 +40,7 @@ private fun LocationModel.toKmpModel() = KmpLocationModel(
     city = city
 )
 
-private fun KmpProfilePersonalDataSave.toModel() = ProfilePersonalData(
+fun KmpProfilePersonalDataSave.toModel() = ProfilePersonalData(
     profileId = if (this is KmpProfilePersonalDataUpdate) profileId ?: "" else "",
     firstName = firstName.toModelString(),
     middleName = middleName.toModelString(),

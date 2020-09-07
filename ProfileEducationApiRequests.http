@@ -1,9 +1,4 @@
 GET http://localhost:8080/profile/education/?id=123
-Content-Type: application/json
-
-{
-  "id": 123
-}
 
 ###
 
