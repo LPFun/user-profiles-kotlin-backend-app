@@ -8,7 +8,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class KmpProfileEducationResponse(
-    val data: KmpProfileEducation,
+    val data: KmpProfileEducation? = null,
     override val status: KmpProfileResponseStatus? = null,
     override val errors: List<KmpProfileError>? = null,
 ) : KmpProfileResponse()

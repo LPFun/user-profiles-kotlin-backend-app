@@ -5,7 +5,6 @@ import com.lpfun.backend.common.model.profile.ProfileContext
 import com.lpfun.backend.common.model.profile.ProfileContextStatus
 import com.lpfun.backend.common.model.profile.ProfilePersonalData
 import com.lpfun.backend.kmp.profile.setQuery
-import com.lpfun.backend.kmp.profile.toModel
 import com.lpfun.base.request
 import com.lpfun.transport.multiplatform.profile.personal.*
 import kotlinx.datetime.LocalDate
@@ -51,9 +50,7 @@ class ProfilePersonalDataService {
     fun update(query: KmpProfilePersonalDataUpdate) = ProfileContext().request<KmpProfilePersonalDataResponse> {
         setQuery(query).apply {
             requestProfileId = profilePersonal.profileId
-            responseProfile = query.toModel().apply {
-                profileId = requestProfileId
-            }
+            responseProfile = requestProfile
             responseProfileStatus = ProfileContextStatus.SUCCESS
         }
     }

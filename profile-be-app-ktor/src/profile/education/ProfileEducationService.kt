@@ -4,7 +4,6 @@ import com.lpfun.backend.common.model.error.InternalServerError
 import com.lpfun.backend.common.model.profile.*
 import com.lpfun.backend.kmp.profile.resultItem
 import com.lpfun.backend.kmp.profile.setQuery
-import com.lpfun.backend.kmp.profile.toModel
 import com.lpfun.transport.multiplatform.profile.education.*
 import java.util.*
 
@@ -59,10 +58,7 @@ class ProfileEducationService {
         try {
             setQuery(query)
                 .apply {
-                    requestProfileId = profileEducationModel.id
-                    responseProfile = query.toModel().apply {
-                        id = requestProfileId
-                    }
+                    responseProfile = requestProfile
                     responseProfileStatus = ProfileContextStatus.SUCCESS
                 }
         } catch (t: Throwable) {

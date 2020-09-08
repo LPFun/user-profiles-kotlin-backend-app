@@ -14,21 +14,21 @@ import com.lpfun.transport.multiplatform.profile.skills.KmpProfileSkillsAndTechR
 inline fun <reified T> ProfileContext.resultItem(): T {
     return when (T::class) {
         KmpProfileEducationResponse::class -> KmpProfileEducationResponse(
-            data = (responseProfile as ProfileEducation).toKmp(),
+            data = if (responseProfile is ProfileEducation) (responseProfile as ProfileEducation).toKmp() else null,
             status = kmpStatus(),
             errors = errors.map { it.toKmp() }
         ) as T
         KmpProfileSkillsAndTechResponse::class -> KmpProfileSkillsAndTechResponse(
-            data = (responseProfile as ProfileSkillsAndTech).toKmp(),
+            data = if (responseProfile is ProfileSkillsAndTech) (responseProfile as ProfileSkillsAndTech).toKmp() else null,
             status = kmpStatus(),
             errors = errors.map { it.toKmp() }
         ) as T
         KmpProfilePersonalDataResponse::class -> KmpProfilePersonalDataResponse(
-            data = (responseProfile as ProfilePersonalData).toKmp(),
+            data = if (responseProfile is ProfilePersonalData) (responseProfile as ProfilePersonalData).toKmp() else null,
             status = kmpStatus(),
             errors = errors.map { it.toKmp() }
         ) as T
-        else -> throw IllegalArgumentException()
+        else -> throw ClassCastException()
     }
 }
 

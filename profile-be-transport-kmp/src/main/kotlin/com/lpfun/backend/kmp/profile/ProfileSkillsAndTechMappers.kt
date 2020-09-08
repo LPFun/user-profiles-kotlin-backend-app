@@ -23,6 +23,7 @@ fun ProfileContext.setQuery(delete: KmpProfileSkillsAndTechDelete) = this.apply 
 }
 
 fun ProfileSkillsAndTech.toKmp() = KmpProfileSkillsAndTech(
+    profileId = profileId,
     specialization = specialization.toKmp(),
     operatingSystems = operatingSystems,
     dataBases = dataBases
