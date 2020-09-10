@@ -27,9 +27,9 @@ class ProfileEducationService {
         )
     )
 
-    fun get(query: String) = ProfileContext().run {
+    fun get(paramsList: List<Pair<String, List<String>>>) = ProfileContext().run {
         try {
-            setQuery(KmpProfileEducationGet(profileId = query))
+            setQuery(KmpProfileEducationGet(profileId = paramsList.first { it.first == "id" }.second.get(0)))
                 .apply {
                     responseProfile = profileEducationModel
                     responseProfileStatus = ProfileContextStatus.SUCCESS

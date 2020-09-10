@@ -1,5 +1,6 @@
 package com.lpfun.profile.education
 
+import com.lpfun.base.handleParams
 import com.lpfun.transport.multiplatform.profile.education.KmpProfileEducationCreate
 import com.lpfun.transport.multiplatform.profile.education.KmpProfileEducationDelete
 import com.lpfun.transport.multiplatform.profile.education.KmpProfileEducationUpdate
@@ -12,8 +13,7 @@ import io.ktor.routing.*
 fun Route.profileEducationRoute(service: ProfileEducationService) {
     route("/education") {
         get {
-            val profileId = call.request.queryParameters["id"] ?: ""
-            call.respond(service.get(profileId))
+            call.respond(service.get(call.request.queryParameters.handleParams()))
         }
         put {
             val body = call.receiveOrNull<KmpProfileEducationUpdate>()
