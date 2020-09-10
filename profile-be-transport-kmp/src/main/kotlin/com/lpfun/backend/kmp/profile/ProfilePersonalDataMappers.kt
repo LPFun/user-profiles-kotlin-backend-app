@@ -25,6 +25,7 @@ fun ProfileContext.setQuery(del: KmpProfilePersonalDataDelete) = this.apply {
 }
 
 fun ProfilePersonalData.toKmp() = KmpProfilePersonalData(
+    profileId = profileId,
     firstName = firstName,
     middleName = middleName,
     lastName = lastName,

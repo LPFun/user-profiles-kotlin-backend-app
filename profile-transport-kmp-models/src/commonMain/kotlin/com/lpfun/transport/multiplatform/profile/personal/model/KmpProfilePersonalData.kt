@@ -4,6 +4,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class KmpProfilePersonalData(
+        var profileId: String? = null,
         var firstName: String? = null,
         var middleName: String? = null,
         var lastName: String? = null,
