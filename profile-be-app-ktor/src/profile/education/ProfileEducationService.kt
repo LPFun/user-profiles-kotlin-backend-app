@@ -44,13 +44,12 @@ class ProfileEducationService {
     }
 
     fun update(query: KmpProfileEducationUpdate) = ProfileContext().request<KmpProfileEducationResponse> {
-
         setQuery(query)
             .apply {
-                responseProfile = requestProfile
+                requestProfileId = profileEducationModel.id
+                responseProfile = (requestProfile as ProfileEducation).copy(requestProfileId)
                 responseProfileStatus = ProfileContextStatus.SUCCESS
             }
-
     }
 
     fun delete(query: KmpProfileEducationDelete) = ProfileContext().request<KmpProfileEducationResponse> {

@@ -65,15 +65,9 @@ class ProfilePersonalDataRouteTest {
                 addHeader("Content-Type", "application/json")
                 val requestBody = """{
                   "firstName": "Test1",
-                  "middleName": "Test1",
-                  "lastName": "Test1",
-                  "displayName": "Test1 Test1",
-                  "phone": "+12345",
-                  "email": "Test@test.com",
                   "bday": "2000-01-01",
                   "locationModel": {
-                    "country": "Test Country",
-                    "city": "Test City"
+                    "country": "Test Country"
                   }
                 }""".trimIndent()
                 setBody(requestBody)
@@ -85,6 +79,8 @@ class ProfilePersonalDataRouteTest {
                 assertEquals(HttpStatusCode.OK, response.status())
                 assertNotEquals("12345", responseObj.data?.profileId)
                 assertEquals("Test1", responseObj.data?.firstName)
+                assertEquals("2000-01-01", responseObj.data?.bday)
+                assertEquals("Test Country", responseObj.data?.locationModel?.country)
             }
         }
     }
