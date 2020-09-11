@@ -7,7 +7,6 @@ import com.lpfun.backend.common.model.profile.SpecializationModel
 import com.lpfun.backend.kmp.profile.setQuery
 import com.lpfun.base.request
 import com.lpfun.transport.multiplatform.profile.skills.*
-import io.ktor.http.*
 import java.util.*
 
 class ProfileSkillsAndTechService {
@@ -21,8 +20,8 @@ class ProfileSkillsAndTechService {
         dataBases = mutableSetOf("Mysql")
     )
 
-    fun get(requestParameters: Parameters) = ProfileContext().request<KmpProfileSkillsAndTechResponse> {
-        val id = requestParameters["id"]
+    fun get(paramsList: List<Pair<String, List<String>>>) = ProfileContext().request<KmpProfileSkillsAndTechResponse> {
+        val id = paramsList.firstOrNull { it.first == "id" }?.second?.get(0) ?: throw IllegalArgumentException()
         if (id == skillsAndTechProfile.profileId) {
             setQuery(KmpProfileSkillsAndTechGet(id))
                 .apply {

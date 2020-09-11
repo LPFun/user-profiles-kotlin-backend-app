@@ -1,5 +1,6 @@
 package com.lpfun.profile.skillsandtech
 
+import com.lpfun.base.handleParams
 import io.ktor.application.*
 import io.ktor.request.*
 import io.ktor.response.*
@@ -8,7 +9,7 @@ import io.ktor.routing.*
 fun Route.profileSkillsAndTechRoute(service: ProfileSkillsAndTechService) {
     route("/skills") {
         get {
-            call.respond(service.get(call.request.queryParameters))
+            call.respond(service.get(call.request.queryParameters.handleParams()))
         }
 
         post {

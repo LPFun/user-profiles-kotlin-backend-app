@@ -27,12 +27,12 @@ class ProfilePersonalDataService {
         )
     )
 
-    fun get(vararg args: Pair<String, String>) = ProfileContext().request<KmpProfilePersonalDataResponse> {
-        val id = args.firstOrNull { it.first == "id" } ?: throw IllegalArgumentException()
-        setQuery(KmpProfilePersonalDataGet(profileId = id.second))
+    fun get(paramsList: List<Pair<String, List<String>>>) = ProfileContext().request<KmpProfilePersonalDataResponse> {
+        val id = paramsList.firstOrNull { it.first == "id" }?.second?.get(0) ?: throw IllegalArgumentException()
+        setQuery(KmpProfilePersonalDataGet(profileId = id))
             .apply {
                 responseProfile =
-                    if (id.second == profilePersonal.profileId) profilePersonal else throw IllegalArgumentException()
+                    if (id == profilePersonal.profileId) profilePersonal else throw IllegalArgumentException()
                 responseProfileStatus = ProfileContextStatus.SUCCESS
             }
     }
