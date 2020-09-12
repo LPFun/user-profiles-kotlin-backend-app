@@ -38,7 +38,7 @@ internal class KmpProfileEducationBackendTest {
         val result = runBlocking {
             businessLayer.get(context.setQuery(getRequest)).resultItem<KmpProfileEducationResponse>()
         }
-        assertEquals("test-id", result.data.id)
+        assertEquals("test-id", result.data?.id)
     }
 
     @Test
@@ -47,9 +47,9 @@ internal class KmpProfileEducationBackendTest {
         val result = runBlocking {
             businessLayer.create(context.setQuery(create)).resultItem<KmpProfileEducationResponse>()
         }
-        assertEquals(result.data.id, "test-id")
+        assertEquals(result.data?.id, "test-id")
         assertEquals(
-            result.data.additionalEducation!![0],
+            result.data?.additionalEducation!![0],
             KmpAdditionalEducationModel(
                 nameOfInstitution = "OTUS",
                 courseName = "Kotlin backend",
@@ -65,7 +65,7 @@ internal class KmpProfileEducationBackendTest {
             businessLayer.update(context.setQuery(update)).resultItem<KmpProfileEducationResponse>()
         }
         assertEquals(
-            result.data.additionalEducation!![0],
+            result.data?.additionalEducation!![0],
             KmpAdditionalEducationModel(
                 nameOfInstitution = "OTUS",
                 courseName = "IOS development",
@@ -81,7 +81,7 @@ internal class KmpProfileEducationBackendTest {
         val result = runBlocking {
             businessLayer.delete(context.setQuery(delete)).resultItem<KmpProfileEducationResponse>()
         }
-        assertEquals(result.data.id, "delete-id")
+        assertEquals(result.data?.id, "delete-id")
     }
 
     class ProfileEducationBusinessLayer() {
