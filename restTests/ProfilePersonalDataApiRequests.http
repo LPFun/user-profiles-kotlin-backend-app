@@ -1,0 +1,48 @@
+GET http://localhost:8080/profile/personal?id=12345
+
+###
+
+POST http://localhost:8080/profile/personal/
+Content-Type: application/json
+
+{
+  "firstName": "Test",
+  "middleName": "Test",
+  "lastName": "Test",
+  "displayName": "Test Test",
+  "phone": "+12345",
+  "email": "Test@test.com",
+  "bday": "2000-01-01",
+  "locationModel": {
+    "country": "Test Country",
+    "city": "Test City"
+  }
+}
+
+###
+
+PUT http://localhost:8080/profile/personal/
+Content-Type: application/json
+
+{
+  "firstName": "Test1",
+  "middleName": "Test1",
+  "lastName": "Test1",
+  "displayName": "Test1 Test1",
+  "phone": "+12345",
+  "email": "Test@test.com",
+  "bday": "2000-01-01",
+  "locationModel": {
+    "country": "Test Country",
+    "city": "Test City"
+  }
+}
+
+###
+
+DELETE http://localhost:8080/profile/personal/
+Content-Type: application/json
+
+{
+  "profileId": "12345"
+}
