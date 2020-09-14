@@ -1,7 +1,6 @@
 package com.lpfun.backend.common.model.profile
 
 import kotlinx.datetime.LocalDate
-import java.time.Year
 
 
 data class ProfilePersonalData(
@@ -12,7 +11,7 @@ data class ProfilePersonalData(
     var displayName: String = "",
     var phone: String = "",
     var email: String = "",
-    var bday: LocalDate = LocalDate(Year.MIN_VALUE, 1, 1),
+    var bday: LocalDate = ProfileConstants.MIN_DATE,
     var locationModel: LocationModel = LocationModel.NONE,
 ) : ProfileBase(
         id = profileId
