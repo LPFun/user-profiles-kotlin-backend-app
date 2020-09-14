@@ -1,8 +1,8 @@
 package com.lpfun.backend.kmp.profile
 
-import com.lpfun.backend.common.model.profile.AdditionalEducationModel
-import com.lpfun.backend.common.model.profile.EducationModel
-import com.lpfun.backend.common.model.profile.ProfileEducation
+import com.lpfun.backend.common.model.profile.education.AdditionalEducationModel
+import com.lpfun.backend.common.model.profile.education.EducationModel
+import com.lpfun.backend.common.model.profile.education.ProfileEducation
 import com.lpfun.transport.multiplatform.profile.education.KmpProfileEducationUpdate
 import com.lpfun.transport.multiplatform.profile.education.model.KmpAdditionalEducationModel
 import com.lpfun.transport.multiplatform.profile.education.model.KmpEducationModel
@@ -21,60 +21,61 @@ internal class ProfileEducationMappersTest {
 
         val profileEducationModel = kmpProfileEducation.toModel()
 
-        assertEquals("121", profileEducationModel.id)
+        assertEquals("121", profileEducationModel.profileId)
         assertEquals(
             getTestEducationModel(),
             profileEducationModel.mainEducation
         )
         assertEquals(
-                getTestAdditionalEducationModel(),
-                profileEducationModel.additionalEducation)
+            getTestAdditionalEducationModel(),
+            profileEducationModel.additionalEducation
+        )
     }
 
     @Test
     fun modelToKmp() {
         val profileEducation = ProfileEducation(
-                id = "123",
-                mainEducation = getTestEducationModel(),
-                additionalEducation = getTestAdditionalEducationModel()
+            profileId = "123",
+            mainEducation = getTestEducationModel(),
+            additionalEducation = getTestAdditionalEducationModel()
         )
         val kmpProfileEducation = profileEducation.toKmp()
-        assertEquals("123", kmpProfileEducation.id)
+        assertEquals("123", kmpProfileEducation.profileId)
         assertEquals(getTestKmpEducationModel(), kmpProfileEducation.mainEducation)
         assertEquals(getTestKmpAdditionalModel(), kmpProfileEducation.additionalEducation)
     }
 
     private fun getTestKmpEducationModel() = mutableListOf(
-            KmpEducationModel(
-                    university = "MGU",
-                    department = "IT",
-                    specialty = "Programmer",
-                    yearOfCompletion = "2020"
-            )
+        KmpEducationModel(
+            university = "MGU",
+            department = "IT",
+            specialty = "Programmer",
+            yearOfCompletion = "2020"
+        )
     )
 
     private fun getTestKmpAdditionalModel() = mutableListOf(
-            KmpAdditionalEducationModel(
-                    nameOfInstitution = "OTUS",
-                    courseName = "Kotlin",
-                    yearOfCompletion = "2020"
-            )
+        KmpAdditionalEducationModel(
+            nameOfInstitution = "OTUS",
+            courseName = "Kotlin",
+            yearOfCompletion = "2020"
+        )
     )
 
     private fun getTestEducationModel() = mutableListOf(
-            EducationModel(
-                    university = "MGU",
-                    department = "IT",
-                    specialty = "Programmer",
-                    yearOfCompletion = "2020"
-            )
+        EducationModel(
+            university = "MGU",
+            department = "IT",
+            specialty = "Programmer",
+            yearOfCompletion = "2020"
+        )
     )
 
     private fun getTestAdditionalEducationModel() = mutableListOf(
-            AdditionalEducationModel(
-                    nameOfInstitution = "OTUS",
-                    courseName = "Kotlin",
-                    yearOfCompletion = "2020"
-            )
+        AdditionalEducationModel(
+            nameOfInstitution = "OTUS",
+            courseName = "Kotlin",
+            yearOfCompletion = "2020"
+        )
     )
 }

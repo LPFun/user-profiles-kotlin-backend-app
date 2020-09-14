@@ -1,28 +1,31 @@
 package com.lpfun.backend.kmp.profile
 
-import com.lpfun.backend.common.model.profile.LocationModel
-import com.lpfun.backend.common.model.profile.ProfileContext
-import com.lpfun.backend.common.model.profile.ProfilePersonalData
-import com.lpfun.transport.multiplatform.profile.personal.KmpProfilePersonalDataDelete
-import com.lpfun.transport.multiplatform.profile.personal.KmpProfilePersonalDataGet
-import com.lpfun.transport.multiplatform.profile.personal.KmpProfilePersonalDataSave
-import com.lpfun.transport.multiplatform.profile.personal.KmpProfilePersonalDataUpdate
+import com.lpfun.backend.common.model.profile.personal.LocationModel
+import com.lpfun.backend.common.model.profile.personal.ProfilePersonalContext
+import com.lpfun.backend.common.model.profile.personal.ProfilePersonalData
+import com.lpfun.transport.multiplatform.profile.personal.*
 import com.lpfun.transport.multiplatform.profile.personal.model.KmpLocationModel
 import com.lpfun.transport.multiplatform.profile.personal.model.KmpProfilePersonalData
 import kotlinx.datetime.LocalDate
 import java.time.Year
 
-fun ProfileContext.setQuery(get: KmpProfilePersonalDataGet) = this.apply {
+fun ProfilePersonalContext.setQuery(get: KmpProfilePersonalDataGet) = this.apply {
     requestProfileId = get.profileId ?: ""
 }
 
-fun ProfileContext.setQuery(save: KmpProfilePersonalDataSave) = this.apply {
+fun ProfilePersonalContext.setQuery(save: KmpProfilePersonalDataSave) = this.apply {
     requestProfile = save.toModel()
 }
 
-fun ProfileContext.setQuery(del: KmpProfilePersonalDataDelete) = this.apply {
+fun ProfilePersonalContext.setQuery(del: KmpProfilePersonalDataDelete) = this.apply {
     requestProfileId = del.profileId ?: ""
 }
+
+fun ProfilePersonalContext.resultItem() = KmpProfilePersonalDataResponse(
+    data = responseProfile.toKmp(),
+    status = kmpStatus(),
+    errors = errors.map { it.toKmp() }
+)
 
 fun ProfilePersonalData.toKmp() = KmpProfilePersonalData(
     profileId = profileId,

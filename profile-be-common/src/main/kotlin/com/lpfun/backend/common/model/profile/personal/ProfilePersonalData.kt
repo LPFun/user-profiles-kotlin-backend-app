@@ -1,5 +1,6 @@
-package com.lpfun.backend.common.model.profile
+package com.lpfun.backend.common.model.profile.personal
 
+import com.lpfun.backend.common.model.profile.ProfileConstants
 import kotlinx.datetime.LocalDate
 
 
@@ -13,15 +14,17 @@ data class ProfilePersonalData(
     var email: String = "",
     var bday: LocalDate = ProfileConstants.MIN_DATE,
     var locationModel: LocationModel = LocationModel.NONE,
-) : ProfileBase(
-        id = profileId
-)
+) {
+    companion object {
+        val NONE = ProfilePersonalData()
+    }
+}
 
 data class LocationModel(
-        val country: String = "",
-        val city: String = ""
+    val country: String = "",
+    val city: String = ""
 ) {
-    companion object{
+    companion object {
         val NONE = LocationModel()
     }
 }

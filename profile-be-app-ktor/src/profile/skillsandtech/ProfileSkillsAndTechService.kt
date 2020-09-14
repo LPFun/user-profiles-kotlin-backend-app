@@ -1,12 +1,15 @@
 package com.lpfun.profile.skillsandtech
 
-import com.lpfun.backend.common.model.profile.ProfileContext
 import com.lpfun.backend.common.model.profile.ProfileContextStatus
-import com.lpfun.backend.common.model.profile.ProfileSkillsAndTech
-import com.lpfun.backend.common.model.profile.SpecializationModel
+import com.lpfun.backend.common.model.profile.skills.ProfileSkillsAndTech
+import com.lpfun.backend.common.model.profile.skills.ProfileSkillsContext
+import com.lpfun.backend.common.model.profile.skills.SpecializationModel
 import com.lpfun.backend.kmp.profile.setQuery
 import com.lpfun.base.request
-import com.lpfun.transport.multiplatform.profile.skills.*
+import com.lpfun.transport.multiplatform.profile.skills.KmpProfileSkillsAndTechCreate
+import com.lpfun.transport.multiplatform.profile.skills.KmpProfileSkillsAndTechDelete
+import com.lpfun.transport.multiplatform.profile.skills.KmpProfileSkillsAndTechGet
+import com.lpfun.transport.multiplatform.profile.skills.KmpProfileSkillsAndTechUpdate
 import java.util.*
 
 class ProfileSkillsAndTechService {
@@ -20,7 +23,7 @@ class ProfileSkillsAndTechService {
         dataBases = mutableSetOf("Mysql")
     )
 
-    fun get(paramsList: List<Pair<String, List<String>>>) = ProfileContext().request<KmpProfileSkillsAndTechResponse> {
+    fun get(paramsList: List<Pair<String, List<String>>>) = ProfileSkillsContext().request {
         val id = paramsList.firstOrNull { it.first == "id" }?.second?.get(0) ?: throw IllegalArgumentException()
         if (id == skillsAndTechProfile.profileId) {
             setQuery(KmpProfileSkillsAndTechGet(id))
@@ -32,7 +35,7 @@ class ProfileSkillsAndTechService {
     }
 
     fun create(createRequestBody: KmpProfileSkillsAndTechCreate?) =
-        ProfileContext().request<KmpProfileSkillsAndTechResponse> {
+        ProfileSkillsContext().request {
             createRequestBody?.let {
                 setQuery(it)
                     .apply {
@@ -46,7 +49,7 @@ class ProfileSkillsAndTechService {
         }
 
     fun update(requestUpdate: KmpProfileSkillsAndTechUpdate?) =
-        ProfileContext().request<KmpProfileSkillsAndTechResponse> {
+        ProfileSkillsContext().request {
             setQuery(requestUpdate!!)
                 .apply {
                     skillsAndTechProfile = (requestProfile as ProfileSkillsAndTech).copy(skillsAndTechProfile.profileId)
@@ -56,7 +59,7 @@ class ProfileSkillsAndTechService {
         }
 
     fun delete(requestDelete: KmpProfileSkillsAndTechDelete?) =
-        ProfileContext().request<KmpProfileSkillsAndTechResponse> {
+        ProfileSkillsContext().request {
             setQuery(requestDelete!!)
                 .apply {
                     skillsAndTechProfile = ProfileSkillsAndTech()

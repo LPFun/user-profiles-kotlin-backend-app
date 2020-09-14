@@ -1,12 +1,15 @@
 package com.lpfun.profile.personaldata
 
-import com.lpfun.backend.common.model.profile.LocationModel
-import com.lpfun.backend.common.model.profile.ProfileContext
 import com.lpfun.backend.common.model.profile.ProfileContextStatus
-import com.lpfun.backend.common.model.profile.ProfilePersonalData
+import com.lpfun.backend.common.model.profile.personal.LocationModel
+import com.lpfun.backend.common.model.profile.personal.ProfilePersonalContext
+import com.lpfun.backend.common.model.profile.personal.ProfilePersonalData
 import com.lpfun.backend.kmp.profile.setQuery
 import com.lpfun.base.request
-import com.lpfun.transport.multiplatform.profile.personal.*
+import com.lpfun.transport.multiplatform.profile.personal.KmpProfilePersonalDataCreate
+import com.lpfun.transport.multiplatform.profile.personal.KmpProfilePersonalDataDelete
+import com.lpfun.transport.multiplatform.profile.personal.KmpProfilePersonalDataGet
+import com.lpfun.transport.multiplatform.profile.personal.KmpProfilePersonalDataUpdate
 import kotlinx.datetime.LocalDate
 import java.util.*
 
@@ -27,7 +30,7 @@ class ProfilePersonalDataService {
         )
     )
 
-    fun get(paramsList: List<Pair<String, List<String>>>) = ProfileContext().request<KmpProfilePersonalDataResponse> {
+    fun get(paramsList: List<Pair<String, List<String>>>) = ProfilePersonalContext().request {
         val id = paramsList.firstOrNull { it.first == "id" }?.second?.get(0) ?: throw IllegalArgumentException()
         setQuery(KmpProfilePersonalDataGet(profileId = id))
             .apply {
@@ -37,7 +40,7 @@ class ProfilePersonalDataService {
             }
     }
 
-    fun create(query: KmpProfilePersonalDataCreate) = ProfileContext().request<KmpProfilePersonalDataResponse> {
+    fun create(query: KmpProfilePersonalDataCreate) = ProfilePersonalContext().request {
         setQuery(query)
             .apply {
                 profilePersonal =
@@ -47,7 +50,7 @@ class ProfilePersonalDataService {
             }
     }
 
-    fun update(query: KmpProfilePersonalDataUpdate) = ProfileContext().request<KmpProfilePersonalDataResponse> {
+    fun update(query: KmpProfilePersonalDataUpdate) = ProfilePersonalContext().request {
         setQuery(query).apply {
             requestProfileId = profilePersonal.profileId
             responseProfile = requestProfile
@@ -55,7 +58,7 @@ class ProfilePersonalDataService {
         }
     }
 
-    fun delete(query: KmpProfilePersonalDataDelete) = ProfileContext().request<KmpProfilePersonalDataResponse> {
+    fun delete(query: KmpProfilePersonalDataDelete) = ProfilePersonalContext().request {
         setQuery(query).apply {
             responseProfile = ProfilePersonalData()
             responseProfileStatus = ProfileContextStatus.SUCCESS
