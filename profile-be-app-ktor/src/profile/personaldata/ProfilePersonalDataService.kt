@@ -16,38 +16,37 @@ import java.util.*
 class ProfilePersonalDataService {
 
     private var profilePersonal = ProfilePersonalData(
-        profileId = "12345",
-        firstName = "John",
-        middleName = "Junior",
-        lastName = "Smith",
-        displayName = "John Smith",
-        phone = "+1234",
-        email = "mail@mail.com",
-        bday = LocalDate(2000, 1, 1),
-        locationModel = LocationModel(
-            country = "Test Country",
-            city = "Test City"
-        )
+            profileId = "12345",
+            firstName = "John",
+            middleName = "Junior",
+            lastName = "Smith",
+            displayName = "John Smith",
+            phone = "+1234",
+            email = "mail@mail.com",
+            bday = LocalDate(2000, 1, 1),
+            locationModel = LocationModel(
+                    country = "Test Country",
+                    city = "Test City"
+            )
     )
 
-    fun get(paramsList: List<Pair<String, List<String>>>) = ProfilePersonalContext().request {
-        val id = paramsList.firstOrNull { it.first == "id" }?.second?.get(0) ?: throw IllegalArgumentException()
-        setQuery(KmpProfilePersonalDataGet(profileId = id))
-            .apply {
-                responseProfile =
-                    if (id == profilePersonal.profileId) profilePersonal else throw IllegalArgumentException()
-                responseProfileStatus = ProfileContextStatus.SUCCESS
-            }
+    fun get(query: KmpProfilePersonalDataGet) = ProfilePersonalContext().request {
+        setQuery(query)
+                .apply {
+                    responseProfile =
+                            if (query.profileId == profilePersonal.profileId) profilePersonal else throw IllegalArgumentException()
+                    responseProfileStatus = ProfileContextStatus.SUCCESS
+                }
     }
 
     fun create(query: KmpProfilePersonalDataCreate) = ProfilePersonalContext().request {
         setQuery(query)
-            .apply {
-                profilePersonal =
-                    (requestProfile as ProfilePersonalData).copy(profileId = UUID.randomUUID().toString())
-                responseProfile = profilePersonal
-                responseProfileStatus = ProfileContextStatus.SUCCESS
-            }
+                .apply {
+                    profilePersonal =
+                            (requestProfile as ProfilePersonalData).copy(profileId = UUID.randomUUID().toString())
+                    responseProfile = profilePersonal
+                    responseProfileStatus = ProfileContextStatus.SUCCESS
+                }
     }
 
     fun update(query: KmpProfilePersonalDataUpdate) = ProfilePersonalContext().request {

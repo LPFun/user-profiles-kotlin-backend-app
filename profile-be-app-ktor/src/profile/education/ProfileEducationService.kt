@@ -15,36 +15,36 @@ import java.util.*
 
 class ProfileEducationService {
     private var profileEducationModel = ProfileEducation(
-        profileId = "123",
-        mainEducation = mutableListOf(
-            EducationModel(
-                university = "Garvard",
-                department = "IT",
-                specialty = "Programming",
-                yearOfCompletion = "2020"
+            profileId = "123",
+            mainEducation = mutableListOf(
+                    EducationModel(
+                            university = "Garvard",
+                            department = "IT",
+                            specialty = "Programming",
+                            yearOfCompletion = "2020"
+                    )
+            ),
+            additionalEducation = mutableListOf(
+                    AdditionalEducationModel(
+                            nameOfInstitution = "OTUS",
+                            courseName = "Kotlin",
+                            yearOfCompletion = "2020"
+                    )
             )
-        ),
-        additionalEducation = mutableListOf(
-            AdditionalEducationModel(
-                nameOfInstitution = "OTUS",
-                courseName = "Kotlin",
-                yearOfCompletion = "2020"
-            )
-        )
     )
 
-    fun get(paramsList: List<Pair<String, List<String>>>) = ProfileEducationContext().request {
-        setQuery(KmpProfileEducationGet(profileId = paramsList.first { it.first == "id" }.second.get(0)))
-            .apply {
-                responseProfile = profileEducationModel
-                responseProfileStatus = ProfileContextStatus.SUCCESS
-            }
+    fun get(query: KmpProfileEducationGet) = ProfileEducationContext().request {
+        setQuery(query)
+                .apply {
+                    responseProfile = profileEducationModel
+                    responseProfileStatus = ProfileContextStatus.SUCCESS
+                }
     }
 
     fun create(query: KmpProfileEducationCreate) = ProfileEducationContext().request {
         setQuery(query)
-            .apply {
-                profileEducationModel = requestProfile.copy(profileId = UUID.randomUUID().toString())
+                .apply {
+                    profileEducationModel = requestProfile.copy(profileId = UUID.randomUUID().toString())
                 responseProfile = profileEducationModel
                 responseProfileStatus = ProfileContextStatus.SUCCESS
             }

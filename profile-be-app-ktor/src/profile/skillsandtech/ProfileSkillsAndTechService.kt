@@ -14,57 +14,56 @@ import java.util.*
 
 class ProfileSkillsAndTechService {
     private var skillsAndTechProfile = ProfileSkillsAndTech(
-        profileId = "111",
-        specialization = SpecializationModel(
-            category = "Development",
-            subCategory = "Mobile developer"
-        ),
-        operatingSystems = mutableSetOf("Android"),
-        dataBases = mutableSetOf("Mysql")
+            profileId = "111",
+            specialization = SpecializationModel(
+                    category = "Development",
+                    subCategory = "Mobile developer"
+            ),
+            operatingSystems = mutableSetOf("Android"),
+            dataBases = mutableSetOf("Mysql")
     )
 
-    fun get(paramsList: List<Pair<String, List<String>>>) = ProfileSkillsContext().request {
-        val id = paramsList.firstOrNull { it.first == "id" }?.second?.get(0) ?: throw IllegalArgumentException()
-        if (id == skillsAndTechProfile.profileId) {
-            setQuery(KmpProfileSkillsAndTechGet(id))
-                .apply {
-                    responseProfile = skillsAndTechProfile
-                    responseProfileStatus = ProfileContextStatus.SUCCESS
-                }
+    fun get(query: KmpProfileSkillsAndTechGet) = ProfileSkillsContext().request {
+        if (query.profileId == skillsAndTechProfile.profileId) {
+            setQuery(query)
+                    .apply {
+                        responseProfile = skillsAndTechProfile
+                        responseProfileStatus = ProfileContextStatus.SUCCESS
+                    }
         } else throw IllegalArgumentException()
     }
 
     fun create(createRequestBody: KmpProfileSkillsAndTechCreate?) =
-        ProfileSkillsContext().request {
-            createRequestBody?.let {
-                setQuery(it)
-                    .apply {
-                        skillsAndTechProfile = (requestProfile as ProfileSkillsAndTech).apply {
-                            profileId = UUID.randomUUID().toString()
-                        }
-                        responseProfile = skillsAndTechProfile
-                        responseProfileStatus = ProfileContextStatus.SUCCESS
-                    }
-            } ?: throw IllegalArgumentException()
-        }
+            ProfileSkillsContext().request {
+                createRequestBody?.let {
+                    setQuery(it)
+                            .apply {
+                                skillsAndTechProfile = (requestProfile as ProfileSkillsAndTech).apply {
+                                    profileId = UUID.randomUUID().toString()
+                                }
+                                responseProfile = skillsAndTechProfile
+                                responseProfileStatus = ProfileContextStatus.SUCCESS
+                            }
+                } ?: throw IllegalArgumentException()
+            }
 
     fun update(requestUpdate: KmpProfileSkillsAndTechUpdate?) =
-        ProfileSkillsContext().request {
-            setQuery(requestUpdate!!)
-                .apply {
-                    skillsAndTechProfile = (requestProfile as ProfileSkillsAndTech).copy(skillsAndTechProfile.profileId)
-                    responseProfile = skillsAndTechProfile
-                    responseProfileStatus = ProfileContextStatus.SUCCESS
-                }
-        }
+            ProfileSkillsContext().request {
+                setQuery(requestUpdate!!)
+                        .apply {
+                            skillsAndTechProfile = (requestProfile as ProfileSkillsAndTech).copy(skillsAndTechProfile.profileId)
+                            responseProfile = skillsAndTechProfile
+                            responseProfileStatus = ProfileContextStatus.SUCCESS
+                        }
+            }
 
     fun delete(requestDelete: KmpProfileSkillsAndTechDelete?) =
-        ProfileSkillsContext().request {
-            setQuery(requestDelete!!)
-                .apply {
-                    skillsAndTechProfile = ProfileSkillsAndTech()
-                    responseProfile = skillsAndTechProfile
-                    responseProfileStatus = ProfileContextStatus.SUCCESS
-                }
-        }
+            ProfileSkillsContext().request {
+                setQuery(requestDelete!!)
+                        .apply {
+                            skillsAndTechProfile = ProfileSkillsAndTech()
+                            responseProfile = skillsAndTechProfile
+                            responseProfileStatus = ProfileContextStatus.SUCCESS
+                        }
+            }
 }

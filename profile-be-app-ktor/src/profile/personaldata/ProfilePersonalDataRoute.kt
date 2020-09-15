@@ -1,6 +1,6 @@
 package com.lpfun.profile.personaldata
 
-import com.lpfun.base.handleParams
+import com.lpfun.base.mapToProfilePersonalGetRequest
 import com.lpfun.transport.multiplatform.profile.personal.KmpProfilePersonalDataCreate
 import com.lpfun.transport.multiplatform.profile.personal.KmpProfilePersonalDataDelete
 import com.lpfun.transport.multiplatform.profile.personal.KmpProfilePersonalDataUpdate
@@ -13,7 +13,7 @@ import io.ktor.routing.*
 fun Route.profilePersonalDataRoute(service: ProfilePersonalDataService) {
     route("/personal") {
         get {
-            call.respond(service.get(call.request.queryParameters.handleParams()))
+            call.respond(service.get(call.request.queryParameters.mapToProfilePersonalGetRequest()))
         }
 
         post {
