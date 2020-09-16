@@ -1,53 +1,55 @@
 package com.lpfun.profile.personaldata
 
-import com.lpfun.backend.common.model.profile.LocationModel
-import com.lpfun.backend.common.model.profile.ProfileContext
 import com.lpfun.backend.common.model.profile.ProfileContextStatus
-import com.lpfun.backend.common.model.profile.ProfilePersonalData
+import com.lpfun.backend.common.model.profile.personal.LocationModel
+import com.lpfun.backend.common.model.profile.personal.ProfilePersonalContext
+import com.lpfun.backend.common.model.profile.personal.ProfilePersonalData
 import com.lpfun.backend.kmp.profile.setQuery
 import com.lpfun.base.request
-import com.lpfun.transport.multiplatform.profile.personal.*
+import com.lpfun.transport.multiplatform.profile.personal.KmpProfilePersonalDataCreate
+import com.lpfun.transport.multiplatform.profile.personal.KmpProfilePersonalDataDelete
+import com.lpfun.transport.multiplatform.profile.personal.KmpProfilePersonalDataGet
+import com.lpfun.transport.multiplatform.profile.personal.KmpProfilePersonalDataUpdate
 import kotlinx.datetime.LocalDate
 import java.util.*
 
 class ProfilePersonalDataService {
 
     private var profilePersonal = ProfilePersonalData(
-        profileId = "12345",
-        firstName = "John",
-        middleName = "Junior",
-        lastName = "Smith",
-        displayName = "John Smith",
-        phone = "+1234",
-        email = "mail@mail.com",
-        bday = LocalDate(2000, 1, 1),
-        locationModel = LocationModel(
-            country = "Test Country",
-            city = "Test City"
-        )
+            profileId = "12345",
+            firstName = "John",
+            middleName = "Junior",
+            lastName = "Smith",
+            displayName = "John Smith",
+            phone = "+1234",
+            email = "mail@mail.com",
+            bday = LocalDate(2000, 1, 1),
+            locationModel = LocationModel(
+                    country = "Test Country",
+                    city = "Test City"
+            )
     )
 
-    fun get(paramsList: List<Pair<String, List<String>>>) = ProfileContext().request<KmpProfilePersonalDataResponse> {
-        val id = paramsList.firstOrNull { it.first == "id" }?.second?.get(0) ?: throw IllegalArgumentException()
-        setQuery(KmpProfilePersonalDataGet(profileId = id))
-            .apply {
-                responseProfile =
-                    if (id == profilePersonal.profileId) profilePersonal else throw IllegalArgumentException()
-                responseProfileStatus = ProfileContextStatus.SUCCESS
-            }
-    }
-
-    fun create(query: KmpProfilePersonalDataCreate) = ProfileContext().request<KmpProfilePersonalDataResponse> {
+    fun get(query: KmpProfilePersonalDataGet) = ProfilePersonalContext().request {
         setQuery(query)
-            .apply {
-                profilePersonal =
-                    (requestProfile as ProfilePersonalData).copy(profileId = UUID.randomUUID().toString())
-                responseProfile = profilePersonal
-                responseProfileStatus = ProfileContextStatus.SUCCESS
-            }
+                .apply {
+                    responseProfile =
+                            if (query.profileId == profilePersonal.profileId) profilePersonal else throw IllegalArgumentException()
+                    responseProfileStatus = ProfileContextStatus.SUCCESS
+                }
     }
 
-    fun update(query: KmpProfilePersonalDataUpdate) = ProfileContext().request<KmpProfilePersonalDataResponse> {
+    fun create(query: KmpProfilePersonalDataCreate) = ProfilePersonalContext().request {
+        setQuery(query)
+                .apply {
+                    profilePersonal =
+                            (requestProfile as ProfilePersonalData).copy(profileId = UUID.randomUUID().toString())
+                    responseProfile = profilePersonal
+                    responseProfileStatus = ProfileContextStatus.SUCCESS
+                }
+    }
+
+    fun update(query: KmpProfilePersonalDataUpdate) = ProfilePersonalContext().request {
         setQuery(query).apply {
             requestProfileId = profilePersonal.profileId
             responseProfile = requestProfile
@@ -55,7 +57,7 @@ class ProfilePersonalDataService {
         }
     }
 
-    fun delete(query: KmpProfilePersonalDataDelete) = ProfileContext().request<KmpProfilePersonalDataResponse> {
+    fun delete(query: KmpProfilePersonalDataDelete) = ProfilePersonalContext().request {
         setQuery(query).apply {
             responseProfile = ProfilePersonalData()
             responseProfileStatus = ProfileContextStatus.SUCCESS

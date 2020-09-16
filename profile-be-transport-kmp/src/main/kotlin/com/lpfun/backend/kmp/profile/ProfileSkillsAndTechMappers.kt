@@ -1,26 +1,29 @@
 package com.lpfun.backend.kmp.profile
 
-import com.lpfun.backend.common.model.profile.ProfileContext
-import com.lpfun.backend.common.model.profile.ProfileSkillsAndTech
-import com.lpfun.backend.common.model.profile.SpecializationModel
-import com.lpfun.transport.multiplatform.profile.skills.KmpProfileSkillsAndTechDelete
-import com.lpfun.transport.multiplatform.profile.skills.KmpProfileSkillsAndTechGet
-import com.lpfun.transport.multiplatform.profile.skills.KmpProfileSkillsAndTechSave
-import com.lpfun.transport.multiplatform.profile.skills.KmpProfileSkillsAndTechUpdate
+import com.lpfun.backend.common.model.profile.skills.ProfileSkillsAndTech
+import com.lpfun.backend.common.model.profile.skills.ProfileSkillsContext
+import com.lpfun.backend.common.model.profile.skills.SpecializationModel
+import com.lpfun.transport.multiplatform.profile.skills.*
 import com.lpfun.transport.multiplatform.profile.skills.model.KmpProfileSkillsAndTech
 import com.lpfun.transport.multiplatform.profile.skills.model.KmpSpecializationModel
 
-fun ProfileContext.setQuery(get: KmpProfileSkillsAndTechGet) = this.apply {
+fun ProfileSkillsContext.setQuery(get: KmpProfileSkillsAndTechGet) = this.apply {
     requestProfileId = get.profileId ?: ""
 }
 
-fun ProfileContext.setQuery(save: KmpProfileSkillsAndTechSave) = this.apply {
+fun ProfileSkillsContext.setQuery(save: KmpProfileSkillsAndTechSave) = this.apply {
     requestProfile = save.toModel()
 }
 
-fun ProfileContext.setQuery(delete: KmpProfileSkillsAndTechDelete) = this.apply {
+fun ProfileSkillsContext.setQuery(delete: KmpProfileSkillsAndTechDelete) = this.apply {
     requestProfileId = delete.profileId ?: ""
 }
+
+fun ProfileSkillsContext.resultItem() = KmpProfileSkillsAndTechResponse(
+    data = responseProfile.toKmp(),
+    status = kmpStatus(),
+    errors = errors.map { it.toKmp() }
+)
 
 fun ProfileSkillsAndTech.toKmp() = KmpProfileSkillsAndTech(
     profileId = profileId,

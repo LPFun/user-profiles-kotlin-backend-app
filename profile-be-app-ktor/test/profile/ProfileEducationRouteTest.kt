@@ -22,7 +22,7 @@ class ProfileEducationRouteTest {
                         response.content ?: fail("Null response")
                     )
                     assertEquals(HttpStatusCode.OK, response.status())
-                    assertEquals("123", getResponse.data?.id)
+                    assertEquals("123", getResponse.data?.profileId)
                 }
         }
     }
@@ -86,7 +86,7 @@ class ProfileEducationRouteTest {
                     response.content ?: fail("Null response")
                 )
                 assertEquals(HttpStatusCode.OK, response.status())
-                assertEquals("123", responseObj.data?.id)
+                assertEquals("123", responseObj.data?.profileId)
                 assertEquals(
                     mutableListOf(
                         KmpAdditionalEducationModel(
@@ -117,7 +117,7 @@ class ProfileEducationRouteTest {
                     response.content ?: fail("Null response")
                 )
                 assertEquals(HttpStatusCode.OK, response.status())
-                assertEquals("", responseObj.data?.id)
+                assertEquals("", responseObj.data?.profileId)
             }
         }
     }

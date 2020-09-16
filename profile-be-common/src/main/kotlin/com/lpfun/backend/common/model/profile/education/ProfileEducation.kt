@@ -1,10 +1,14 @@
-package com.lpfun.backend.common.model.profile
+package com.lpfun.backend.common.model.profile.education
 
 data class ProfileEducation(
-        override var id: String = "",
-        var mainEducation: MutableList<EducationModel> = mutableListOf(),
-        var additionalEducation: MutableList<AdditionalEducationModel> = mutableListOf()
-) : ProfileBase()
+    var profileId: String = "",
+    var mainEducation: MutableList<EducationModel> = mutableListOf(),
+    var additionalEducation: MutableList<AdditionalEducationModel> = mutableListOf()
+) {
+    companion object {
+        val NONE = ProfileEducation()
+    }
+}
 
 data class EducationModel(
         var university: String = "",
