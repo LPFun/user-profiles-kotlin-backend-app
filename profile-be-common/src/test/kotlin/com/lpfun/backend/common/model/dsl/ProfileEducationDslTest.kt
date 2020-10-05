@@ -9,19 +9,19 @@ import kotlin.test.assertEquals
 
 internal class ProfileEducationDslTest {
     private val profileEducation = profileEducation {
-        mainEducation {
+        +mainEducation {
             university = "First university"
             department = "First department"
             speciality = "First speciality"
             yearOfCompletion = "First year"
         }
-        mainEducation {
+        +mainEducation {
             university = "Second university"
             department = "Second department"
             speciality = "Second speciality"
             yearOfCompletion = "Second year"
         }
-        additionalEducation {
+        +additionalEducation {
             nameOfInstitution = "First name"
             courseName = "First course"
             yearOfCompletion = "First year"

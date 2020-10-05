@@ -10,6 +10,7 @@ import kotlin.test.assertEquals
 
 class ProfilePersonalDataDslTest {
     private val profilePersonalData = profilePersonalData {
+        id = "testId"
         name {
             first = "First"
             second = "Second"

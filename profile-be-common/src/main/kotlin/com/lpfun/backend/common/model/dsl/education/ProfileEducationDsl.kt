@@ -9,21 +9,27 @@ import com.lpfun.backend.common.model.profile.education.ProfileEducation
 class ProfileEducationDsl(
     var id: String = ""
 ) {
-
     var mainEducation = mutableListOf<MainEducationDsl>()
         private set
     var additionalEducation = mutableListOf<AdditionalEducationDsl>()
         private set
 
-    fun mainEducation(conf: MainEducationDsl.() -> Unit) {
-        mainEducation.add(MainEducationDsl().apply(conf))
+    fun mainEducation(conf: MainEducationDsl.() -> Unit): MainEducationDsl {
+        return MainEducationDsl().apply(conf)
     }
 
-    fun additionalEducation(conf: AdditionalEducationDsl.() -> Unit) {
-        additionalEducation.add(AdditionalEducationDsl().apply(conf))
+    fun additionalEducation(conf: AdditionalEducationDsl.() -> Unit): AdditionalEducationDsl {
+        return AdditionalEducationDsl().apply(conf)
+    }
+
+    operator fun MainEducationDsl.unaryPlus() {
+        this@ProfileEducationDsl.mainEducation.add(this)
+    }
+
+    operator fun AdditionalEducationDsl.unaryPlus() {
+        this@ProfileEducationDsl.additionalEducation.add(this)
     }
 }
-
 
 fun profileEducation(conf: ProfileEducationDsl.() -> Unit): ProfileEducation = ProfileEducationDsl().apply(conf).run() {
     ProfileEducation(
