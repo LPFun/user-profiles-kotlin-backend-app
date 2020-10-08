@@ -1,5 +1,6 @@
 package com.lpfun.backend.kmp.profile
 
+import com.lpfun.backend.common.model.profile.base.stub.ProfileStubGet
 import com.lpfun.backend.common.model.profile.personal.LocationModel
 import com.lpfun.backend.common.model.profile.personal.ProfilePersonalContext
 import com.lpfun.backend.common.model.profile.personal.ProfilePersonalData
@@ -11,6 +12,10 @@ import java.time.Year
 
 fun ProfilePersonalContext.setQuery(get: KmpProfilePersonalDataGet) = this.apply {
     requestProfileId = get.profileId ?: ""
+    stubCaseGet = when (get.debug?.stub) {
+        KmpProfilePersonalDataGet.StubCase.RUNNING -> ProfileStubGet.RUNNING
+        else -> ProfileStubGet.NONE
+    }
 }
 
 fun ProfilePersonalContext.setQuery(save: KmpProfilePersonalDataSave) = this.apply {

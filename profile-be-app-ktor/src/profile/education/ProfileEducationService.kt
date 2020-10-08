@@ -1,6 +1,6 @@
 package com.lpfun.profile.education
 
-import com.lpfun.backend.common.model.profile.ProfileContextStatus
+import com.lpfun.backend.common.model.profile.base.ProfileContextStatus
 import com.lpfun.backend.common.model.profile.education.AdditionalEducationModel
 import com.lpfun.backend.common.model.profile.education.EducationModel
 import com.lpfun.backend.common.model.profile.education.ProfileEducation

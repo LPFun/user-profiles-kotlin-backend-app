@@ -1,6 +1,6 @@
 package com.lpfun.backend.common.model.profile.personal
 
-import com.lpfun.backend.common.model.profile.ProfileConstants
+import com.lpfun.backend.common.model.profile.base.ProfileConstants
 import kotlinx.datetime.LocalDate
 
 

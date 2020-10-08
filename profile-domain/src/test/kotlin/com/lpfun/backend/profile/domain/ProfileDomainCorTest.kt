@@ -1,14 +1,16 @@
 package com.lpfun.backend.profile.domain
 
 import com.lpfun.backend.profile.domain.cor.cor
+import kotlinx.coroutines.runBlocking
 import kotlin.test.Test
+import kotlin.test.assertEquals
 
 internal class ProfileDomainCorTest {
 
     @Test
     fun corTest() {
         val context = TestContext()
-        cor<TestContext> {
+        val processor = cor<TestContext> {
 
             condition {
                 true
@@ -19,7 +21,7 @@ internal class ProfileDomainCorTest {
             }
 
             execute {
-                println("Test 1")
+                a += "a"
             }
 
             handler {
@@ -28,7 +30,7 @@ internal class ProfileDomainCorTest {
                 }
 
                 exec {
-                    println("Test 2")
+                    a += "b"
                 }
 
                 error {
@@ -38,12 +40,20 @@ internal class ProfileDomainCorTest {
 
             processor {
                 handler {
-
+                    exec {
+                        a += "c"
+                    }
                 }
             }
         }
+
+        runBlocking {
+            processor.exec(context)
+            assertEquals("abc", context.a)
+        }
+
     }
 }
 
-class TestContext
+class TestContext(var a: String = "")
 

@@ -1,6 +1,6 @@
 package com.lpfun.profile.skillsandtech
 
-import com.lpfun.backend.common.model.profile.ProfileContextStatus
+import com.lpfun.backend.common.model.profile.base.ProfileContextStatus
 import com.lpfun.backend.common.model.profile.skills.ProfileSkillsAndTech
 import com.lpfun.backend.common.model.profile.skills.ProfileSkillsContext
 import com.lpfun.backend.common.model.profile.skills.SpecializationModel

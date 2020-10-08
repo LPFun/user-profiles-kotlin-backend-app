@@ -9,6 +9,7 @@ import com.lpfun.transport.multiplatform.profile.education.KmpProfileEducationGe
 import com.lpfun.transport.multiplatform.profile.personal.KmpProfilePersonalDataGet
 import com.lpfun.transport.multiplatform.profile.skills.KmpProfileSkillsAndTechGet
 import io.ktor.http.*
+import io.ktor.request.*
 
 inline fun ProfileEducationContext.request(crossinline block: ProfileEducationContext.() -> Unit) = run {
     try {
@@ -19,7 +20,7 @@ inline fun ProfileEducationContext.request(crossinline block: ProfileEducationCo
     resultItem()
 }
 
-inline fun ProfilePersonalContext.request(crossinline block: ProfilePersonalContext.() -> Unit) = run {
+suspend inline fun ProfilePersonalContext.request(crossinline block: ProfilePersonalContext.() -> Unit) = run {
     try {
         block.invoke(this)
     } catch (t: Throwable) {
@@ -39,6 +40,12 @@ inline fun ProfileSkillsContext.request(crossinline block: ProfileSkillsContext.
 
 fun Parameters.mapToProfileEducationGetRequest() = KmpProfileEducationGet(profileId = this["id"])
 
-fun Parameters.mapToProfilePersonalGetRequest() = KmpProfilePersonalDataGet(profileId = this["id"])
+fun ApplicationRequest.mapToProfilePersonalGetRequest() = KmpProfilePersonalDataGet(
+    profileId = this.queryParameters["id"],
+    debug = KmpProfilePersonalDataGet.Debug().also {
+        it.stub = if (this.headers["test"] == "test") KmpProfilePersonalDataGet.StubCase.RUNNING else null
+    }
+
+)
 
 fun Parameters.mapToProfileSkillsGetRequest() = KmpProfileSkillsAndTechGet(profileId = this["id"])

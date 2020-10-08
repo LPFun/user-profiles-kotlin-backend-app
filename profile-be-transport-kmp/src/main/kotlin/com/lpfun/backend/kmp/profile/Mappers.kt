@@ -1,7 +1,7 @@
 package com.lpfun.backend.kmp.profile
 
 import com.lpfun.backend.common.model.error.IProfileError
-import com.lpfun.backend.common.model.profile.BaseProfileContext
+import com.lpfun.backend.common.model.profile.base.BaseProfileContext
 import com.lpfun.transport.multiplatform.profile.KmpProfileError
 import com.lpfun.transport.multiplatform.profile.KmpProfileResponseStatus
 

@@ -7,6 +7,7 @@ group = "com.lpfun"
 version = "0.1"
 
 
+
 allprojects {
     repositories {
         mavenCentral()
@@ -14,3 +15,5 @@ allprojects {
         maven(url = "https://kotlin.bintray.com/kotlinx/")
     }
 }
+
+

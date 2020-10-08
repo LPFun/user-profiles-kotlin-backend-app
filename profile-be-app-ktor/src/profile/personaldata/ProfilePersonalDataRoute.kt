@@ -13,7 +13,7 @@ import io.ktor.routing.*
 fun Route.profilePersonalDataRoute(service: ProfilePersonalDataService) {
     route("/personal") {
         get {
-            call.respond(service.get(call.request.queryParameters.mapToProfilePersonalGetRequest()))
+            call.respond(service.get(call.request.mapToProfilePersonalGetRequest()))
         }
 
         post {

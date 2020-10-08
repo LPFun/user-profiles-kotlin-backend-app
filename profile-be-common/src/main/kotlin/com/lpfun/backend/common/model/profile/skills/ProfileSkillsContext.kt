@@ -1,6 +1,6 @@
 package com.lpfun.backend.common.model.profile.skills
 
-import com.lpfun.backend.common.model.profile.BaseProfileContext
+import com.lpfun.backend.common.model.profile.base.BaseProfileContext
 
 data class ProfileSkillsContext(
     var requestProfile: ProfileSkillsAndTech = ProfileSkillsAndTech.NONE,
