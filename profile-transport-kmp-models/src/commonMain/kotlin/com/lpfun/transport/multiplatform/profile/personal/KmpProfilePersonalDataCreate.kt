@@ -13,7 +13,7 @@ data class KmpProfilePersonalDataCreate(
     override var email: String? = null,
     override var bday: String? = null,
     override var locationModel: KmpLocationModel? = null,
-    var debug: KmpDebug? = null
+    var debug: Debug? = null
 ) : KmpProfilePersonalDataSave(
     firstName = firstName,
     middleName = middleName,
@@ -25,5 +25,13 @@ data class KmpProfilePersonalDataCreate(
     locationModel = locationModel
 ) {
     @Serializable
-    class KmpDebug
+    class Debug {
+        var stub: StubCase? = null
+    }
+
+    @Serializable
+    enum class StubCase {
+        NONE,
+        RUNNING
+    }
 }

@@ -1,10 +1,10 @@
-package com.lpfun.backend.profile.domain.education
+package com.lpfun.backend.profile.domain.personal
 
 import com.lpfun.backend.common.model.profile.personal.ProfilePersonalContext
 import com.lpfun.backend.profile.domain.cor.IExec
 import com.lpfun.backend.profile.domain.cor.cor
 
-class ProfilePersonalDeleteChain : IExec<ProfilePersonalContext> {
+class ProfilePersonalUpdateChain : IExec<ProfilePersonalContext> {
     override suspend fun exec(ctx: ProfilePersonalContext) = chain.exec(ctx.apply {
 
     })
@@ -20,7 +20,6 @@ class ProfilePersonalDeleteChain : IExec<ProfilePersonalContext> {
             // Работа с БД
 
             // Обработка ответа
-
         }
     }
 }

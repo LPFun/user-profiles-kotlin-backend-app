@@ -1,4 +1,4 @@
-package com.lpfun.backend.profile.domain.education
+package com.lpfun.backend.profile.domain.personal
 
 import com.lpfun.backend.common.model.profile.personal.ProfilePersonalContext
 

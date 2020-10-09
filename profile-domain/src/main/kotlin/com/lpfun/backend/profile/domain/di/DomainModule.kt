@@ -1,6 +1,6 @@
 package com.lpfun.backend.profile.domain.di
 
-import com.lpfun.backend.profile.domain.education.ProfilePersonalCrud
+import com.lpfun.backend.profile.domain.personal.ProfilePersonalCrud
 import org.kodein.di.DI
 import org.kodein.di.bind
 import org.kodein.di.provider

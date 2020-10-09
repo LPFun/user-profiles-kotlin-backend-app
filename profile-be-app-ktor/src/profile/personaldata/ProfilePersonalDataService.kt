@@ -7,14 +7,13 @@ import com.lpfun.backend.common.model.profile.personal.ProfilePersonalContext
 import com.lpfun.backend.common.model.profile.personal.ProfilePersonalData
 import com.lpfun.backend.kmp.profile.resultItem
 import com.lpfun.backend.kmp.profile.setQuery
-import com.lpfun.backend.profile.domain.education.ProfilePersonalCrud
+import com.lpfun.backend.profile.domain.personal.ProfilePersonalCrud
 import com.lpfun.base.request
 import com.lpfun.transport.multiplatform.profile.personal.KmpProfilePersonalDataCreate
 import com.lpfun.transport.multiplatform.profile.personal.KmpProfilePersonalDataDelete
 import com.lpfun.transport.multiplatform.profile.personal.KmpProfilePersonalDataGet
 import com.lpfun.transport.multiplatform.profile.personal.KmpProfilePersonalDataUpdate
 import kotlinx.datetime.LocalDate
-import java.util.*
 
 class ProfilePersonalDataService(
     val crud: ProfilePersonalCrud
@@ -44,14 +43,13 @@ class ProfilePersonalDataService(
         resultItem()
     }
 
-    suspend fun create(query: KmpProfilePersonalDataCreate) = ProfilePersonalContext().request {
-        setQuery(query)
-            .apply {
-                profilePersonal =
-                    (requestProfile as ProfilePersonalData).copy(profileId = UUID.randomUUID().toString())
-                responseProfile = profilePersonal
-                responseProfileStatus = ProfileContextStatus.SUCCESS
-            }
+    suspend fun create(query: KmpProfilePersonalDataCreate) = ProfilePersonalContext().run {
+        try {
+            crud.create(setQuery(query))
+        } catch (t: Throwable) {
+            errors.add(InternalServerError.instance)
+        }
+        resultItem()
     }
 
     suspend fun update(query: KmpProfilePersonalDataUpdate) = ProfilePersonalContext().request {

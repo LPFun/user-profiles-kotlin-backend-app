@@ -1,5 +1,6 @@
 package com.lpfun.backend.kmp.profile
 
+import com.lpfun.backend.common.model.profile.base.stub.ProfileStubCreate
 import com.lpfun.backend.common.model.profile.base.stub.ProfileStubGet
 import com.lpfun.backend.common.model.profile.personal.LocationModel
 import com.lpfun.backend.common.model.profile.personal.ProfilePersonalContext
@@ -20,6 +21,12 @@ fun ProfilePersonalContext.setQuery(get: KmpProfilePersonalDataGet) = this.apply
 
 fun ProfilePersonalContext.setQuery(save: KmpProfilePersonalDataSave) = this.apply {
     requestProfile = save.toModel()
+    when (save) {
+        is KmpProfilePersonalDataCreate -> stubCaseCreate = when (save.debug?.stub) {
+            KmpProfilePersonalDataCreate.StubCase.RUNNING -> ProfileStubCreate.RUNNING
+            else -> ProfileStubCreate.NONE
+        }
+    }
 }
 
 fun ProfilePersonalContext.setQuery(del: KmpProfilePersonalDataDelete) = this.apply {
