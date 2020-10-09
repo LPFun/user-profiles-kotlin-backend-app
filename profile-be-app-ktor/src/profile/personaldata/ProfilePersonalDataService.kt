@@ -2,7 +2,6 @@ package com.lpfun.profile.personaldata
 
 import com.lpfun.backend.common.model.error.InternalServerError
 import com.lpfun.backend.common.model.profile.base.ProfileContextStatus
-import com.lpfun.backend.common.model.profile.personal.LocationModel
 import com.lpfun.backend.common.model.profile.personal.ProfilePersonalContext
 import com.lpfun.backend.common.model.profile.personal.ProfilePersonalData
 import com.lpfun.backend.kmp.profile.resultItem
@@ -13,27 +12,10 @@ import com.lpfun.transport.multiplatform.profile.personal.KmpProfilePersonalData
 import com.lpfun.transport.multiplatform.profile.personal.KmpProfilePersonalDataDelete
 import com.lpfun.transport.multiplatform.profile.personal.KmpProfilePersonalDataGet
 import com.lpfun.transport.multiplatform.profile.personal.KmpProfilePersonalDataUpdate
-import kotlinx.datetime.LocalDate
 
 class ProfilePersonalDataService(
     val crud: ProfilePersonalCrud
 ) {
-
-    private var profilePersonal = ProfilePersonalData(
-        profileId = "12345",
-        firstName = "John",
-        middleName = "Junior",
-        lastName = "Smith",
-        displayName = "John Smith",
-        phone = "+1234",
-        email = "mail@mail.com",
-        bday = LocalDate(2000, 1, 1),
-        locationModel = LocationModel(
-            country = "Test Country",
-            city = "Test City"
-        )
-    )
-
     suspend fun get(query: KmpProfilePersonalDataGet) = ProfilePersonalContext().run {
         try {
             crud.get(setQuery(query))
@@ -52,12 +34,13 @@ class ProfilePersonalDataService(
         resultItem()
     }
 
-    suspend fun update(query: KmpProfilePersonalDataUpdate) = ProfilePersonalContext().request {
-        setQuery(query).apply {
-            requestProfileId = profilePersonal.profileId
-            responseProfile = requestProfile
-            responseProfileStatus = ProfileContextStatus.SUCCESS
+    suspend fun update(query: KmpProfilePersonalDataUpdate) = ProfilePersonalContext().run {
+        try {
+            crud.update(setQuery(query))
+        } catch (t: Throwable) {
+            errors.add(InternalServerError.instance)
         }
+        resultItem()
     }
 
     suspend fun delete(query: KmpProfilePersonalDataDelete) = ProfilePersonalContext().request {

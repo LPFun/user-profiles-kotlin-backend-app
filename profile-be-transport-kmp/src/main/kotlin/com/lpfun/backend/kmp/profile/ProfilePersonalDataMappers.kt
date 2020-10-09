@@ -2,6 +2,7 @@ package com.lpfun.backend.kmp.profile
 
 import com.lpfun.backend.common.model.profile.base.stub.ProfileStubCreate
 import com.lpfun.backend.common.model.profile.base.stub.ProfileStubGet
+import com.lpfun.backend.common.model.profile.base.stub.ProfileStubUpdate
 import com.lpfun.backend.common.model.profile.personal.LocationModel
 import com.lpfun.backend.common.model.profile.personal.ProfilePersonalContext
 import com.lpfun.backend.common.model.profile.personal.ProfilePersonalData
@@ -25,6 +26,10 @@ fun ProfilePersonalContext.setQuery(save: KmpProfilePersonalDataSave) = this.app
         is KmpProfilePersonalDataCreate -> stubCaseCreate = when (save.debug?.stub) {
             KmpProfilePersonalDataCreate.StubCase.RUNNING -> ProfileStubCreate.RUNNING
             else -> ProfileStubCreate.NONE
+        }
+        is KmpProfilePersonalDataUpdate -> stubCaseUpdate = when (save.debug?.stub) {
+            KmpProfilePersonalDataUpdate.StubCase.RUNNING -> ProfileStubUpdate.RUNNING
+            else -> ProfileStubUpdate.NONE
         }
     }
 }

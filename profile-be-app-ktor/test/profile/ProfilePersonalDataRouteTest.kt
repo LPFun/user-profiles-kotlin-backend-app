@@ -3,6 +3,7 @@ package com.lpfun.profile
 import com.lpfun.module
 import com.lpfun.transport.multiplatform.profile.personal.KmpProfilePersonalDataCreate
 import com.lpfun.transport.multiplatform.profile.personal.KmpProfilePersonalDataResponse
+import com.lpfun.transport.multiplatform.profile.personal.KmpProfilePersonalDataUpdate
 import com.lpfun.transport.multiplatform.profile.personal.model.KmpLocationModel
 import io.ktor.http.*
 import io.ktor.server.testing.*
@@ -69,24 +70,27 @@ class ProfilePersonalDataRouteTest {
         withTestApplication({ module(testing = true) }) {
             handleRequest(HttpMethod.Put, "profile/personal/") {
                 addHeader("Content-Type", "application/json")
-                val requestBody = """{
-                  "firstName": "Test1",
-                  "bday": "2000-01-01",
-                  "locationModel": {
-                    "country": "Test Country"
-                  }
-                }""".trimIndent()
-                setBody(requestBody)
+                val body = KmpProfilePersonalDataUpdate(
+                    firstName = "Updated First",
+                    bday = "2000-01-01",
+                    locationModel = KmpLocationModel(
+                        country = "Updated Country"
+                    ),
+                    debug = KmpProfilePersonalDataUpdate.Debug().apply {
+                        stub = KmpProfilePersonalDataUpdate.StubCase.RUNNING
+                    }
+                )
+                val bodyStr = Json.encodeToString(KmpProfilePersonalDataUpdate.serializer(), body)
+                setBody(bodyStr)
             }.apply {
                 val responseObj = Json.decodeFromString(
                     KmpProfilePersonalDataResponse.serializer(),
                     response.content ?: fail("Null response")
                 )
                 assertEquals(HttpStatusCode.OK, response.status())
-                assertNotEquals("12345", responseObj.data?.profileId)
-                assertEquals("Test1", responseObj.data?.firstName)
+                assertEquals("Updated First", responseObj.data?.firstName)
                 assertEquals("2000-01-01", responseObj.data?.bday)
-                assertEquals("Test Country", responseObj.data?.locationModel?.country)
+                assertEquals("Updated Country", responseObj.data?.locationModel?.country)
             }
         }
     }
