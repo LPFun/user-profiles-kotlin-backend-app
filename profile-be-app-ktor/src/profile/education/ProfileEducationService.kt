@@ -6,6 +6,7 @@ import com.lpfun.backend.common.model.profile.education.EducationModel
 import com.lpfun.backend.common.model.profile.education.ProfileEducation
 import com.lpfun.backend.common.model.profile.education.ProfileEducationContext
 import com.lpfun.backend.kmp.profile.setQuery
+import com.lpfun.backend.profile.domain.education.ProfileEducationCrud
 import com.lpfun.base.request
 import com.lpfun.transport.multiplatform.profile.education.KmpProfileEducationCreate
 import com.lpfun.transport.multiplatform.profile.education.KmpProfileEducationDelete
@@ -13,24 +14,26 @@ import com.lpfun.transport.multiplatform.profile.education.KmpProfileEducationGe
 import com.lpfun.transport.multiplatform.profile.education.KmpProfileEducationUpdate
 import java.util.*
 
-class ProfileEducationService {
+class ProfileEducationService(
+    private val crud: ProfileEducationCrud
+) {
     private var profileEducationModel = ProfileEducation(
-            profileId = "123",
-            mainEducation = mutableListOf(
-                    EducationModel(
-                            university = "Garvard",
-                            department = "IT",
-                            specialty = "Programming",
-                            yearOfCompletion = "2020"
-                    )
-            ),
-            additionalEducation = mutableListOf(
-                    AdditionalEducationModel(
-                            nameOfInstitution = "OTUS",
-                            courseName = "Kotlin",
-                            yearOfCompletion = "2020"
-                    )
+        profileId = "123",
+        mainEducation = mutableListOf(
+            EducationModel(
+                university = "Garvard",
+                department = "IT",
+                specialty = "Programming",
+                yearOfCompletion = "2020"
             )
+        ),
+        additionalEducation = mutableListOf(
+            AdditionalEducationModel(
+                nameOfInstitution = "OTUS",
+                courseName = "Kotlin",
+                yearOfCompletion = "2020"
+            )
+        )
     )
 
     fun get(query: KmpProfileEducationGet) = ProfileEducationContext().request {
