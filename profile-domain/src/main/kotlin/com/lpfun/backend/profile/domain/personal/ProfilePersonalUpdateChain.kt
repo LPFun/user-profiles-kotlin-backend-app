@@ -14,6 +14,9 @@ class ProfilePersonalUpdateChain : IExec<ProfilePersonalContext> {
     companion object {
         val chain = cor<ProfilePersonalContext> {
             // Инициализация пайплайна
+            execute {
+                responseProfileStatus = ProfileContextStatus.RUNNING
+            }
 
             // Обработка стабов
             processor {

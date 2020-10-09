@@ -2,6 +2,7 @@ package com.lpfun.profile
 
 import com.lpfun.module
 import com.lpfun.transport.multiplatform.profile.personal.KmpProfilePersonalDataCreate
+import com.lpfun.transport.multiplatform.profile.personal.KmpProfilePersonalDataDelete
 import com.lpfun.transport.multiplatform.profile.personal.KmpProfilePersonalDataResponse
 import com.lpfun.transport.multiplatform.profile.personal.KmpProfilePersonalDataUpdate
 import com.lpfun.transport.multiplatform.profile.personal.model.KmpLocationModel
@@ -100,9 +101,13 @@ class ProfilePersonalDataRouteTest {
         withTestApplication({ module(testing = true) }) {
             handleRequest(HttpMethod.Delete, "profile/personal/") {
                 addHeader("Content-Type", "application/json")
-                val requestBody = """{
-                  "profileId": "12345"
-                }""".trimIndent()
+                val body = KmpProfilePersonalDataDelete(
+                    profileId = "12345",
+                    debug = KmpProfilePersonalDataDelete.Debug().apply {
+                        stub = KmpProfilePersonalDataDelete.StubCase.RUNNING
+                    }
+                )
+                val requestBody = Json.encodeToString(KmpProfilePersonalDataDelete.serializer(), body)
                 setBody(requestBody)
             }.apply {
                 val responseObj = Json.decodeFromString(

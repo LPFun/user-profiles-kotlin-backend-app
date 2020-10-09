@@ -1,6 +1,7 @@
 package com.lpfun.backend.kmp.profile
 
 import com.lpfun.backend.common.model.profile.base.stub.ProfileStubCreate
+import com.lpfun.backend.common.model.profile.base.stub.ProfileStubDelete
 import com.lpfun.backend.common.model.profile.base.stub.ProfileStubGet
 import com.lpfun.backend.common.model.profile.base.stub.ProfileStubUpdate
 import com.lpfun.backend.common.model.profile.personal.LocationModel
@@ -36,6 +37,10 @@ fun ProfilePersonalContext.setQuery(save: KmpProfilePersonalDataSave) = this.app
 
 fun ProfilePersonalContext.setQuery(del: KmpProfilePersonalDataDelete) = this.apply {
     requestProfileId = del.profileId ?: ""
+    stubCaseDelete = when (del.debug?.stub) {
+        KmpProfilePersonalDataDelete.StubCase.RUNNING -> ProfileStubDelete.RUNNING
+        else -> ProfileStubDelete.NONE
+    }
 }
 
 fun ProfilePersonalContext.resultItem() = KmpProfilePersonalDataResponse(

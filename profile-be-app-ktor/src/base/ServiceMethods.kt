@@ -2,7 +2,6 @@ package com.lpfun.base
 
 import com.lpfun.backend.common.model.error.InternalServerError
 import com.lpfun.backend.common.model.profile.education.ProfileEducationContext
-import com.lpfun.backend.common.model.profile.personal.ProfilePersonalContext
 import com.lpfun.backend.common.model.profile.skills.ProfileSkillsContext
 import com.lpfun.backend.kmp.profile.resultItem
 import com.lpfun.transport.multiplatform.profile.education.KmpProfileEducationGet
@@ -12,15 +11,6 @@ import io.ktor.http.*
 import io.ktor.request.*
 
 inline fun ProfileEducationContext.request(crossinline block: ProfileEducationContext.() -> Unit) = run {
-    try {
-        block.invoke(this)
-    } catch (t: Throwable) {
-        errors.add(InternalServerError.instance)
-    }
-    resultItem()
-}
-
-suspend inline fun ProfilePersonalContext.request(crossinline block: ProfilePersonalContext.() -> Unit) = run {
     try {
         block.invoke(this)
     } catch (t: Throwable) {
