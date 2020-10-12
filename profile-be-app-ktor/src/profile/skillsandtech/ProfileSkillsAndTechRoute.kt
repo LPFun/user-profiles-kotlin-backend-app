@@ -9,19 +9,19 @@ import io.ktor.routing.*
 fun Route.profileSkillsAndTechRoute(service: ProfileSkillsAndTechService) {
     route("/skills") {
         get {
-            call.respond(service.get(call.request.queryParameters.mapToProfileSkillsGetRequest()))
+            call.respond(service.get(call.request.mapToProfileSkillsGetRequest()))
         }
 
         post {
-            call.respond(service.create(call.receiveOrNull()))
+            call.respond(service.create(call.receive()))
         }
 
         put {
-            call.respond(service.update(call.receiveOrNull()))
+            call.respond(service.update(call.receive()))
         }
 
         delete {
-            call.respond(service.delete(call.receiveOrNull()))
+            call.respond(service.delete(call.receive()))
         }
     }
 }
