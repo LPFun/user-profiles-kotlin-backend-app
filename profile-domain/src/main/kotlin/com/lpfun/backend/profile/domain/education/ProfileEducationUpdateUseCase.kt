@@ -1,13 +1,12 @@
 package com.lpfun.backend.profile.domain.education
 
-import com.lpfun.backend.common.model.dsl.education.profileEducation
 import com.lpfun.backend.common.model.profile.base.ProfileContextStatus
-import com.lpfun.backend.common.model.profile.base.stub.ProfileStubGet
+import com.lpfun.backend.common.model.profile.base.stub.ProfileStubUpdate
 import com.lpfun.backend.common.model.profile.education.ProfileEducationContext
 import com.lpfun.backend.profile.domain.cor.IExec
 import com.lpfun.backend.profile.domain.cor.cor
 
-class ProfileEducationGetChain : IExec<ProfileEducationContext> {
+class ProfileEducationUpdateUseCase : IExec<ProfileEducationContext> {
     override suspend fun execute(ctx: ProfileEducationContext) = chain.execute(ctx.apply {
 
     })
@@ -21,25 +20,11 @@ class ProfileEducationGetChain : IExec<ProfileEducationContext> {
 
             // Обработка стабов
             processor {
-                condition { stubCaseGet != ProfileStubGet.NONE }
+                condition { stubCaseUpdate != ProfileStubUpdate.NONE }
                 handler {
-                    condition { stubCaseGet == ProfileStubGet.RUNNING }
+                    condition { stubCaseUpdate == ProfileStubUpdate.RUNNING }
                     exec {
-                        responseProfile = profileEducation {
-                            id = requestProfileId
-                            mainEducation {
-                                university = "Garvard"
-                                department = "IT"
-                                speciality = "Programming"
-                                yearOfCompletion = "2020"
-                            }
-                            +additionalEducation {
-                                nameOfInstitution = "OTUS"
-                                courseName = "Kotlin"
-                                yearOfCompletion = "2020"
-                            }
-                        }
-
+                        responseProfile = requestProfile
                         responseProfileStatus = ProfileContextStatus.FINISHING
                     }
                 }

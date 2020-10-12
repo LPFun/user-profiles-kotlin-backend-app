@@ -1,19 +1,20 @@
-package com.lpfun.backend.profile.domain.personal
+package com.lpfun.backend.profile.domain.education
 
-import com.lpfun.backend.common.model.dsl.personal.profilePersonalData
+import com.lpfun.backend.common.model.dsl.education.profileEducation
 import com.lpfun.backend.common.model.profile.base.ProfileContextStatus
 import com.lpfun.backend.common.model.profile.base.stub.ProfileStubGet
-import com.lpfun.backend.common.model.profile.personal.ProfilePersonalContext
+import com.lpfun.backend.common.model.profile.education.ProfileEducationContext
 import com.lpfun.backend.profile.domain.cor.IExec
 import com.lpfun.backend.profile.domain.cor.cor
 
-class ProfilePersonalGetChain : IExec<ProfilePersonalContext> {
-    override suspend fun execute(ctx: ProfilePersonalContext) = chain.execute(ctx.apply {
+class ProfileEducationGetUseCase : IExec<ProfileEducationContext> {
+    override suspend fun execute(ctx: ProfileEducationContext) = chain.execute(ctx.apply {
 
     })
 
     companion object {
-        val chain = cor<ProfilePersonalContext> {
+        val chain = cor<ProfileEducationContext> {
+            // Инициализация пайплайна
             execute {
                 responseProfileStatus = ProfileContextStatus.RUNNING
             }
@@ -24,23 +25,21 @@ class ProfilePersonalGetChain : IExec<ProfilePersonalContext> {
                 handler {
                     condition { stubCaseGet == ProfileStubGet.RUNNING }
                     exec {
-                        responseProfile = profilePersonalData {
+                        responseProfile = profileEducation {
                             id = requestProfileId
-                            name {
-                                first = "John"
-                                second = "Junior"
-                                last = "Smith"
-                                display = "John Smith"
+                            mainEducation {
+                                university = "Garvard"
+                                department = "IT"
+                                speciality = "Programming"
+                                yearOfCompletion = "2020"
                             }
-                            contacts {
-                                phone = "+1234"
-                                email = "mail@mail.com"
-                            }
-                            location {
-                                country = "Test Country"
-                                city = "Test City"
+                            +additionalEducation {
+                                nameOfInstitution = "OTUS"
+                                courseName = "Kotlin"
+                                yearOfCompletion = "2020"
                             }
                         }
+
                         responseProfileStatus = ProfileContextStatus.FINISHING
                     }
                 }
@@ -54,7 +53,6 @@ class ProfilePersonalGetChain : IExec<ProfilePersonalContext> {
             execute {
                 responseProfileStatus = ProfileContextStatus.SUCCESS
             }
-
         }
     }
 }

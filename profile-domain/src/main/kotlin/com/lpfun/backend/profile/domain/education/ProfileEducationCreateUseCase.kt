@@ -1,13 +1,12 @@
 package com.lpfun.backend.profile.domain.education
 
 import com.lpfun.backend.common.model.profile.base.ProfileContextStatus
-import com.lpfun.backend.common.model.profile.base.stub.ProfileStubDelete
-import com.lpfun.backend.common.model.profile.education.ProfileEducation
+import com.lpfun.backend.common.model.profile.base.stub.ProfileStubCreate
 import com.lpfun.backend.common.model.profile.education.ProfileEducationContext
 import com.lpfun.backend.profile.domain.cor.IExec
 import com.lpfun.backend.profile.domain.cor.cor
 
-class ProfileEducationDeleteChain : IExec<ProfileEducationContext> {
+class ProfileEducationCreateUseCase : IExec<ProfileEducationContext> {
     override suspend fun execute(ctx: ProfileEducationContext) = chain.execute(ctx.apply {
 
     })
@@ -21,11 +20,13 @@ class ProfileEducationDeleteChain : IExec<ProfileEducationContext> {
 
             // Обработка стабов
             processor {
-                condition { stubCaseDelete != ProfileStubDelete.NONE }
+                condition { stubCaseCreate != ProfileStubCreate.NONE }
                 handler {
-                    condition { stubCaseDelete == ProfileStubDelete.RUNNING }
+                    condition { stubCaseCreate == ProfileStubCreate.RUNNING }
                     exec {
-                        responseProfile = ProfileEducation()
+                        responseProfile = requestProfile.apply {
+                            profileId = "test-id"
+                        }
                         responseProfileStatus = ProfileContextStatus.FINISHING
                     }
                 }

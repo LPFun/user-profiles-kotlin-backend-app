@@ -1,12 +1,13 @@
 package com.lpfun.backend.profile.domain.personal
 
 import com.lpfun.backend.common.model.profile.base.ProfileContextStatus
-import com.lpfun.backend.common.model.profile.base.stub.ProfileStubUpdate
+import com.lpfun.backend.common.model.profile.base.stub.ProfileStubDelete
 import com.lpfun.backend.common.model.profile.personal.ProfilePersonalContext
+import com.lpfun.backend.common.model.profile.personal.ProfilePersonalData
 import com.lpfun.backend.profile.domain.cor.IExec
 import com.lpfun.backend.profile.domain.cor.cor
 
-class ProfilePersonalUpdateChain : IExec<ProfilePersonalContext> {
+class ProfilePersonalDeleteUseCase : IExec<ProfilePersonalContext> {
     override suspend fun execute(ctx: ProfilePersonalContext) = chain.execute(ctx.apply {
 
     })
@@ -20,11 +21,11 @@ class ProfilePersonalUpdateChain : IExec<ProfilePersonalContext> {
 
             // Обработка стабов
             processor {
-                condition { stubCaseUpdate != ProfileStubUpdate.NONE }
+                condition { stubCaseDelete != ProfileStubDelete.NONE }
                 handler {
-                    condition { stubCaseUpdate == ProfileStubUpdate.RUNNING }
+                    condition { stubCaseDelete == ProfileStubDelete.RUNNING }
                     exec {
-                        responseProfile = requestProfile
+                        responseProfile = ProfilePersonalData()
                         responseProfileStatus = ProfileContextStatus.FINISHING
                     }
                 }
@@ -38,6 +39,7 @@ class ProfilePersonalUpdateChain : IExec<ProfilePersonalContext> {
             execute {
                 responseProfileStatus = ProfileContextStatus.SUCCESS
             }
+
         }
     }
 }
