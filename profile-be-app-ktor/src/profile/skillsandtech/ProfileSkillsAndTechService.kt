@@ -5,6 +5,7 @@ import com.lpfun.backend.common.model.profile.skills.ProfileSkillsAndTech
 import com.lpfun.backend.common.model.profile.skills.ProfileSkillsContext
 import com.lpfun.backend.common.model.profile.skills.SpecializationModel
 import com.lpfun.backend.kmp.profile.setQuery
+import com.lpfun.backend.profile.domain.skills.ProfileSkillsCrud
 import com.lpfun.base.request
 import com.lpfun.transport.multiplatform.profile.skills.KmpProfileSkillsAndTechCreate
 import com.lpfun.transport.multiplatform.profile.skills.KmpProfileSkillsAndTechDelete
@@ -12,15 +13,17 @@ import com.lpfun.transport.multiplatform.profile.skills.KmpProfileSkillsAndTechG
 import com.lpfun.transport.multiplatform.profile.skills.KmpProfileSkillsAndTechUpdate
 import java.util.*
 
-class ProfileSkillsAndTechService {
+class ProfileSkillsAndTechService(
+    private val crud: ProfileSkillsCrud
+) {
     private var skillsAndTechProfile = ProfileSkillsAndTech(
-            profileId = "111",
-            specialization = SpecializationModel(
-                    category = "Development",
-                    subCategory = "Mobile developer"
-            ),
-            operatingSystems = mutableSetOf("Android"),
-            dataBases = mutableSetOf("Mysql")
+        profileId = "111",
+        specialization = SpecializationModel(
+            category = "Development",
+            subCategory = "Mobile developer"
+        ),
+        operatingSystems = mutableSetOf("Android"),
+        dataBases = mutableSetOf("Mysql")
     )
 
     fun get(query: KmpProfileSkillsAndTechGet) = ProfileSkillsContext().request {
