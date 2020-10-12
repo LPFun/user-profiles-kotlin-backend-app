@@ -7,11 +7,11 @@ class CorProcessor<T>(
     var onError: CorOnErrorType<T> = { t -> throw t }
 ) : IExec<T> {
 
-    override suspend fun exec(ctx: T) {
+    override suspend fun execute(ctx: T) {
         try {
             if (matcher(ctx)) {
                 handlers.forEach {
-                    it.exec(ctx)
+                    it.execute(ctx)
                 }
             }
         } catch (t: Throwable) {

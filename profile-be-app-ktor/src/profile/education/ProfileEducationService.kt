@@ -1,72 +1,52 @@
 package com.lpfun.profile.education
 
-import com.lpfun.backend.common.model.profile.base.ProfileContextStatus
-import com.lpfun.backend.common.model.profile.education.AdditionalEducationModel
-import com.lpfun.backend.common.model.profile.education.EducationModel
-import com.lpfun.backend.common.model.profile.education.ProfileEducation
+import com.lpfun.backend.common.model.error.InternalServerError
 import com.lpfun.backend.common.model.profile.education.ProfileEducationContext
+import com.lpfun.backend.kmp.profile.resultItem
 import com.lpfun.backend.kmp.profile.setQuery
 import com.lpfun.backend.profile.domain.education.ProfileEducationCrud
-import com.lpfun.base.request
 import com.lpfun.transport.multiplatform.profile.education.KmpProfileEducationCreate
 import com.lpfun.transport.multiplatform.profile.education.KmpProfileEducationDelete
 import com.lpfun.transport.multiplatform.profile.education.KmpProfileEducationGet
 import com.lpfun.transport.multiplatform.profile.education.KmpProfileEducationUpdate
-import java.util.*
 
 class ProfileEducationService(
     private val crud: ProfileEducationCrud
 ) {
-    private var profileEducationModel = ProfileEducation(
-        profileId = "123",
-        mainEducation = mutableListOf(
-            EducationModel(
-                university = "Garvard",
-                department = "IT",
-                specialty = "Programming",
-                yearOfCompletion = "2020"
-            )
-        ),
-        additionalEducation = mutableListOf(
-            AdditionalEducationModel(
-                nameOfInstitution = "OTUS",
-                courseName = "Kotlin",
-                yearOfCompletion = "2020"
-            )
-        )
-    )
 
-    fun get(query: KmpProfileEducationGet) = ProfileEducationContext().request {
-        setQuery(query)
-                .apply {
-                    responseProfile = profileEducationModel
-                    responseProfileStatus = ProfileContextStatus.SUCCESS
-                }
+    suspend fun get(query: KmpProfileEducationGet) = ProfileEducationContext().run {
+        try {
+            crud.get(setQuery(query))
+        } catch (t: Throwable) {
+            errors.add(InternalServerError.instance)
+        }
+        resultItem()
     }
 
-    fun create(query: KmpProfileEducationCreate) = ProfileEducationContext().request {
-        setQuery(query)
-                .apply {
-                    profileEducationModel = requestProfile.copy(profileId = UUID.randomUUID().toString())
-                responseProfile = profileEducationModel
-                responseProfileStatus = ProfileContextStatus.SUCCESS
-            }
+    suspend fun create(query: KmpProfileEducationCreate) = ProfileEducationContext().run {
+        try {
+            crud.create(setQuery(query))
+        } catch (t: Throwable) {
+            errors.add(InternalServerError.instance)
+        }
+        resultItem()
     }
 
-    fun update(query: KmpProfileEducationUpdate) = ProfileEducationContext().request {
-        setQuery(query)
-            .apply {
-                requestProfileId = profileEducationModel.profileId
-                responseProfile = requestProfile.copy(requestProfileId)
-                responseProfileStatus = ProfileContextStatus.SUCCESS
-            }
+    suspend fun update(query: KmpProfileEducationUpdate) = ProfileEducationContext().run {
+        try {
+            crud.update(setQuery(query))
+        } catch (t: Throwable) {
+            errors.add(InternalServerError.instance)
+        }
+        resultItem()
     }
 
-    fun delete(query: KmpProfileEducationDelete) = ProfileEducationContext().request {
-        setQuery(query)
-            .apply {
-                responseProfile = ProfileEducation()
-                responseProfileStatus = ProfileContextStatus.SUCCESS
-            }
+    suspend fun delete(query: KmpProfileEducationDelete) = ProfileEducationContext().run {
+        try {
+            crud.delete(setQuery(query))
+        } catch (t: Throwable) {
+            errors.add(InternalServerError.instance)
+        }
+        resultItem()
     }
 }

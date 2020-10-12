@@ -48,7 +48,7 @@ internal class ProfileDomainCorTest {
         }
 
         runBlocking {
-            processor.exec(context)
+            processor.execute(context)
             assertEquals("abc", context.a)
         }
 

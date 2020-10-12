@@ -5,8 +5,16 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class KmpProfileEducationDelete(
     var profileId: String? = null,
-    var debug: KmpDebug? = null
+    var debug: Debug? = null
 ) {
     @Serializable
-    class KmpDebug
+    class Debug {
+        var stub: StubCase? = null
+    }
+
+    @Serializable
+    enum class StubCase {
+        NONE,
+        RUNNING
+    }
 }

@@ -28,7 +28,12 @@ inline fun ProfileSkillsContext.request(crossinline block: ProfileSkillsContext.
     resultItem()
 }
 
-fun Parameters.mapToProfileEducationGetRequest() = KmpProfileEducationGet(profileId = this["id"])
+fun ApplicationRequest.mapToProfileEducationGetRequest() = KmpProfileEducationGet(
+    profileId = this.queryParameters["id"],
+    debug = KmpProfileEducationGet.Debug().also {
+        it.stub = if (this.headers["test"] == "test") KmpProfileEducationGet.StubCase.RUNNING else null
+    }
+)
 
 fun ApplicationRequest.mapToProfilePersonalGetRequest() = KmpProfilePersonalDataGet(
     profileId = this.queryParameters["id"],

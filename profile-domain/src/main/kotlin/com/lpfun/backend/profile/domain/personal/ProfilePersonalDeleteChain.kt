@@ -8,7 +8,7 @@ import com.lpfun.backend.profile.domain.cor.IExec
 import com.lpfun.backend.profile.domain.cor.cor
 
 class ProfilePersonalDeleteChain : IExec<ProfilePersonalContext> {
-    override suspend fun exec(ctx: ProfilePersonalContext) = chain.exec(ctx.apply {
+    override suspend fun execute(ctx: ProfilePersonalContext) = chain.execute(ctx.apply {
 
     })
 

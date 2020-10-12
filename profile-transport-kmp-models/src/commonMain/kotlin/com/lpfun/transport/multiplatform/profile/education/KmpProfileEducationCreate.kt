@@ -8,11 +8,19 @@ import kotlinx.serialization.Serializable
 data class KmpProfileEducationCreate(
     override var mainEducation: MutableList<KmpEducationModel>? = null,
     override var additionalEducation: MutableList<KmpAdditionalEducationModel>? = null,
-    var debug: KmpDebug? = null
+    var debug: Debug? = null
 ) : KmpProfileEducationSave(
     mainEducation = mainEducation,
     additionalEducation = additionalEducation
 ) {
     @Serializable
-    class KmpDebug
+    class Debug {
+        var stub: StubCase? = null
+    }
+
+    @Serializable
+    enum class StubCase {
+        NONE,
+        RUNNING
+    }
 }

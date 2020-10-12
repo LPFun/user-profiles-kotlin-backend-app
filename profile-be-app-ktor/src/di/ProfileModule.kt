@@ -11,7 +11,7 @@ import org.kodein.di.provider
 
 val profileModule = DI.Module("ProfileModule") {
     import(domainModule)
-    bind<ProfileEducationService>() with provider { ProfileEducationService() }
+    bind<ProfileEducationService>() with provider { ProfileEducationService(instance()) }
     bind<ProfilePersonalDataService>() with provider { ProfilePersonalDataService(instance()) }
     bind<ProfileSkillsAndTechService>() with provider { ProfileSkillsAndTechService() }
 }

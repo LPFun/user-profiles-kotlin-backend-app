@@ -8,8 +8,8 @@ class ProfileEducationCrud {
     private val updateChain = ProfileEducationUpdateChain()
     private val deleteChain = ProfileEducationDeleteChain()
 
-    suspend fun get(context: ProfileEducationContext) = getChain.exec(context)
-    suspend fun create(context: ProfileEducationContext) = createChain.exec(context)
-    suspend fun update(context: ProfileEducationContext) = updateChain.exec(context)
-    suspend fun delete(context: ProfileEducationContext) = deleteChain.exec(context)
+    suspend fun get(context: ProfileEducationContext) = getChain.execute(context)
+    suspend fun create(context: ProfileEducationContext) = createChain.execute(context)
+    suspend fun update(context: ProfileEducationContext) = updateChain.execute(context)
+    suspend fun delete(context: ProfileEducationContext) = deleteChain.execute(context)
 }

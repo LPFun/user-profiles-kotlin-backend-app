@@ -6,7 +6,7 @@ class CorHandler<T>(
     var handler: CorHandlerType<T> = {},
     var onError: CorOnErrorType<T> = { t -> throw t }
 ) : IExec<T> {
-    override suspend fun exec(ctx: T) {
+    override suspend fun execute(ctx: T) {
         try {
             if (matcher(ctx)) handler(ctx)
         } catch (t: Throwable) {
