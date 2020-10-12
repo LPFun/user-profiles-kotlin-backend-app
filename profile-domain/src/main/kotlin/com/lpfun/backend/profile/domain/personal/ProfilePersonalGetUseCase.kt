@@ -25,7 +25,7 @@ class ProfilePersonalGetUseCase : IExec<ProfilePersonalContext> {
                     condition { stubCaseGet == ProfileStubGet.RUNNING }
                     exec {
                         responseProfile = profilePersonalData {
-                            id = requestProfileId
+                            id = requestProfile.profileId
                             name {
                                 first = "John"
                                 second = "Junior"

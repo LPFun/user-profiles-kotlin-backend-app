@@ -14,7 +14,7 @@ import kotlinx.datetime.LocalDate
 import java.time.Year
 
 fun ProfilePersonalContext.setQuery(get: KmpProfilePersonalDataGet) = this.apply {
-    requestProfileId = get.profileId ?: ""
+    requestProfile.profileId = get.profileId ?: ""
     stubCaseGet = when (get.debug?.stub) {
         KmpProfilePersonalDataGet.StubCase.RUNNING -> ProfileStubGet.RUNNING
         else -> ProfileStubGet.NONE
