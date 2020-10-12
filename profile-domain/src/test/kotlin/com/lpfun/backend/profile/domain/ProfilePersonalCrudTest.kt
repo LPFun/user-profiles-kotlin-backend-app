@@ -3,6 +3,7 @@ package com.lpfun.backend.profile.domain
 import com.lpfun.backend.common.model.dsl.personal.profilePersonalData
 import com.lpfun.backend.common.model.profile.base.ProfileContextStatus
 import com.lpfun.backend.common.model.profile.base.stub.ProfileStubCreate
+import com.lpfun.backend.common.model.profile.base.stub.ProfileStubDelete
 import com.lpfun.backend.common.model.profile.base.stub.ProfileStubGet
 import com.lpfun.backend.common.model.profile.base.stub.ProfileStubUpdate
 import com.lpfun.backend.common.model.profile.personal.ProfilePersonalContext
@@ -88,12 +89,14 @@ internal class ProfilePersonalCrudTest {
     fun deleteProfilePersonalTest() {
         val context = ProfilePersonalContext().apply {
             requestProfile.profileId = "test-id"
+            stubCaseDelete = ProfileStubDelete.RUNNING
         }
         val crud = ProfilePersonalCrud()
+
         runBlocking {
             crud.delete(context)
         }
-        assertEquals("test-id", context.responseProfile.profileId)
+        assertEquals("", context.responseProfile.profileId)
         assertEquals("", context.responseProfile.firstName)
     }
 }
