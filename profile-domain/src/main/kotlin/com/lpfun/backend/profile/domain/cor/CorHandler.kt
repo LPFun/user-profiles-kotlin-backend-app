@@ -1,10 +1,9 @@
 package com.lpfun.backend.profile.domain.cor
 
-@CorDslMarker
-class CorHandler<T>(
-    var matcher: CorMatcherType<T> = { true },
-    var handler: CorHandlerType<T> = {},
-    var onError: CorOnErrorType<T> = { t -> throw t }
+class CorHandler<T> private constructor(
+    private val matcher: CorMatcherType<T> = { true },
+    private val handler: CorHandlerType<T> = {},
+    private val onError: CorOnErrorType<T> = { t -> throw t }
 ) : IExec<T> {
     override suspend fun execute(ctx: T) {
         try {
@@ -14,15 +13,28 @@ class CorHandler<T>(
         }
     }
 
-    fun condition(conf: CorMatcherType<T>) {
-        matcher = conf
-    }
+    @CorDslMarker
+    class Builder<T> {
+        private var matcher: CorMatcherType<T> = { true }
+        private var handler: CorHandlerType<T> = {}
+        private var onError: CorOnErrorType<T> = { t -> throw t }
 
-    fun exec(conf: CorHandlerType<T>) {
-        handler = conf
-    }
+        fun condition(conf: CorMatcherType<T>) {
+            matcher = conf
+        }
 
-    fun error(conf: CorOnErrorType<T>) {
-        onError = conf
+        fun exec(conf: CorHandlerType<T>) {
+            handler = conf
+        }
+
+        fun error(conf: CorOnErrorType<T>) {
+            onError = conf
+        }
+
+        fun build() = CorHandler<T>(
+            matcher = matcher,
+            handler = handler,
+            onError = onError
+        )
     }
 }
