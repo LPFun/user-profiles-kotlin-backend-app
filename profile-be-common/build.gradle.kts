@@ -1,5 +1,6 @@
 plugins {
     kotlin("jvm")
+    id("dependencies")
 }
 
 group = rootProject.group
@@ -10,7 +11,6 @@ repositories {
 }
 
 dependencies {
-    val kotlinDatetime: String by project
     implementation(kotlin("stdlib"))
-    implementation("org.jetbrains.kotlinx:kotlinx-datetime:$kotlinDatetime")
+    implementation(Deps.kotlinx.datetime)
 }
