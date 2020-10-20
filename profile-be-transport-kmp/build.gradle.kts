@@ -1,5 +1,6 @@
 plugins {
     kotlin("jvm")
+    id("dependencies")
 }
 
 group = rootProject.group
@@ -10,15 +11,14 @@ repositories {
 }
 
 dependencies {
-    val coroutinesVersion: String by project
-    val kotlinDatetime: String by project
-
-    implementation(project(":profile-be-common"))
-    implementation(project(":profile-transport-kmp-models"))
-
     implementation(kotlin("stdlib"))
-    implementation("org.jetbrains.kotlinx:kotlinx-datetime:$kotlinDatetime")
-    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion")
+    // Modules
+    implementation(project(Deps.profileModules.profileBeCommon))
+    implementation(project(Deps.profileModules.profileTransportKmpModels))
+    // Kotlinx
+    implementation(Deps.kotlinx.datetime)
+    implementation(Deps.kotlinx.coroutinesCore)
+    // Test
     testImplementation(kotlin("test"))
     testImplementation(kotlin("test-junit"))
 }
