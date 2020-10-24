@@ -1,6 +1,5 @@
-package com.lpfun.backend.profile.domain
+package com.lpfun.backend.common.cor
 
-import com.lpfun.backend.profile.domain.cor.cor
 import kotlinx.coroutines.runBlocking
 import kotlin.test.Test
 import kotlin.test.assertEquals

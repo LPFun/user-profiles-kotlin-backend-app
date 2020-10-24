@@ -1,11 +1,11 @@
 package com.lpfun.backend.profile.domain.education
 
+import com.lpfun.backend.common.cor.IExec
+import com.lpfun.backend.common.cor.cor
 import com.lpfun.backend.common.model.dsl.education.profileEducation
 import com.lpfun.backend.common.model.profile.base.ProfileContextStatus
 import com.lpfun.backend.common.model.profile.base.stub.ProfileStubGet
 import com.lpfun.backend.common.model.profile.education.ProfileEducationContext
-import com.lpfun.backend.profile.domain.cor.IExec
-import com.lpfun.backend.profile.domain.cor.cor
 
 class ProfileEducationGetUseCase : IExec<ProfileEducationContext> {
     override suspend fun execute(ctx: ProfileEducationContext) = chain.execute(ctx.apply {

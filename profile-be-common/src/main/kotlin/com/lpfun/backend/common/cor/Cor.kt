@@ -1,4 +1,4 @@
-package com.lpfun.backend.profile.domain.cor
+package com.lpfun.backend.common.cor
 
 typealias CorMatcherType<T> = suspend T.() -> Boolean
 typealias CorHandlerType<T> = suspend T.() -> Unit

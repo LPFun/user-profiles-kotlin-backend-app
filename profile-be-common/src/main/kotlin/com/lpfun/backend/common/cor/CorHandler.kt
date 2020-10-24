@@ -1,4 +1,4 @@
-package com.lpfun.backend.profile.domain.cor
+package com.lpfun.backend.common.cor
 
 class CorHandler<T> private constructor(
     private val matcher: CorMatcherType<T> = { true },

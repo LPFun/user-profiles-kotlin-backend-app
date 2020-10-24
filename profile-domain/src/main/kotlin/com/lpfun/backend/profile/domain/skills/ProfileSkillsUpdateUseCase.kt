@@ -1,10 +1,10 @@
 package com.lpfun.backend.profile.domain.skills
 
+import com.lpfun.backend.common.cor.IExec
+import com.lpfun.backend.common.cor.cor
 import com.lpfun.backend.common.model.profile.base.ProfileContextStatus
 import com.lpfun.backend.common.model.profile.base.stub.ProfileStubUpdate
 import com.lpfun.backend.common.model.profile.skills.ProfileSkillsContext
-import com.lpfun.backend.profile.domain.cor.IExec
-import com.lpfun.backend.profile.domain.cor.cor
 
 class ProfileSkillsUpdateUseCase : IExec<ProfileSkillsContext> {
     override suspend fun execute(ctx: ProfileSkillsContext) = chain.execute(ctx.apply {

@@ -1,11 +1,11 @@
 package com.lpfun.backend.profile.domain.personal
 
+import com.lpfun.backend.common.cor.IExec
+import com.lpfun.backend.common.cor.cor
 import com.lpfun.backend.common.model.dsl.personal.profilePersonalData
 import com.lpfun.backend.common.model.profile.base.ProfileContextStatus
 import com.lpfun.backend.common.model.profile.base.stub.ProfileStubGet
 import com.lpfun.backend.common.model.profile.personal.ProfilePersonalContext
-import com.lpfun.backend.profile.domain.cor.IExec
-import com.lpfun.backend.profile.domain.cor.cor
 
 class ProfilePersonalGetUseCase : IExec<ProfilePersonalContext> {
     override suspend fun execute(ctx: ProfilePersonalContext) = chain.execute(ctx.apply {
