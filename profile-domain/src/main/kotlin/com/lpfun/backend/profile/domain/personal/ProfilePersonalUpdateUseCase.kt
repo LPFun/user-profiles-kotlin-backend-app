@@ -22,7 +22,7 @@ class ProfilePersonalUpdateUseCase : IExec<ProfilePersonalContext> {
             processor {
                 condition { stubCaseUpdate != ProfileStubUpdate.NONE }
                 handler {
-                    condition { stubCaseUpdate == ProfileStubUpdate.RUNNING }
+                    condition { stubCaseUpdate == ProfileStubUpdate.SUCCESS }
                     exec {
                         responseProfile = requestProfile
                         responseProfileStatus = ProfileContextStatus.FINISHING

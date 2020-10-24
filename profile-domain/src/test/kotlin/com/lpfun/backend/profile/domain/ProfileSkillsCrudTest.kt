@@ -16,7 +16,7 @@ internal class ProfileSkillsCrudTest {
     fun getProfileSkillsCrudTest() {
         val context = ProfileSkillsContext().apply {
             requestProfile.profileId = "test-id"
-            stubCaseGet = ProfileStubGet.RUNNING
+            stubCaseGet = ProfileStubGet.SUCCESS
         }
 
         val crud = ProfileSkillsCrud()
@@ -43,7 +43,7 @@ internal class ProfileSkillsCrudTest {
                 }
 
             }
-            stubCaseCreate = ProfileStubCreate.RUNNING
+            stubCaseCreate = ProfileStubCreate.SUCCESS
         }
 
         val crud = ProfileSkillsCrud()
@@ -67,7 +67,7 @@ internal class ProfileSkillsCrudTest {
                     subCategory = "Backend"
                 }
             }
-            stubCaseUpdate = ProfileStubUpdate.RUNNING
+            stubCaseUpdate = ProfileStubUpdate.SUCCESS
         }
         val crud = ProfileSkillsCrud()
         runBlocking {
@@ -81,7 +81,7 @@ internal class ProfileSkillsCrudTest {
     fun deleteProfileSkillsCrudTest() {
         val context = ProfileSkillsContext().apply {
             requestProfile.profileId = "test-id"
-            stubCaseDelete = ProfileStubDelete.RUNNING
+            stubCaseDelete = ProfileStubDelete.SUCCESS
         }
         val crud = ProfileSkillsCrud()
         runBlocking {

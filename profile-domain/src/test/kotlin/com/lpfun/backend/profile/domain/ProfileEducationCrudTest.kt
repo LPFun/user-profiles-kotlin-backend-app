@@ -44,7 +44,7 @@ internal class ProfileEducationCrudTest {
                     yearOfCompletion = "2020"
                 }
             }
-            stubCaseCreate = ProfileStubCreate.RUNNING
+            stubCaseCreate = ProfileStubCreate.SUCCESS
         }
 
         val crud = ProfileEducationCrud()
@@ -76,7 +76,7 @@ internal class ProfileEducationCrudTest {
                     yearOfCompletion = "2020"
                 }
             }
-            stubCaseUpdate = ProfileStubUpdate.RUNNING
+            stubCaseUpdate = ProfileStubUpdate.SUCCESS
         }
 
         val crud = ProfileEducationCrud()
@@ -100,7 +100,7 @@ internal class ProfileEducationCrudTest {
     fun deleteProfileEducationTest() {
         val context = ProfileEducationContext().apply {
             requestProfile.profileId = "test-id"
-            stubCaseDelete = ProfileStubDelete.RUNNING
+            stubCaseDelete = ProfileStubDelete.SUCCESS
         }
 
         val crud = ProfileEducationCrud()

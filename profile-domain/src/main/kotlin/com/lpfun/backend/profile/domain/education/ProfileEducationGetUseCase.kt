@@ -23,7 +23,7 @@ class ProfileEducationGetUseCase : IExec<ProfileEducationContext> {
             processor {
                 condition { stubCaseGet != ProfileStubGet.NONE }
                 handler {
-                    condition { stubCaseGet == ProfileStubGet.RUNNING }
+                    condition { stubCaseGet == ProfileStubGet.SUCCESS }
                     exec {
                         responseProfile = profileEducation {
                             id = requestProfileId

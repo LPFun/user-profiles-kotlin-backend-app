@@ -16,7 +16,7 @@ import java.time.Year
 fun ProfilePersonalContext.setQuery(get: KmpProfilePersonalDataGet) = this.apply {
     requestProfile.profileId = get.profileId ?: ""
     stubCaseGet = when (get.debug?.stub) {
-        KmpProfilePersonalDataGet.StubCase.RUNNING -> ProfileStubGet.RUNNING
+        KmpProfilePersonalDataGet.StubCase.RUNNING -> ProfileStubGet.SUCCESS
         else -> ProfileStubGet.NONE
     }
 }
@@ -25,11 +25,11 @@ fun ProfilePersonalContext.setQuery(save: KmpProfilePersonalDataSave) = this.app
     requestProfile = save.toModel()
     when (save) {
         is KmpProfilePersonalDataCreate -> stubCaseCreate = when (save.debug?.stub) {
-            KmpProfilePersonalDataCreate.StubCase.RUNNING -> ProfileStubCreate.RUNNING
+            KmpProfilePersonalDataCreate.StubCase.RUNNING -> ProfileStubCreate.SUCCESS
             else -> ProfileStubCreate.NONE
         }
         is KmpProfilePersonalDataUpdate -> stubCaseUpdate = when (save.debug?.stub) {
-            KmpProfilePersonalDataUpdate.StubCase.RUNNING -> ProfileStubUpdate.RUNNING
+            KmpProfilePersonalDataUpdate.StubCase.RUNNING -> ProfileStubUpdate.SUCCESS
             else -> ProfileStubUpdate.NONE
         }
     }
@@ -38,7 +38,7 @@ fun ProfilePersonalContext.setQuery(save: KmpProfilePersonalDataSave) = this.app
 fun ProfilePersonalContext.setQuery(del: KmpProfilePersonalDataDelete) = this.apply {
     requestProfileId = del.profileId ?: ""
     stubCaseDelete = when (del.debug?.stub) {
-        KmpProfilePersonalDataDelete.StubCase.RUNNING -> ProfileStubDelete.RUNNING
+        KmpProfilePersonalDataDelete.StubCase.RUNNING -> ProfileStubDelete.SUCCESS
         else -> ProfileStubDelete.NONE
     }
 }

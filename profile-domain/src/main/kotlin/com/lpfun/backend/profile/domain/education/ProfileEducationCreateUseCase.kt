@@ -22,7 +22,7 @@ class ProfileEducationCreateUseCase : IExec<ProfileEducationContext> {
             processor {
                 condition { stubCaseCreate != ProfileStubCreate.NONE }
                 handler {
-                    condition { stubCaseCreate == ProfileStubCreate.RUNNING }
+                    condition { stubCaseCreate == ProfileStubCreate.SUCCESS }
                     exec {
                         responseProfile = requestProfile.apply {
                             profileId = "test-id"

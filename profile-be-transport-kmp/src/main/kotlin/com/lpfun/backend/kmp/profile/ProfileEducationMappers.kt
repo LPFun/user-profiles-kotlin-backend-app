@@ -16,7 +16,7 @@ import com.lpfun.transport.multiplatform.profile.education.model.KmpProfileEduca
 fun ProfileEducationContext.setQuery(get: KmpProfileEducationGet) = this.apply {
     requestProfileId = get.profileId ?: ""
     stubCaseGet = when (get.debug?.stub) {
-        KmpProfileEducationGet.StubCase.RUNNING -> ProfileStubGet.RUNNING
+        KmpProfileEducationGet.StubCase.RUNNING -> ProfileStubGet.SUCCESS
         else -> ProfileStubGet.NONE
     }
 }
@@ -25,11 +25,11 @@ fun ProfileEducationContext.setQuery(save: KmpProfileEducationSave) = this.apply
     requestProfile = save.toModel()
     when (save) {
         is KmpProfileEducationCreate -> stubCaseCreate = when (save.debug?.stub) {
-            KmpProfileEducationCreate.StubCase.RUNNING -> ProfileStubCreate.RUNNING
+            KmpProfileEducationCreate.StubCase.RUNNING -> ProfileStubCreate.SUCCESS
             else -> ProfileStubCreate.NONE
         }
         is KmpProfileEducationUpdate -> stubCaseUpdate = when (save.debug?.stub) {
-            KmpProfileEducationUpdate.StubCase.RUNNING -> ProfileStubUpdate.RUNNING
+            KmpProfileEducationUpdate.StubCase.RUNNING -> ProfileStubUpdate.SUCCESS
             else -> ProfileStubUpdate.NONE
         }
     }
@@ -38,7 +38,7 @@ fun ProfileEducationContext.setQuery(save: KmpProfileEducationSave) = this.apply
 fun ProfileEducationContext.setQuery(del: KmpProfileEducationDelete) = this.apply {
     requestProfileId = del.profileId ?: ""
     stubCaseDelete = when (del.debug?.stub) {
-        KmpProfileEducationDelete.StubCase.RUNNING -> ProfileStubDelete.RUNNING
+        KmpProfileEducationDelete.StubCase.RUNNING -> ProfileStubDelete.SUCCESS
         else -> ProfileStubDelete.NONE
     }
 }

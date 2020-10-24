@@ -22,7 +22,7 @@ class ProfileSkillsGetUseCase : IExec<ProfileSkillsContext> {
             processor {
                 condition { stubCaseGet != ProfileStubGet.NONE }
                 handler {
-                    condition { stubCaseGet == ProfileStubGet.RUNNING }
+                    condition { stubCaseGet == ProfileStubGet.SUCCESS }
                     exec {
                         responseProfile = profileSkills {
                             id = requestProfileId

@@ -19,7 +19,7 @@ internal class ProfilePersonalCrudTest {
     @Test
     fun getProfilePersonalTest() {
         val context = ProfilePersonalContext().apply {
-            stubCaseGet = ProfileStubGet.RUNNING
+            stubCaseGet = ProfileStubGet.SUCCESS
             requestProfile = ProfilePersonalData(
                 profileId = "test-id"
             )
@@ -35,7 +35,7 @@ internal class ProfilePersonalCrudTest {
     @Test
     fun createProfilePersonalTest() {
         val context = ProfilePersonalContext().apply {
-            stubCaseCreate = ProfileStubCreate.RUNNING
+            stubCaseCreate = ProfileStubCreate.SUCCESS
             requestProfile = profilePersonalData {
                 name {
                     first = "John"
@@ -75,7 +75,7 @@ internal class ProfilePersonalCrudTest {
                     phone = "+123456789"
                 }
             }
-            stubCaseUpdate = ProfileStubUpdate.RUNNING
+            stubCaseUpdate = ProfileStubUpdate.SUCCESS
         }
         val crud = ProfilePersonalCrud()
         runBlocking {
@@ -89,7 +89,7 @@ internal class ProfilePersonalCrudTest {
     fun deleteProfilePersonalTest() {
         val context = ProfilePersonalContext().apply {
             requestProfile.profileId = "test-id"
-            stubCaseDelete = ProfileStubDelete.RUNNING
+            stubCaseDelete = ProfileStubDelete.SUCCESS
         }
         val crud = ProfilePersonalCrud()
 

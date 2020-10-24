@@ -21,7 +21,7 @@ class ProfileSkillsDeleteUseCase : IExec<ProfileSkillsContext> {
             processor {
                 condition { stubCaseDelete != ProfileStubDelete.NONE }
                 handler {
-                    condition { stubCaseDelete == ProfileStubDelete.RUNNING }
+                    condition { stubCaseDelete == ProfileStubDelete.SUCCESS }
                     exec {
                         responseProfile = ProfileSkillsAndTech()
                         responseProfileStatus = ProfileContextStatus.FINISHING
