@@ -1,5 +1,6 @@
 plugins {
     kotlin("jvm")
+    id("dependencies")
 }
 
 group = rootProject.group
@@ -14,7 +15,7 @@ dependencies {
     val coroutinesVersion: String by project
 
     implementation(kotlin("stdlib"))
-    implementation("org.jetbrains.kotlinx:kotlinx-datetime:$kotlinDatetime")
+    implementation(Deps.kotlinx.datetime)
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion")
     testImplementation(kotlin("test"))
     testImplementation(kotlin("test-junit"))

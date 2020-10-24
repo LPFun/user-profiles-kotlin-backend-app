@@ -1,6 +1,7 @@
 plugins {
     kotlin("multiplatform")
     kotlin("plugin.serialization")
+    id("dependencies")
 }
 
 group = rootProject.group
@@ -12,54 +13,25 @@ repositories {
 }
 
 kotlin {
-    /* Targets configuration omitted.
-*  To find out how to configure the targets, please follow the link:
-*  https://kotlinlang.org/docs/reference/building-mpp-with-gradle.html#setting-up-targets */
     js {
         browser()
         nodejs()
     }
-
     jvm()
 
     sourceSets {
-        val serializationVersion: String by project
-        val kotlinDatetime: String by project
-
         val commonMain by getting {
             dependencies {
-//                implementation(kotlin("stdlib-common"))
-                api("org.jetbrains.kotlinx:kotlinx-serialization-core:$serializationVersion")
-                implementation("org.jetbrains.kotlinx:kotlinx-datetime:$kotlinDatetime")
+                implementation(Deps.kotlinx.serializationCore)
+                implementation(Deps.kotlinx.datetime)
             }
         }
-        val commonTest by getting {
-            dependencies {
-                implementation(kotlin("test-common"))
-                implementation(kotlin("test-annotations-common"))
-            }
-        }
-        val jvmMain by getting {
-            dependencies {
-//                implementation(kotlin("stdlib-jdk8"))
-            }
-        }
-        val jvmTest by getting {
-            dependencies {
-                implementation(kotlin("test"))
-                implementation(kotlin("test-junit"))
-            }
-        }
-        val jsMain by getting {
-            dependencies {
-//                implementation(kotlin("stdlib-js"))
-            }
-        }
-        val jsTest by getting {
-            dependencies {
-                implementation(kotlin("test"))
-                implementation(kotlin("test-js"))
-            }
-        }
+        val commonTest by getting
+
+        val jvmMain by getting
+        val jvmTest by getting
+
+        val jsMain by getting
+        val jsTest by getting
     }
 }

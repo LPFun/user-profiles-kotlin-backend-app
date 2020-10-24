@@ -1,16 +1,10 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
-val ktorVersion: String by project
-val kotlinVersion: String by project
-val logbackVersion: String by project
-val serializationVersion: String by project
-val coroutinesVersion: String by project
 val compileKotlin: KotlinCompile by tasks
-val kotlinDatetime: String by project
-val kodeinVersion: String by project
 
 plugins {
     application
+    id("dependencies")
     kotlin("jvm")
     kotlin("plugin.serialization")
 }
@@ -31,23 +25,26 @@ repositories {
 compileKotlin.kotlinOptions.jvmTarget = "1.8"
 
 dependencies {
-    implementation(project(":profile-be-common"))
-    implementation(project(":profile-transport-kmp-models"))
-    implementation(project(":profile-be-transport-kmp"))
-    implementation(project(":profile-domain"))
-    implementation(kotlin("stdlib", kotlinVersion))
-    implementation("io.ktor:ktor-server-netty:$ktorVersion")
-    implementation("io.ktor:ktor-client-core:$ktorVersion")
-    implementation("ch.qos.logback:logback-classic:$logbackVersion")
-    implementation("io.ktor:ktor-serialization:$ktorVersion")
-    implementation("org.jetbrains.kotlinx:kotlinx-datetime:$kotlinDatetime")
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:$serializationVersion")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion")
+    implementation(kotlin("stdlib"))
+    // Modules
+    implementation(project(Deps.profileModules.profileBeCommon))
+    implementation(project(Deps.profileModules.profileTransportKmpModels))
+    implementation(project(Deps.profileModules.profileBeTransportKmp))
+    // Ktor
+    implementation(Deps.ktor.serverNetty)
+    implementation(Deps.ktor.clientCore)
+    implementation(Deps.ktor.serialization)
+    // Kotlinx
+    implementation(Deps.kotlinx.datetime)
+    implementation(Deps.kotlinx.serializationCore)
+    implementation(Deps.kotlinx.coroutinesCore)
     // Kodein
-    implementation("org.kodein.di:kodein-di:$kodeinVersion")
-    implementation("org.kodein.di:kodein-di-framework-ktor-server-jvm:$kodeinVersion")
+    implementation(Deps.kodein.di)
+    implementation(Deps.kodein.ktorServerJvm)
 
-    testImplementation("io.ktor:ktor-server-tests:$ktorVersion")
+    implementation(Deps.logging.logbackClassic)
+
+    testImplementation(Deps.ktor.serverTests)
 }
 
 kotlin.sourceSets["main"].kotlin.srcDirs("src")
