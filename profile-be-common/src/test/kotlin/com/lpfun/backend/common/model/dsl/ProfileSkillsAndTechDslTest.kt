@@ -26,20 +26,21 @@ internal class ProfileSkillsAndTechDslTest {
     }
 
     @Test
-    fun profileSkillsDslTest() {
-        profileSkillsFieldsTest(profileSkills)
+    fun profileSkillsDslSuccessTest() {
+        profileSkillsFieldsSuccessTest(profileSkills)
     }
 
     @Test
-    fun profileContextInfixText() {
+    fun profileContextInfixSuccessTest() {
         val context = ProfileSkillsContext()
         context applyRequest profileSkills
-        profileSkillsFieldsTest(context.requestProfile)
+        profileSkillsFieldsSuccessTest(context.requestProfile)
     }
 
-    private fun profileSkillsFieldsTest(profileSkills: ProfileSkillsAndTech) {
+    private fun profileSkillsFieldsSuccessTest(profileSkills: ProfileSkillsAndTech) {
         assertEquals(profileSkills.profileId, "testId")
         assertEquals(profileSkills.specialization.category, "Category")
+        assertEquals(profileSkills.specialization.subCategory, "Sub category")
         assertTrue(profileSkills.operatingSystems.containsAll(listOf("system 1", "system 2")))
         assertTrue(profileSkills.dataBases.containsAll(listOf("base 1", "base 2")))
     }

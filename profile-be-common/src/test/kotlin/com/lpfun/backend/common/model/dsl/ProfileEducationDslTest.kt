@@ -29,19 +29,28 @@ internal class ProfileEducationDslTest {
     }
 
     @Test
-    fun profileEducationTest() {
-        profileTests(profileEducation)
+    fun profileEducationSuccessTest() {
+        profileEducationFieldsSuccessTests(profileEducation)
     }
 
     @Test
-    fun infixContextTest() {
+    fun infixContextSuccessTest() {
         val context = ProfileEducationContext()
         context applyRequest profileEducation
-        profileTests(context.requestProfile)
+        profileEducationFieldsSuccessTests(context.requestProfile)
     }
 
-    private fun profileTests(profile: ProfileEducation) {
+    private fun profileEducationFieldsSuccessTests(profile: ProfileEducation) {
         assertEquals(profile.mainEducation.first().university, "First university")
+        assertEquals(profile.mainEducation.first().department, "First department")
+        assertEquals(profile.mainEducation.first().specialty, "First speciality")
+        assertEquals(profile.mainEducation.first().yearOfCompletion, "First year")
         assertEquals(profile.mainEducation.get(1).university, "Second university")
+        assertEquals(profile.mainEducation.get(1).department, "Second department")
+        assertEquals(profile.mainEducation.get(1).specialty, "Second speciality")
+        assertEquals(profile.mainEducation.get(1).yearOfCompletion, "Second year")
+        assertEquals(profile.additionalEducation.first().nameOfInstitution, "First name")
+        assertEquals(profile.additionalEducation.first().courseName, "First course")
+        assertEquals(profile.additionalEducation.first().yearOfCompletion, "First year")
     }
 }

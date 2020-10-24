@@ -31,21 +31,26 @@ class ProfilePersonalDataDslTest {
     }
 
     @Test
-    fun profilePersonalDataDslTest() {
-        testProfilePersonalDataFields(profilePersonalData)
+    fun profilePersonalDataDslSuccessTest() {
+        testSuccessProfilePersonalDataFields(profilePersonalData)
     }
 
     @Test
-    fun infixProfilePersonalContextTest() {
+    fun infixProfilePersonalContextSuccessTest() {
         val context = ProfilePersonalContext()
         context applyRequest profilePersonalData
-        testProfilePersonalDataFields(context.requestProfile)
+        testSuccessProfilePersonalDataFields(context.requestProfile)
     }
 
-    private fun testProfilePersonalDataFields(profile: ProfilePersonalData) {
+    private fun testSuccessProfilePersonalDataFields(profile: ProfilePersonalData) {
         assertEquals(profile.firstName, "First")
+        assertEquals(profile.middleName, "Second")
+        assertEquals(profile.lastName, "Last")
+        assertEquals(profile.displayName, "Display")
         assertEquals(profile.phone, "+79991111111")
+        assertEquals(profile.email, "test@test.com")
         assertEquals(profile.bday, LocalDate.parse("2000-01-01"))
         assertEquals(profile.locationModel.country, "Country")
+        assertEquals(profile.locationModel.city, "City")
     }
 }
