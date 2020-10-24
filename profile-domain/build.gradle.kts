@@ -1,7 +1,10 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
+val compileKotlin: KotlinCompile by tasks
+
 plugins {
     kotlin("jvm")
+    id("dependencies")
 }
 
 group = rootProject.group
@@ -11,19 +14,13 @@ repositories {
     mavenCentral()
 }
 
-val compileKotlin: KotlinCompile by tasks
-
 compileKotlin.kotlinOptions.jvmTarget = "1.8"
 
 dependencies {
-    val coroutinesVersion: String by project
-    val kotlinDatetime: String by project
-    val kodeinVersion: String by project
-
-    implementation("org.kodein.di:kodein-di:$kodeinVersion")
-    implementation("org.jetbrains.kotlinx:kotlinx-datetime:$kotlinDatetime")
-    implementation(project(":profile-be-common"))
     implementation(kotlin("stdlib"))
+    implementation(Deps.kodein.di)
+    implementation(Deps.kotlinx.datetime)
+    implementation(Deps.kotlinx.coroutinesCore)
+    implementation(project(Deps.profileModules.profileBeCommon))
     testImplementation(kotlin("test-junit"))
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion")
 }

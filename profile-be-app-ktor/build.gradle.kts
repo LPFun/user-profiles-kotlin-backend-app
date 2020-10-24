@@ -30,6 +30,7 @@ dependencies {
     implementation(project(Deps.profileModules.profileBeCommon))
     implementation(project(Deps.profileModules.profileTransportKmpModels))
     implementation(project(Deps.profileModules.profileBeTransportKmp))
+    implementation(project(Deps.profileModules.profileDomain))
     // Ktor
     implementation(Deps.ktor.serverNetty)
     implementation(Deps.ktor.clientCore)

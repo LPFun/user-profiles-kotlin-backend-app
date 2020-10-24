@@ -11,12 +11,9 @@ repositories {
 }
 
 dependencies {
-    val kotlinDatetime: String by project
-    val coroutinesVersion: String by project
-
     implementation(kotlin("stdlib"))
     implementation(Deps.kotlinx.datetime)
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion")
+    implementation(Deps.kotlinx.coroutinesCore)
     testImplementation(kotlin("test"))
     testImplementation(kotlin("test-junit"))
 }
