@@ -27,6 +27,7 @@ object Deps {
         const val profileBeCommon = ":profile-be-common"
         const val profileTransportKmpModels = ":profile-transport-kmp-models"
         const val profileBeTransportKmp = ":profile-be-transport-kmp"
+        const val profileDomain = ":profile-domain"
     }
 
     object Kotlinx {

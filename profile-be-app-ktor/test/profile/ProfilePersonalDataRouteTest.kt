@@ -1,7 +1,11 @@
 package com.lpfun.profile
 
 import com.lpfun.module
+import com.lpfun.transport.multiplatform.profile.personal.KmpProfilePersonalDataCreate
+import com.lpfun.transport.multiplatform.profile.personal.KmpProfilePersonalDataDelete
 import com.lpfun.transport.multiplatform.profile.personal.KmpProfilePersonalDataResponse
+import com.lpfun.transport.multiplatform.profile.personal.KmpProfilePersonalDataUpdate
+import com.lpfun.transport.multiplatform.profile.personal.model.KmpLocationModel
 import io.ktor.http.*
 import io.ktor.server.testing.*
 import kotlinx.serialization.json.Json
@@ -14,7 +18,9 @@ class ProfilePersonalDataRouteTest {
     @Test
     fun testGet() {
         withTestApplication({ module(testing = true) }) {
-            handleRequest(HttpMethod.Get, "profile/personal?id=12345").apply {
+            handleRequest(HttpMethod.Get, "profile/personal?id=12345") {
+                addHeader("test", "test")
+            }.apply {
                 val responseObj = Json.decodeFromString(
                     KmpProfilePersonalDataResponse.serializer(),
                     response.content ?: fail("Null response")
@@ -30,30 +36,32 @@ class ProfilePersonalDataRouteTest {
         withTestApplication({ module(testing = true) }) {
             handleRequest(HttpMethod.Post, "profile/personal/") {
                 addHeader("Content-Type", "application/json")
-                val requestBody = """
-                    {
-                      "firstName": "Test",
-                      "middleName": "Test",
-                      "lastName": "Test",
-                      "displayName": "Test Test",
-                      "phone": "+12345",
-                      "email": "Test@test.com",
-                      "bday": "2000-01-01",
-                      "locationModel": {
-                        "country": "Test Country",
-                        "city": "Test City"
-                      }
+                val body = KmpProfilePersonalDataCreate(
+                    firstName = "First",
+                    middleName = "Middle",
+                    lastName = "Last",
+                    displayName = "Display Name",
+                    phone = "+12345",
+                    email = "test@test.com",
+                    bday = "2009-01-01",
+                    locationModel = KmpLocationModel(
+                        country = "Country",
+                        city = "City"
+                    ),
+                    debug = KmpProfilePersonalDataCreate.Debug().apply {
+                        stub = KmpProfilePersonalDataCreate.StubCase.RUNNING
                     }
-                """.trimIndent()
-                setBody(requestBody)
+                )
+                val bodyStr = Json.encodeToString(KmpProfilePersonalDataCreate.serializer(), body)
+                setBody(bodyStr)
             }.apply {
                 val responseObj = Json.decodeFromString(
                     KmpProfilePersonalDataResponse.serializer(),
                     response.content ?: fail("Null response")
                 )
                 assertEquals(HttpStatusCode.OK, response.status())
+                assertEquals("First", responseObj.data?.firstName)
                 assertNotEquals("", responseObj.data?.profileId)
-                assertEquals("Test", responseObj.data?.firstName)
             }
         }
     }
@@ -63,24 +71,27 @@ class ProfilePersonalDataRouteTest {
         withTestApplication({ module(testing = true) }) {
             handleRequest(HttpMethod.Put, "profile/personal/") {
                 addHeader("Content-Type", "application/json")
-                val requestBody = """{
-                  "firstName": "Test1",
-                  "bday": "2000-01-01",
-                  "locationModel": {
-                    "country": "Test Country"
-                  }
-                }""".trimIndent()
-                setBody(requestBody)
+                val body = KmpProfilePersonalDataUpdate(
+                    firstName = "Updated First",
+                    bday = "2000-01-01",
+                    locationModel = KmpLocationModel(
+                        country = "Updated Country"
+                    ),
+                    debug = KmpProfilePersonalDataUpdate.Debug().apply {
+                        stub = KmpProfilePersonalDataUpdate.StubCase.RUNNING
+                    }
+                )
+                val bodyStr = Json.encodeToString(KmpProfilePersonalDataUpdate.serializer(), body)
+                setBody(bodyStr)
             }.apply {
                 val responseObj = Json.decodeFromString(
                     KmpProfilePersonalDataResponse.serializer(),
                     response.content ?: fail("Null response")
                 )
                 assertEquals(HttpStatusCode.OK, response.status())
-                assertNotEquals("12345", responseObj.data?.profileId)
-                assertEquals("Test1", responseObj.data?.firstName)
+                assertEquals("Updated First", responseObj.data?.firstName)
                 assertEquals("2000-01-01", responseObj.data?.bday)
-                assertEquals("Test Country", responseObj.data?.locationModel?.country)
+                assertEquals("Updated Country", responseObj.data?.locationModel?.country)
             }
         }
     }
@@ -90,9 +101,13 @@ class ProfilePersonalDataRouteTest {
         withTestApplication({ module(testing = true) }) {
             handleRequest(HttpMethod.Delete, "profile/personal/") {
                 addHeader("Content-Type", "application/json")
-                val requestBody = """{
-                  "profileId": "12345"
-                }""".trimIndent()
+                val body = KmpProfilePersonalDataDelete(
+                    profileId = "12345",
+                    debug = KmpProfilePersonalDataDelete.Debug().apply {
+                        stub = KmpProfilePersonalDataDelete.StubCase.RUNNING
+                    }
+                )
+                val requestBody = Json.encodeToString(KmpProfilePersonalDataDelete.serializer(), body)
                 setBody(requestBody)
             }.apply {
                 val responseObj = Json.decodeFromString(

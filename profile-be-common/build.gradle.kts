@@ -13,4 +13,7 @@ repositories {
 dependencies {
     implementation(kotlin("stdlib"))
     implementation(Deps.kotlinx.datetime)
+    implementation(Deps.kotlinx.coroutinesCore)
+    testImplementation(kotlin("test"))
+    testImplementation(kotlin("test-junit"))
 }
