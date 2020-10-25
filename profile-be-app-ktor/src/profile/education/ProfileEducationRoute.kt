@@ -13,7 +13,7 @@ import io.ktor.routing.*
 fun Route.profileEducationRoute(service: ProfileEducationService) {
     route("/education") {
         get {
-            call.respond(service.get(call.request.queryParameters.mapToProfileEducationGetRequest()))
+            call.respond(service.get(call.request.mapToProfileEducationGetRequest()))
         }
         put {
             val body = call.receiveOrNull<KmpProfileEducationUpdate>()

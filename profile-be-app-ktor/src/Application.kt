@@ -15,8 +15,8 @@ import io.ktor.response.*
 import io.ktor.routing.*
 import io.ktor.serialization.*
 import io.ktor.server.netty.*
-import org.kodein.di.generic.instance
-import org.kodein.di.ktor.kodein
+import org.kodein.di.instance
+import org.kodein.di.ktor.di
 
 fun main(args: Array<String>): Unit = EngineMain.main(args)
 
@@ -24,7 +24,7 @@ fun main(args: Array<String>): Unit = EngineMain.main(args)
 @JvmOverloads
 fun Application.module(testing: Boolean = false) {
 
-    kodein {
+    di {
         import(profileModule)
     }
 
@@ -42,9 +42,9 @@ fun Application.module(testing: Boolean = false) {
         gzip()
     }
 
-    val educationService by kodein().instance<ProfileEducationService>()
-    val personalDataService by kodein().instance<ProfilePersonalDataService>()
-    val skillsAndTechService by kodein().instance<ProfileSkillsAndTechService>()
+    val educationService by di().instance<ProfileEducationService>()
+    val personalDataService by di().instance<ProfilePersonalDataService>()
+    val skillsAndTechService by di().instance<ProfileSkillsAndTechService>()
 
     routing {
         route("/profile") {

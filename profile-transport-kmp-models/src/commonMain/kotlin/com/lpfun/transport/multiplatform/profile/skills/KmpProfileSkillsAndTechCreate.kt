@@ -8,12 +8,20 @@ data class KmpProfileSkillsAndTechCreate(
     override var specialization: KmpSpecializationModel? = null,
     override var operatingSystems: MutableSet<String>? = null,
     override var dataBases: MutableSet<String>? = null,
-    var debug: KmpDebug? = null
+    var debug: Debug? = null
 ) : KmpProfileSkillsAndTechSave(
     specialization = specialization,
     operatingSystems = operatingSystems,
     dataBases = dataBases
 ) {
     @Serializable
-    class KmpDebug
+    class Debug {
+        var stub: StubCase? = null
+    }
+
+    @Serializable
+    enum class StubCase {
+        NONE,
+        RUNNING
+    }
 }

@@ -4,9 +4,17 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class KmpProfileSkillsAndTechGet(
-        val profileId: String? = null,
-        val debug: KmpDebug? = null
+    val profileId: String? = null,
+    val debug: Debug? = null
 ) {
     @Serializable
-    class KmpDebug
+    class Debug {
+        var stub: StubCase? = null
+    }
+
+    @Serializable
+    enum class StubCase {
+        NONE,
+        RUNNING
+    }
 }

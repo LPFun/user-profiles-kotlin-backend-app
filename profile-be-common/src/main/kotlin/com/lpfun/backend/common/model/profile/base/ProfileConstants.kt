@@ -1,4 +1,4 @@
-package com.lpfun.backend.common.model.profile
+package com.lpfun.backend.common.model.profile.base
 
 import kotlinx.datetime.LocalDate
 import java.time.Year

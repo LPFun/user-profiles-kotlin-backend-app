@@ -1,5 +1,9 @@
 package com.lpfun.backend.kmp.profile
 
+import com.lpfun.backend.common.model.profile.base.stub.ProfileStubCreate
+import com.lpfun.backend.common.model.profile.base.stub.ProfileStubDelete
+import com.lpfun.backend.common.model.profile.base.stub.ProfileStubGet
+import com.lpfun.backend.common.model.profile.base.stub.ProfileStubUpdate
 import com.lpfun.backend.common.model.profile.personal.LocationModel
 import com.lpfun.backend.common.model.profile.personal.ProfilePersonalContext
 import com.lpfun.backend.common.model.profile.personal.ProfilePersonalData
@@ -10,15 +14,33 @@ import kotlinx.datetime.LocalDate
 import java.time.Year
 
 fun ProfilePersonalContext.setQuery(get: KmpProfilePersonalDataGet) = this.apply {
-    requestProfileId = get.profileId ?: ""
+    requestProfile.profileId = get.profileId ?: ""
+    stubCaseGet = when (get.debug?.stub) {
+        KmpProfilePersonalDataGet.StubCase.RUNNING -> ProfileStubGet.SUCCESS
+        else -> ProfileStubGet.NONE
+    }
 }
 
 fun ProfilePersonalContext.setQuery(save: KmpProfilePersonalDataSave) = this.apply {
     requestProfile = save.toModel()
+    when (save) {
+        is KmpProfilePersonalDataCreate -> stubCaseCreate = when (save.debug?.stub) {
+            KmpProfilePersonalDataCreate.StubCase.RUNNING -> ProfileStubCreate.SUCCESS
+            else -> ProfileStubCreate.NONE
+        }
+        is KmpProfilePersonalDataUpdate -> stubCaseUpdate = when (save.debug?.stub) {
+            KmpProfilePersonalDataUpdate.StubCase.RUNNING -> ProfileStubUpdate.SUCCESS
+            else -> ProfileStubUpdate.NONE
+        }
+    }
 }
 
 fun ProfilePersonalContext.setQuery(del: KmpProfilePersonalDataDelete) = this.apply {
     requestProfileId = del.profileId ?: ""
+    stubCaseDelete = when (del.debug?.stub) {
+        KmpProfilePersonalDataDelete.StubCase.RUNNING -> ProfileStubDelete.SUCCESS
+        else -> ProfileStubDelete.NONE
+    }
 }
 
 fun ProfilePersonalContext.resultItem() = KmpProfilePersonalDataResponse(
