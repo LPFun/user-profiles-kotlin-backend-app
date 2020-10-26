@@ -11,14 +11,16 @@ data class ProfileEducation(
 }
 
 data class EducationModel(
-        var university: String = "",
-        var department: String = "",
-        var specialty: String = "",
-        var yearOfCompletion: String = "",
+    var id: String = "",
+    var university: String = "",
+    var department: String = "",
+    var specialty: String = "",
+    var yearOfCompletion: String = "",
 )
 
 data class AdditionalEducationModel(
-        var nameOfInstitution: String = "",
-        var courseName: String = "",
-        var yearOfCompletion: String = "",
+    var id: String = "",
+    var nameOfInstitution: String = "",
+    var courseName: String = "",
+    var yearOfCompletion: String = "",
 )
