@@ -16,6 +16,7 @@ object Deps {
     val ktor = Ktor
     val kodein = Kodein
     val logging = Logging
+    val database = Database
 
     object Versions {
         const val kotlinDatetime = "0.1.0"
@@ -53,6 +54,10 @@ object Deps {
     object Logging {
         private const val logbackVersion = "1.2.1"
         const val logbackClassic = "ch.qos.logback:logback-classic:$logbackVersion"
+    }
+
+    object Database {
+        const val cache2k = "org.cache2k:cache2k-core:1.4.1.Final"
     }
 
 }

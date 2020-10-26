@@ -1,5 +1,6 @@
 plugins {
     kotlin("jvm")
+    id("dependencies")
 }
 
 group = rootProject.group
@@ -10,5 +11,12 @@ repositories {
 }
 
 dependencies {
-    implementation(kotlin("stdlib"))
+    implementation(kotlin("stdlib-jdk8"))
+
+    implementation(Deps.profileModules.profileBeCommon)
+    implementation(Deps.kotlinx.coroutinesCore)
+    implementation(Deps.database.cache2k)
+
+    testImplementation(kotlin("test"))
+    testImplementation(kotlin("test-junit"))
 }
