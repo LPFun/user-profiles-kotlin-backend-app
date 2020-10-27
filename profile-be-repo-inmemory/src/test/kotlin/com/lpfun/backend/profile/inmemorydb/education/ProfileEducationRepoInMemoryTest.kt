@@ -1,14 +1,13 @@
-package com.lpfun.backend.profile.inmemorydb
+package com.lpfun.backend.profile.inmemorydb.education
 
 import com.lpfun.backend.common.model.dsl.education.profileEducation
-import com.lpfun.backend.profile.inmemorydb.education.ProfileEducationRepositoryInMemory
 import kotlinx.coroutines.runBlocking
 import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-internal class ProfileEducationRepositoryInMemoryTest {
+internal class ProfileEducationRepoInMemoryTest {
     var repo: ProfileEducationRepositoryInMemory? = null
 
     @BeforeTest

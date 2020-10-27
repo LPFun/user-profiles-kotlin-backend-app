@@ -8,6 +8,7 @@ import com.lpfun.backend.profile.inmemorydb.education.entity.AdditionalEducation
 import com.lpfun.backend.profile.inmemorydb.education.entity.MainEducationEntity
 import com.lpfun.backend.profile.inmemorydb.education.table.AdditionalEducationTable
 import com.lpfun.backend.profile.inmemorydb.education.table.MainEducationTable
+import com.lpfun.backend.profile.inmemorydb.education.table.ProfileEducationEntity
 import com.lpfun.backend.profile.inmemorydb.education.table.ProfileEducationTable
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.transaction
@@ -64,7 +65,7 @@ class ProfileEducationRepositoryInMemory : IProfileEducationRepository {
         }
         transaction {
             addLogger(StdOutSqlLogger)
-            ProfileEducationTable.insert { it[profileId] = profile.profileId }
+            ProfileEducationEntity.new(profile.profileId) { }
             profile.mainEducation.forEach { ed ->
                 MainEducationEntity.new(UUID.randomUUID().toString()) {
                     profileId = profile.profileId
@@ -116,13 +117,15 @@ class ProfileEducationRepositoryInMemory : IProfileEducationRepository {
         val profile = get(id)
         transaction {
             addLogger(StdOutSqlLogger)
+            AdditionalEducationEntity.find { AdditionalEducationTable.profileId eq id }.forEach {
+                it.delete()
+            }
             MainEducationEntity.find { MainEducationTable.profileId eq id }.forEach {
                 it.delete()
             }
-            AdditionalEducationEntity.find { MainEducationTable.profileId eq id }.forEach {
+            ProfileEducationEntity.find { ProfileEducationTable.profileId eq id }.forEach {
                 it.delete()
             }
-            ProfileEducationTable.deleteWhere { ProfileEducationTable.profileId eq id }
         }
         return profile
     }

@@ -3,7 +3,6 @@ package com.lpfun.backend.common.model.profile.personal
 import com.lpfun.backend.common.model.profile.base.ProfileConstants
 import kotlinx.datetime.LocalDate
 
-
 data class ProfilePersonalData(
     var profileId: String = "",
     var firstName: String = "",
@@ -27,4 +26,8 @@ data class LocationModel(
     companion object {
         val NONE = LocationModel()
     }
+}
+
+fun String.toLocalDate(): LocalDate {
+    return LocalDate.parse(this)
 }
