@@ -5,6 +5,8 @@ import com.lpfun.transport.multiplatform.profile.skills.KmpProfileSkillsAndTechC
 import com.lpfun.transport.multiplatform.profile.skills.KmpProfileSkillsAndTechDelete
 import com.lpfun.transport.multiplatform.profile.skills.KmpProfileSkillsAndTechResponse
 import com.lpfun.transport.multiplatform.profile.skills.KmpProfileSkillsAndTechUpdate
+import com.lpfun.transport.multiplatform.profile.skills.model.KmpDataBaseModel
+import com.lpfun.transport.multiplatform.profile.skills.model.KmpOperatingSystemModel
 import io.ktor.http.*
 import io.ktor.server.testing.*
 import kotlinx.serialization.json.Json
@@ -45,7 +47,7 @@ class ProfileSkillsAndTechRouteTest {
             handleRequest(HttpMethod.Post, uri) {
                 addHeaderContentTypeJson()
                 val requestBody = KmpProfileSkillsAndTechCreate(
-                    operatingSystems = mutableSetOf("Test System"),
+                    operatingSystems = mutableSetOf(KmpOperatingSystemModel(operatingSystem = "Test System")),
                     debug = KmpProfileSkillsAndTechCreate.Debug().apply {
                         stub = KmpProfileSkillsAndTechCreate.StubCase.RUNNING
                     }
@@ -55,7 +57,7 @@ class ProfileSkillsAndTechRouteTest {
             }.apply {
                 val responseObj = getResponseObj(response.content)
                 assertEquals(HttpStatusCode.OK, response.status())
-                assertEquals(mutableSetOf("Test System"), responseObj.data?.operatingSystems)
+                assertEquals("Test System", responseObj.data?.operatingSystems?.first()?.operatingSystem)
                 assertNotEquals("", responseObj.data?.profileId)
             }
         }
@@ -67,7 +69,7 @@ class ProfileSkillsAndTechRouteTest {
             handleRequest(HttpMethod.Put, uri) {
                 addHeaderContentTypeJson()
                 val requestBody = KmpProfileSkillsAndTechUpdate(
-                    dataBases = mutableSetOf("Update Data Base"),
+                    dataBases = mutableSetOf(KmpDataBaseModel(dataBase = "Update Data Base")),
                     debug = KmpProfileSkillsAndTechUpdate.Debug().apply {
                         stub = KmpProfileSkillsAndTechUpdate.StubCase.RUNNING
                     }
@@ -77,7 +79,7 @@ class ProfileSkillsAndTechRouteTest {
             }.apply {
                 getResponseObj(response.content).run {
                     assertEquals(HttpStatusCode.OK, response.status())
-                    assertEquals("Update Data Base", data?.dataBases?.first())
+                    assertEquals("Update Data Base", data?.dataBases?.first()?.dataBase)
                 }
             }
         }

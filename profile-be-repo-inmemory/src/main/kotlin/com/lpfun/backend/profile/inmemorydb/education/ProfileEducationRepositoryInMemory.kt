@@ -65,10 +65,12 @@ class ProfileEducationRepositoryInMemory : IProfileEducationRepository {
         }
         transaction {
             addLogger(StdOutSqlLogger)
-            ProfileEducationEntity.new(profile.profileId) { }
+            val createdProfileId = ProfileEducationTable.insertAndGetId {
+                it[id] = profile.profileId
+            }
             profile.mainEducation.forEach { ed ->
                 MainEducationEntity.new(UUID.randomUUID().toString()) {
-                    profileId = profile.profileId
+                    profileId = createdProfileId
                     university = ed.university
                     department = ed.department
                     speciality = ed.specialty
@@ -77,7 +79,7 @@ class ProfileEducationRepositoryInMemory : IProfileEducationRepository {
             }
             profile.additionalEducation.forEach { ed ->
                 AdditionalEducationEntity.new(UUID.randomUUID().toString()) {
-                    profileId = profile.profileId
+                    profileId = createdProfileId
                     nameOfInstitution = ed.nameOfInstitution
                     courseName = ed.courseName
                     yearOfCompletion = ed.yearOfCompletion
@@ -123,7 +125,7 @@ class ProfileEducationRepositoryInMemory : IProfileEducationRepository {
             MainEducationEntity.find { MainEducationTable.profileId eq id }.forEach {
                 it.delete()
             }
-            ProfileEducationEntity.find { ProfileEducationTable.profileId eq id }.forEach {
+            ProfileEducationEntity.find { ProfileEducationTable.id eq id }.forEach {
                 it.delete()
             }
         }

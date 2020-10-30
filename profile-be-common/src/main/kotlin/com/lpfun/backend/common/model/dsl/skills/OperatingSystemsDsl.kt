@@ -1,17 +1,18 @@
 package com.lpfun.backend.common.model.dsl.skills
 
 import com.lpfun.backend.common.model.dsl.ProfileDslMarker
+import com.lpfun.backend.common.model.profile.skills.OperatingSystemModel
 
 @ProfileDslMarker
 class OperatingSystemsDsl(
-    val operatingSystemList: MutableSet<String> = mutableSetOf()
+    val operatingSystemList: MutableSet<OperatingSystemModel> = mutableSetOf()
 ) {
     operator fun String.unaryPlus() {
-        add(this)
+        operatingSystemList.add(OperatingSystemModel(operatingSystem = this))
     }
 
-    fun add(string: String) {
-        operatingSystemList.add(string)
+    fun add(model: String) {
+        operatingSystemList.add(OperatingSystemModel(operatingSystem = model))
     }
 
     companion object {
