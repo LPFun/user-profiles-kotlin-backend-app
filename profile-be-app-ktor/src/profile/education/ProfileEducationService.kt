@@ -1,6 +1,6 @@
 package com.lpfun.profile.education
 
-import com.lpfun.backend.common.model.profile.education.ProfileEducationContext
+import com.lpfun.backend.common.profile.model.profile.education.ProfileEducationContext
 import com.lpfun.backend.kmp.profile.setQuery
 import com.lpfun.backend.profile.domain.education.ProfileEducationCrud
 import com.lpfun.base.request

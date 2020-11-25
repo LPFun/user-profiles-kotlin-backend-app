@@ -2,13 +2,20 @@ package com.lpfun.backend.profile.domain.education
 
 import com.lpfun.backend.common.cor.IExec
 import com.lpfun.backend.common.cor.cor
-import com.lpfun.backend.common.model.profile.base.ProfileContextStatus
-import com.lpfun.backend.common.model.profile.base.stub.ProfileStubCreate
-import com.lpfun.backend.common.model.profile.education.ProfileEducationContext
+import com.lpfun.backend.common.profile.model.profile.base.ProfileContextStatus
+import com.lpfun.backend.common.profile.model.profile.education.ProfileEducationContext
+import com.lpfun.backend.common.profile.repository.IProfileEducationRepository
+import com.lpfun.backend.profile.domain.education.handlers.responsePrepareHandler
+import com.lpfun.backend.profile.domain.education.handlers.setupWorkMode
+import com.lpfun.backend.profile.domain.education.stubs.stubCreate
 
-class ProfileEducationCreateUseCase : IExec<ProfileEducationContext> {
+class ProfileEducationCreateUseCase(
+    private val repo: IProfileEducationRepository,
+    private val testRepo: IProfileEducationRepository
+) : IExec<ProfileEducationContext> {
     override suspend fun execute(ctx: ProfileEducationContext) = chain.execute(ctx.apply {
-
+        repository = repo
+        testRepository = testRepo
     })
 
     companion object {
@@ -18,28 +25,27 @@ class ProfileEducationCreateUseCase : IExec<ProfileEducationContext> {
                 responseProfileStatus = ProfileContextStatus.RUNNING
             }
 
-            // Обработка стабов
-            processor {
-                condition { stubCaseCreate != ProfileStubCreate.NONE }
-                handler {
-                    condition { stubCaseCreate == ProfileStubCreate.SUCCESS }
-                    exec {
-                        responseProfile = requestProfile.apply {
-                            profileId = "test-id"
-                        }
-                        responseProfileStatus = ProfileContextStatus.FINISHING
-                    }
-                }
-            }
+            // Установка режима работы
+            execute(setupWorkMode)
 
             // Валидация
 
+            // Обработка стабов
+            execute(stubCreate)
+
             // Обращение к БД и обработка
+            handler {
+                condition { responseProfileStatus == ProfileContextStatus.RUNNING }
+                exec {
+                    responseProfile = repository.create(requestProfile)
+                }
+                error {
+
+                }
+            }
 
             // Подготовка ответа
-            execute {
-                responseProfileStatus = ProfileContextStatus.SUCCESS
-            }
+            execute(responsePrepareHandler)
         }
     }
 }

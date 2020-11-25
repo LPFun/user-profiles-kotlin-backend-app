@@ -1,6 +1,6 @@
 package com.lpfun.profile.personaldata
 
-import com.lpfun.backend.common.model.profile.personal.ProfilePersonalContext
+import com.lpfun.backend.common.profile.model.profile.personal.ProfilePersonalContext
 import com.lpfun.backend.kmp.profile.setQuery
 import com.lpfun.backend.profile.domain.personal.ProfilePersonalCrud
 import com.lpfun.base.request

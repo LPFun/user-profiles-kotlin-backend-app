@@ -1,9 +1,9 @@
 package com.lpfun.backend.common.model.dsl
 
-import com.lpfun.backend.common.model.dsl.personal.profilePersonalData
-import com.lpfun.backend.common.model.extensions.applyRequest
-import com.lpfun.backend.common.model.profile.personal.ProfilePersonalContext
-import com.lpfun.backend.common.model.profile.personal.ProfilePersonalData
+import com.lpfun.backend.common.profile.model.dsl.personal.profilePersonalData
+import com.lpfun.backend.common.profile.model.extensions.applyRequest
+import com.lpfun.backend.common.profile.model.profile.personal.ProfilePersonalContext
+import com.lpfun.backend.common.profile.model.profile.personal.ProfilePersonalData
 import kotlinx.datetime.LocalDate
 import kotlin.test.Test
 import kotlin.test.assertEquals

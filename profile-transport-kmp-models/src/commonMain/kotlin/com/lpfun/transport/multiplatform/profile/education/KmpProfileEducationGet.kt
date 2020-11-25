@@ -1,5 +1,6 @@
 package com.lpfun.transport.multiplatform.profile.education
 
+import com.lpfun.transport.multiplatform.profile.KmpProfileDbMode
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -10,6 +11,7 @@ data class KmpProfileEducationGet(
     @Serializable
     class Debug {
         var stub: StubCase? = null
+        var db: KmpProfileDbMode? = null
     }
 
     @Serializable

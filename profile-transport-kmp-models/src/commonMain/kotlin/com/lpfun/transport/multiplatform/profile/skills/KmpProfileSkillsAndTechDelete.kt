@@ -1,5 +1,6 @@
 package com.lpfun.transport.multiplatform.profile.skills
 
+import com.lpfun.transport.multiplatform.profile.KmpProfileDbMode
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -10,6 +11,7 @@ data class KmpProfileSkillsAndTechDelete(
     @Serializable
     class Debug {
         var stub: StubCase? = null
+        var db: KmpProfileDbMode? = null
     }
 
     @Serializable

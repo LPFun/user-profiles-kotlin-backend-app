@@ -2,14 +2,21 @@ package com.lpfun.backend.profile.domain.skills
 
 import com.lpfun.backend.common.cor.IExec
 import com.lpfun.backend.common.cor.cor
-import com.lpfun.backend.common.model.profile.base.ProfileContextStatus
-import com.lpfun.backend.common.model.profile.base.stub.ProfileStubDelete
-import com.lpfun.backend.common.model.profile.skills.ProfileSkillsAndTech
-import com.lpfun.backend.common.model.profile.skills.ProfileSkillsContext
+import com.lpfun.backend.common.profile.model.profile.base.ProfileContextStatus
+import com.lpfun.backend.common.profile.model.profile.skills.ProfileSkillsContext
+import com.lpfun.backend.common.profile.repository.IProfileSkillsAndTechRepository
+import com.lpfun.backend.profile.domain.skills.handlers.responsePrepareHandler
+import com.lpfun.backend.profile.domain.skills.handlers.setupWorkMode
+import com.lpfun.backend.profile.domain.skills.stubs.stubDelete
 
-class ProfileSkillsDeleteUseCase : IExec<ProfileSkillsContext> {
+class ProfileSkillsDeleteUseCase(
+    private val repo: IProfileSkillsAndTechRepository,
+    private val testRepo: IProfileSkillsAndTechRepository,
+) : IExec<ProfileSkillsContext> {
+
     override suspend fun execute(ctx: ProfileSkillsContext) = chain.execute(ctx.apply {
-
+        repository = repo
+        testRepository = testRepo
     })
 
     companion object {
@@ -17,25 +24,25 @@ class ProfileSkillsDeleteUseCase : IExec<ProfileSkillsContext> {
             // Запуск пайплайна
             execute { responseProfileStatus = ProfileContextStatus.RUNNING }
 
-            // Обработка стабов
-            processor {
-                condition { stubCaseDelete != ProfileStubDelete.NONE }
-                handler {
-                    condition { stubCaseDelete == ProfileStubDelete.SUCCESS }
-                    exec {
-                        responseProfile = ProfileSkillsAndTech()
-                        responseProfileStatus = ProfileContextStatus.FINISHING
-                    }
-
-                }
-            }
+            // Установка режима работы
+            execute(setupWorkMode)
 
             // Валидация
 
+            // Обработка стабов
+            execute(stubDelete)
+
             // Обращение к БД
+            handler {
+                condition { responseProfileStatus == ProfileContextStatus.RUNNING }
+                exec {
+                    responseProfile = repository.delete(requestProfile.profileId)
+                }
+                error { }
+            }
 
             // Обработка ответа
-            execute { responseProfileStatus = ProfileContextStatus.SUCCESS }
+            execute(responsePrepareHandler)
         }
     }
 }

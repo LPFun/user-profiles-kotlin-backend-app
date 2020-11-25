@@ -1,5 +1,6 @@
 package com.lpfun.transport.multiplatform.profile.personal
 
+import com.lpfun.transport.multiplatform.profile.KmpProfileDbMode
 import com.lpfun.transport.multiplatform.profile.personal.model.KmpLocationModel
 import kotlinx.serialization.Serializable
 
@@ -28,6 +29,7 @@ data class KmpProfilePersonalDataUpdate(
     @Serializable
     class Debug {
         var stub: StubCase? = null
+        var db: KmpProfileDbMode? = null
     }
 
     @Serializable

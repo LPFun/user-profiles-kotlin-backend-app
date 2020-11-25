@@ -2,14 +2,20 @@ package com.lpfun.backend.profile.domain.education
 
 import com.lpfun.backend.common.cor.IExec
 import com.lpfun.backend.common.cor.cor
-import com.lpfun.backend.common.model.dsl.education.profileEducation
-import com.lpfun.backend.common.model.profile.base.ProfileContextStatus
-import com.lpfun.backend.common.model.profile.base.stub.ProfileStubGet
-import com.lpfun.backend.common.model.profile.education.ProfileEducationContext
+import com.lpfun.backend.common.profile.model.profile.base.ProfileContextStatus
+import com.lpfun.backend.common.profile.model.profile.education.ProfileEducationContext
+import com.lpfun.backend.common.profile.repository.IProfileEducationRepository
+import com.lpfun.backend.profile.domain.education.handlers.responsePrepareHandler
+import com.lpfun.backend.profile.domain.education.handlers.setupWorkMode
+import com.lpfun.backend.profile.domain.education.stubs.stubGet
 
-class ProfileEducationGetUseCase : IExec<ProfileEducationContext> {
+class ProfileEducationGetUseCase(
+    private val repo: IProfileEducationRepository,
+    private val testRepo: IProfileEducationRepository,
+) : IExec<ProfileEducationContext> {
     override suspend fun execute(ctx: ProfileEducationContext) = chain.execute(ctx.apply {
-
+        repository = repo
+        testRepository = testRepo
     })
 
     companion object {
@@ -19,40 +25,27 @@ class ProfileEducationGetUseCase : IExec<ProfileEducationContext> {
                 responseProfileStatus = ProfileContextStatus.RUNNING
             }
 
-            // Обработка стабов
-            processor {
-                condition { stubCaseGet != ProfileStubGet.NONE }
-                handler {
-                    condition { stubCaseGet == ProfileStubGet.SUCCESS }
-                    exec {
-                        responseProfile = profileEducation {
-                            id = requestProfileId
-                            mainEducation {
-                                university = "Garvard"
-                                department = "IT"
-                                speciality = "Programming"
-                                yearOfCompletion = "2020"
-                            }
-                            +additionalEducation {
-                                nameOfInstitution = "OTUS"
-                                courseName = "Kotlin"
-                                yearOfCompletion = "2020"
-                            }
-                        }
-
-                        responseProfileStatus = ProfileContextStatus.FINISHING
-                    }
-                }
-            }
+            // Установка режима работы
+            execute(setupWorkMode)
 
             // Валидация
 
+            // Обработка стабов
+            execute(stubGet)
+
             // Обращение к БД и обработка
+            handler {
+                condition { responseProfileStatus == ProfileContextStatus.RUNNING }
+                exec {
+                    responseProfile = repository.get(requestProfile.profileId)
+                }
+                error {
+
+                }
+            }
 
             // Подготовка ответа
-            execute {
-                responseProfileStatus = ProfileContextStatus.SUCCESS
-            }
+            execute(responsePrepareHandler)
         }
     }
 }

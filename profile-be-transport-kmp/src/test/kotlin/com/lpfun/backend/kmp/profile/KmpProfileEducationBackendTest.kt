@@ -1,7 +1,7 @@
 package com.lpfun.backend.kmp.profile
 
-import com.lpfun.backend.common.model.profile.education.ProfileEducation
-import com.lpfun.backend.common.model.profile.education.ProfileEducationContext
+import com.lpfun.backend.common.profile.model.profile.education.ProfileEducation
+import com.lpfun.backend.common.profile.model.profile.education.ProfileEducationContext
 import com.lpfun.transport.multiplatform.profile.education.KmpProfileEducationCreate
 import com.lpfun.transport.multiplatform.profile.education.KmpProfileEducationDelete
 import com.lpfun.transport.multiplatform.profile.education.KmpProfileEducationGet

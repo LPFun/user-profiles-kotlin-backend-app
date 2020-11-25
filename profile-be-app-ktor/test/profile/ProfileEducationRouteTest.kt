@@ -43,6 +43,7 @@ class ProfileEducationRouteTest {
                     },
                     additionalEducation = mutableListOf(
                         KmpAdditionalEducationModel(
+                            id = "test-id",
                             nameOfInstitution = "OTUS",
                             courseName = "Kotlin",
                             yearOfCompletion = "2020"
@@ -60,6 +61,7 @@ class ProfileEducationRouteTest {
                 assertEquals(
                     mutableListOf(
                         KmpAdditionalEducationModel(
+                            id = "test-id",
                             nameOfInstitution = "OTUS",
                             courseName = "Kotlin",
                             yearOfCompletion = "2020"
@@ -78,6 +80,7 @@ class ProfileEducationRouteTest {
                 val requestBody = KmpProfileEducationUpdate(
                     additionalEducation = mutableListOf(
                         KmpAdditionalEducationModel(
+                            id = "test-id",
                             nameOfInstitution = "OTUS",
                             courseName = "Kotlin",
                             yearOfCompletion = "2021"
@@ -99,6 +102,7 @@ class ProfileEducationRouteTest {
                 assertEquals(
                     mutableListOf(
                         KmpAdditionalEducationModel(
+                            id = "test-id",
                             nameOfInstitution = "OTUS",
                             courseName = "Kotlin",
                             yearOfCompletion = "2021"

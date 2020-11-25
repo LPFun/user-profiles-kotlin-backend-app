@@ -4,7 +4,8 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class KmpAdditionalEducationModel(
-        var nameOfInstitution: String? = null,
-        var courseName: String? = null,
-        var yearOfCompletion: String? = null,
+    var id: String? = null,
+    var nameOfInstitution: String? = null,
+    var courseName: String? = null,
+    var yearOfCompletion: String? = null,
 )

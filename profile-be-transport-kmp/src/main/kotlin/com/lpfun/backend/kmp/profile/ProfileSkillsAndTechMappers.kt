@@ -1,10 +1,10 @@
 package com.lpfun.backend.kmp.profile
 
-import com.lpfun.backend.common.model.profile.base.stub.ProfileStubCreate
-import com.lpfun.backend.common.model.profile.base.stub.ProfileStubDelete
-import com.lpfun.backend.common.model.profile.base.stub.ProfileStubGet
-import com.lpfun.backend.common.model.profile.base.stub.ProfileStubUpdate
-import com.lpfun.backend.common.model.profile.skills.*
+import com.lpfun.backend.common.profile.model.profile.base.stub.ProfileStubCreate
+import com.lpfun.backend.common.profile.model.profile.base.stub.ProfileStubDelete
+import com.lpfun.backend.common.profile.model.profile.base.stub.ProfileStubGet
+import com.lpfun.backend.common.profile.model.profile.base.stub.ProfileStubUpdate
+import com.lpfun.backend.common.profile.model.profile.skills.*
 import com.lpfun.transport.multiplatform.profile.skills.*
 import com.lpfun.transport.multiplatform.profile.skills.model.KmpDataBaseModel
 import com.lpfun.transport.multiplatform.profile.skills.model.KmpOperatingSystemModel
@@ -12,33 +12,43 @@ import com.lpfun.transport.multiplatform.profile.skills.model.KmpProfileSkillsAn
 import com.lpfun.transport.multiplatform.profile.skills.model.KmpSpecializationModel
 
 fun ProfileSkillsContext.setQuery(get: KmpProfileSkillsAndTechGet) = this.apply {
+    requestProfile.profileId = get.profileId ?: ""
     requestProfileId = get.profileId ?: ""
     stubCaseGet = when (get.debug?.stub) {
         KmpProfileSkillsAndTechGet.StubCase.RUNNING -> ProfileStubGet.SUCCESS
         else -> ProfileStubGet.NONE
     }
+    workMode = get.debug?.db.toModel()
 }
 
 fun ProfileSkillsContext.setQuery(save: KmpProfileSkillsAndTechSave) = this.apply {
     requestProfile = save.toModel()
     when (save) {
-        is KmpProfileSkillsAndTechCreate -> stubCaseCreate = when (save.debug?.stub) {
-            KmpProfileSkillsAndTechCreate.StubCase.RUNNING -> ProfileStubCreate.SUCCESS
-            else -> ProfileStubCreate.NONE
+        is KmpProfileSkillsAndTechCreate -> {
+            workMode = save.debug?.db.toModel()
+            stubCaseCreate = when (save.debug?.stub) {
+                KmpProfileSkillsAndTechCreate.StubCase.RUNNING -> ProfileStubCreate.SUCCESS
+                else -> ProfileStubCreate.NONE
+            }
         }
-        is KmpProfileSkillsAndTechUpdate -> stubCaseUpdate = when (save.debug?.stub) {
-            KmpProfileSkillsAndTechUpdate.StubCase.RUNNING -> ProfileStubUpdate.SUCCESS
-            else -> ProfileStubUpdate.NONE
+        is KmpProfileSkillsAndTechUpdate -> {
+            workMode = save.debug?.db.toModel()
+            stubCaseUpdate = when (save.debug?.stub) {
+                KmpProfileSkillsAndTechUpdate.StubCase.RUNNING -> ProfileStubUpdate.SUCCESS
+                else -> ProfileStubUpdate.NONE
+            }
         }
     }
 }
 
 fun ProfileSkillsContext.setQuery(delete: KmpProfileSkillsAndTechDelete) = this.apply {
+    requestProfile.profileId = delete.profileId ?: ""
     requestProfileId = delete.profileId ?: ""
     stubCaseDelete = when (delete.debug?.stub) {
         KmpProfileSkillsAndTechDelete.StubCase.RUNNING -> ProfileStubDelete.SUCCESS
         else -> ProfileStubDelete.NONE
     }
+    workMode = delete.debug?.db.toModel()
 }
 
 fun ProfileSkillsContext.resultItem() = KmpProfileSkillsAndTechResponse(
@@ -121,8 +131,6 @@ private fun MutableSet<KmpOperatingSystemModel>?.toModel(): MutableSet<Operating
     }
     return set
 }
-
-private fun MutableSet<String>?.toModel() = this ?: mutableSetOf()
 
 private fun KmpSpecializationModel?.toModel() = SpecializationModel(
     category = this?.category.toModelString(),

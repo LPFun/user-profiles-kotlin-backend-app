@@ -29,6 +29,9 @@ object Deps {
         const val profileTransportKmpModels = ":profile-transport-kmp-models"
         const val profileBeTransportKmp = ":profile-be-transport-kmp"
         const val profileDomain = ":profile-domain"
+        const val profileDataBase = ":profile-be-repo-db"
+        const val profileInMemoryDB = ":profile-be-repo-db-inmemory"
+        const val profileDBBase = ":profile-be-repo-db-base"
     }
 
     object Kotlinx {
@@ -57,7 +60,15 @@ object Deps {
     }
 
     object Database {
-        const val cache2k = "org.cache2k:cache2k-core:1.4.1.Final"
+        private const val exposedVersion = "0.28.1"
+        const val h2 = "com.h2database:h2:1.4.200"
+        const val exposedCore = "org.jetbrains.exposed:exposed-core:$exposedVersion"
+        const val exposedDao = "org.jetbrains.exposed:exposed-dao:$exposedVersion"
+        const val exposedJdbc = "org.jetbrains.exposed:exposed-jdbc:$exposedVersion"
+        const val postgreSql = "org.postgresql:postgresql:42.2.18"
+        const val postgreSqlTestContainers = "org.testcontainers:postgresql:1.14.3"
+        const val hikari = "com.zaxxer:HikariCP:3.4.5"
+        const val flywayCore = "org.flywaydb:flyway-core:7.1.1"
     }
 
 }

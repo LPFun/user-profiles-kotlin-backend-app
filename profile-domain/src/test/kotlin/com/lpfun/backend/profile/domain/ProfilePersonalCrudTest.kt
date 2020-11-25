@@ -1,13 +1,13 @@
 package com.lpfun.backend.profile.domain
 
-import com.lpfun.backend.common.model.dsl.personal.profilePersonalData
-import com.lpfun.backend.common.model.profile.base.ProfileContextStatus
-import com.lpfun.backend.common.model.profile.base.stub.ProfileStubCreate
-import com.lpfun.backend.common.model.profile.base.stub.ProfileStubDelete
-import com.lpfun.backend.common.model.profile.base.stub.ProfileStubGet
-import com.lpfun.backend.common.model.profile.base.stub.ProfileStubUpdate
-import com.lpfun.backend.common.model.profile.personal.ProfilePersonalContext
-import com.lpfun.backend.common.model.profile.personal.ProfilePersonalData
+import com.lpfun.backend.common.profile.model.dsl.personal.profilePersonalData
+import com.lpfun.backend.common.profile.model.profile.base.ProfileContextStatus
+import com.lpfun.backend.common.profile.model.profile.base.stub.ProfileStubCreate
+import com.lpfun.backend.common.profile.model.profile.base.stub.ProfileStubDelete
+import com.lpfun.backend.common.profile.model.profile.base.stub.ProfileStubGet
+import com.lpfun.backend.common.profile.model.profile.base.stub.ProfileStubUpdate
+import com.lpfun.backend.common.profile.model.profile.personal.ProfilePersonalContext
+import com.lpfun.backend.common.profile.model.profile.personal.ProfilePersonalData
 import com.lpfun.backend.profile.domain.personal.ProfilePersonalCrud
 import kotlinx.coroutines.runBlocking
 import kotlinx.datetime.LocalDate

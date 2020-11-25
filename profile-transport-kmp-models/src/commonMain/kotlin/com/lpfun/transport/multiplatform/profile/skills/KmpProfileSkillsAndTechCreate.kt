@@ -1,5 +1,6 @@
 package com.lpfun.transport.multiplatform.profile.skills
 
+import com.lpfun.transport.multiplatform.profile.KmpProfileDbMode
 import com.lpfun.transport.multiplatform.profile.skills.model.KmpDataBaseModel
 import com.lpfun.transport.multiplatform.profile.skills.model.KmpOperatingSystemModel
 import com.lpfun.transport.multiplatform.profile.skills.model.KmpSpecializationModel
@@ -19,6 +20,7 @@ data class KmpProfileSkillsAndTechCreate(
     @Serializable
     class Debug {
         var stub: StubCase? = null
+        var db: KmpProfileDbMode? = null
     }
 
     @Serializable

@@ -101,7 +101,7 @@ class ProfileSkillsAndTechRouteTest {
             }.apply {
                 getResponseObj(response.content).run {
                     assertEquals(HttpStatusCode.OK, response.status())
-                    assertEquals("", data?.profileId)
+                    assertEquals("test-id", data?.profileId)
                 }
             }
         }
