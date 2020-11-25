@@ -2,6 +2,7 @@ package com.lpfun.backend.profile.domain.skills
 
 import com.lpfun.backend.common.cor.IExec
 import com.lpfun.backend.common.cor.cor
+import com.lpfun.backend.common.profile.model.error.GeneralError
 import com.lpfun.backend.common.profile.model.profile.base.ProfileContextStatus
 import com.lpfun.backend.common.profile.model.profile.skills.ProfileSkillsContext
 import com.lpfun.backend.common.profile.repository.IProfileSkillsAndTechRepository
@@ -38,7 +39,10 @@ class ProfileSkillsDeleteUseCase(
                 exec {
                     responseProfile = repository.delete(requestProfile.profileId)
                 }
-                error { }
+                error {
+                    responseProfileStatus = ProfileContextStatus.ERROR
+                    errors.add(GeneralError(code = "repo-delete-error", e = it))
+                }
             }
 
             // Обработка ответа

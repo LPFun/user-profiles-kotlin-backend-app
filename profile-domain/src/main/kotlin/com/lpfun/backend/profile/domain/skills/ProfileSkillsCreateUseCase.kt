@@ -1,11 +1,13 @@
 package com.lpfun.backend.profile.domain.skills
 
-import com.lpfun.backend.common.WorkMode
 import com.lpfun.backend.common.cor.IExec
 import com.lpfun.backend.common.cor.cor
+import com.lpfun.backend.common.profile.model.error.GeneralError
 import com.lpfun.backend.common.profile.model.profile.base.ProfileContextStatus
 import com.lpfun.backend.common.profile.model.profile.skills.ProfileSkillsContext
 import com.lpfun.backend.common.profile.repository.IProfileSkillsAndTechRepository
+import com.lpfun.backend.profile.domain.skills.handlers.responsePrepareHandler
+import com.lpfun.backend.profile.domain.skills.handlers.setupWorkMode
 import com.lpfun.backend.profile.domain.skills.stubs.stubCreate
 
 class ProfileSkillsCreateUseCase(
@@ -23,19 +25,14 @@ class ProfileSkillsCreateUseCase(
             // Запуск пайплайна
             execute { responseProfileStatus = ProfileContextStatus.RUNNING }
 
+            // Установка режима работы
+            execute(setupWorkMode)
+
             // Валидация
 
             // Обработка стабов
             execute(stubCreate)
 
-            handler {
-                condition {
-                    responseProfileStatus == ProfileContextStatus.RUNNING && workMode == WorkMode.TEST
-                }
-                exec {
-                    responseProfile = testRepository.create(requestProfile)
-                }
-            }
 
             // Обращение к БД
             handler {
@@ -43,10 +40,14 @@ class ProfileSkillsCreateUseCase(
                 exec {
                     responseProfile = repository.create(requestProfile)
                 }
+                error {
+                    responseProfileStatus = ProfileContextStatus.ERROR
+                    errors.add(GeneralError(code = "repo-create-error", e = it))
+                }
             }
 
             // Обработка ответа
-            execute { responseProfileStatus = ProfileContextStatus.SUCCESS }
+            execute(responsePrepareHandler)
         }
     }
 }
