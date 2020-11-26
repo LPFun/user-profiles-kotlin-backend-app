@@ -11,7 +11,7 @@ import org.jetbrains.exposed.sql.insertAndGetId
 import org.jetbrains.exposed.sql.transactions.transaction
 import java.util.*
 
-class ProfileEducationRepositoryBase : IProfileEducationRepository {
+open class ProfileEducationRepositoryBase : IProfileEducationRepository {
     override suspend fun get(id: String): ProfileEducation {
         val profile = ProfileEducation(profileId = id)
         transaction {

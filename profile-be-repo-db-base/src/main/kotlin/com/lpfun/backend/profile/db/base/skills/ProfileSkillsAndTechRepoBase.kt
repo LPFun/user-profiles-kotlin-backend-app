@@ -13,15 +13,15 @@ import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.transactions.transaction
 import java.util.*
 
-class ProfileSkillsAndTechRepoBase : IProfileSkillsAndTechRepository {
+open class ProfileSkillsAndTechRepoBase : IProfileSkillsAndTechRepository {
 
     override suspend fun get(id: String): ProfileSkillsAndTech {
         return transaction {
             val profile = ProfileSkillsAndTech()
             ProfileSpecializationTable.select { ProfileSpecializationTable.profileId eq UUID.fromString(id) }
                 .firstOrNull()?.let {
-                profile.profileId = it[ProfileSpecializationTable.profileId].toString()
-            }
+                    profile.profileId = it[ProfileSpecializationTable.profileId].toString()
+                }
             profile.dataBases = ProfileDataBaseEntity.find {
                 ProfileDataBaseTable.profileId eq UUID.fromString(id)
             }.toDataBasesModel()
@@ -98,25 +98,26 @@ class ProfileSkillsAndTechRepoBase : IProfileSkillsAndTechRepository {
 
     override suspend fun delete(id: String): ProfileSkillsAndTech {
         return transaction {
+            val deleteId = UUID.fromString(id)
             val profile = ProfileSkillsAndTech()
-            ProfileSkillsAndTechTable.select { ProfileSkillsAndTechTable.id eq UUID.fromString(id) }.forEach {
+            ProfileSkillsAndTechTable.select { ProfileSkillsAndTechTable.id eq deleteId }.forEach {
                 profile.profileId = this.id
             }
 
             ProfileDataBaseEntity.find {
-                ProfileDataBaseTable.profileId eq UUID.fromString(id)
+                ProfileDataBaseTable.profileId eq deleteId
             }.forEach {
                 profile.dataBases.add(it.toModel())
                 it.delete()
             }
             ProfileSpecializationEntity.find {
-                ProfileSpecializationTable.profileId eq UUID.fromString(id)
+                ProfileSpecializationTable.profileId eq deleteId
             }.forEach {
                 profile.specialization = it.toSpecializationModel()
                 it.delete()
             }
             ProfileOperatingSystemEntity.find {
-                ProfileOperatingSystemTable.profileId eq UUID.fromString(id)
+                ProfileOperatingSystemTable.profileId eq deleteId
             }.forEach {
                 profile.operatingSystems.add(it.toModel())
                 it.delete()

@@ -1,4 +1,7 @@
-GET http://localhost:8080/profile/education/?id=123
+###
+GET http://localhost:8080/profile/education/?id=test-id
+test:inmemory
+Content-Type: application/json
 
 ###
 
@@ -6,13 +9,18 @@ PUT http://localhost:8080/profile/education/
 Content-Type: application/json
 
 {
+  "profileId": "test-id",
   "additionalEducation": [
     {
+      "id": "test-id",
       "nameOfInstitution": "OTUS",
       "courseName": "Kotlin",
       "yearOfCompletion": "2021"
     }
-  ]
+  ],
+  "debug": {
+    "db": "TEST"
+  }
 }
 
 ###
@@ -21,7 +29,10 @@ DELETE http://localhost:8080/profile/education/
 Content-Type: application/json
 
 {
-  "profileId": 123
+  "profileId": "test-id",
+  "debug": {
+    "db": "TEST"
+  }
 }
 
 ###
@@ -36,5 +47,8 @@ Content-Type: application/json
       "courseName": "Kotlin",
       "yearOfCompletion": "2020"
     }
-  ]
+  ],
+  "debug": {
+    "db": "TEST"
+  }
 }

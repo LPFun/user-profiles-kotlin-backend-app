@@ -19,7 +19,7 @@ class ProfilePersonalDataRouteTest {
     fun testGet() {
         withTestApplication({ module(testing = true) }) {
             handleRequest(HttpMethod.Get, "profile/personal?id=12345") {
-                addHeader("test", "test")
+                addHeader("test", "stub")
             }.apply {
                 val responseObj = Json.decodeFromString(
                     KmpProfilePersonalDataResponse.serializer(),
@@ -49,7 +49,7 @@ class ProfilePersonalDataRouteTest {
                         city = "City"
                     ),
                     debug = KmpProfilePersonalDataCreate.Debug().apply {
-                        stub = KmpProfilePersonalDataCreate.StubCase.RUNNING
+                        stub = KmpProfilePersonalDataCreate.StubCase.SUCCESS
                     }
                 )
                 val bodyStr = Json.encodeToString(KmpProfilePersonalDataCreate.serializer(), body)
@@ -78,7 +78,7 @@ class ProfilePersonalDataRouteTest {
                         country = "Updated Country"
                     ),
                     debug = KmpProfilePersonalDataUpdate.Debug().apply {
-                        stub = KmpProfilePersonalDataUpdate.StubCase.RUNNING
+                        stub = KmpProfilePersonalDataUpdate.StubCase.SUCCESS
                     }
                 )
                 val bodyStr = Json.encodeToString(KmpProfilePersonalDataUpdate.serializer(), body)
@@ -104,7 +104,7 @@ class ProfilePersonalDataRouteTest {
                 val body = KmpProfilePersonalDataDelete(
                     profileId = "12345",
                     debug = KmpProfilePersonalDataDelete.Debug().apply {
-                        stub = KmpProfilePersonalDataDelete.StubCase.RUNNING
+                        stub = KmpProfilePersonalDataDelete.StubCase.SUCCESS
                     }
                 )
                 val requestBody = Json.encodeToString(KmpProfilePersonalDataDelete.serializer(), body)

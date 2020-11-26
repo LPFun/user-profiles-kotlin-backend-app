@@ -32,7 +32,7 @@ class ProfileSkillsAndTechRouteTest {
     fun getProfileSkillsAndTechRouteTest() {
         withTestApplication({ module(testing = true) }) {
             handleRequest(HttpMethod.Get, "$uri?id=111") {
-                addHeader("test", "test")
+                addHeader("test", "stub")
             }.apply {
                 val responseObj = getResponseObj(response.content)
                 assertEquals(HttpStatusCode.OK, response.status())
@@ -49,7 +49,7 @@ class ProfileSkillsAndTechRouteTest {
                 val requestBody = KmpProfileSkillsAndTechCreate(
                     operatingSystems = mutableSetOf(KmpOperatingSystemModel(operatingSystem = "Test System")),
                     debug = KmpProfileSkillsAndTechCreate.Debug().apply {
-                        stub = KmpProfileSkillsAndTechCreate.StubCase.RUNNING
+                        stub = KmpProfileSkillsAndTechCreate.StubCase.SUCCESS
                     }
                 )
                 val body = Json.encodeToString(KmpProfileSkillsAndTechCreate.serializer(), requestBody)
@@ -71,7 +71,7 @@ class ProfileSkillsAndTechRouteTest {
                 val requestBody = KmpProfileSkillsAndTechUpdate(
                     dataBases = mutableSetOf(KmpDataBaseModel(dataBase = "Update Data Base")),
                     debug = KmpProfileSkillsAndTechUpdate.Debug().apply {
-                        stub = KmpProfileSkillsAndTechUpdate.StubCase.RUNNING
+                        stub = KmpProfileSkillsAndTechUpdate.StubCase.SUCCESS
                     }
                 )
                 val body = Json.encodeToString(KmpProfileSkillsAndTechUpdate.serializer(), requestBody)
@@ -93,7 +93,7 @@ class ProfileSkillsAndTechRouteTest {
                 val requestBody = KmpProfileSkillsAndTechDelete(
                     profileId = "test-id",
                     debug = KmpProfileSkillsAndTechDelete.Debug().apply {
-                        stub = KmpProfileSkillsAndTechDelete.StubCase.RUNNING
+                        stub = KmpProfileSkillsAndTechDelete.StubCase.SUCCESS
                     }
                 )
                 val body = Json.encodeToString(KmpProfileSkillsAndTechDelete.serializer(), requestBody)

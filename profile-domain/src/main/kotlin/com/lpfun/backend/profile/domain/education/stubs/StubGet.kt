@@ -13,16 +13,16 @@ val stubGet = cor<ProfileEducationContext> {
         exec {
             responseProfile = profileEducation {
                 id = requestProfileId
-                mainEducation {
-                    university = "Garvard"
-                    department = "IT"
-                    speciality = "Programming"
-                    yearOfCompletion = "2020"
+                +mainEducation {
+                    university = "Stub University"
+                    department = "Stub Department"
+                    speciality = "Stub Speciality"
+                    yearOfCompletion = "Stub Year"
                 }
                 +additionalEducation {
-                    nameOfInstitution = "OTUS"
-                    courseName = "Kotlin"
-                    yearOfCompletion = "2020"
+                    nameOfInstitution = "Stub Name"
+                    courseName = "Stub Course"
+                    yearOfCompletion = "Stub Year"
                 }
             }
 

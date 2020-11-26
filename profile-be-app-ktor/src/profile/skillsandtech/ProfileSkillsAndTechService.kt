@@ -25,6 +25,6 @@ class ProfileSkillsAndTechService(
     }
 
     suspend fun delete(query: KmpProfileSkillsAndTechDelete) = ProfileSkillsContext().request {
-        crud.update(setQuery(query))
+        crud.delete(setQuery(query))
     }
 }

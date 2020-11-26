@@ -17,7 +17,7 @@ fun ProfilePersonalContext.setQuery(get: KmpProfilePersonalDataGet) = this.apply
     requestProfile.profileId = get.profileId ?: ""
     requestProfileId = get.profileId ?: ""
     stubCaseGet = when (get.debug?.stub) {
-        KmpProfilePersonalDataGet.StubCase.RUNNING -> ProfileStubGet.SUCCESS
+        KmpProfilePersonalDataGet.StubCase.SUCCESS -> ProfileStubGet.SUCCESS
         else -> ProfileStubGet.NONE
     }
     workMode = get.debug?.db.toModel()
@@ -29,14 +29,14 @@ fun ProfilePersonalContext.setQuery(save: KmpProfilePersonalDataSave) = this.app
         is KmpProfilePersonalDataCreate -> {
             workMode = save.debug?.db.toModel()
             stubCaseCreate = when (save.debug?.stub) {
-                KmpProfilePersonalDataCreate.StubCase.RUNNING -> ProfileStubCreate.SUCCESS
+                KmpProfilePersonalDataCreate.StubCase.SUCCESS -> ProfileStubCreate.SUCCESS
                 else -> ProfileStubCreate.NONE
             }
         }
         is KmpProfilePersonalDataUpdate -> {
             workMode = save.debug?.db.toModel()
             stubCaseUpdate = when (save.debug?.stub) {
-                KmpProfilePersonalDataUpdate.StubCase.RUNNING -> ProfileStubUpdate.SUCCESS
+                KmpProfilePersonalDataUpdate.StubCase.SUCCESS -> ProfileStubUpdate.SUCCESS
                 else -> ProfileStubUpdate.NONE
             }
         }
@@ -47,7 +47,7 @@ fun ProfilePersonalContext.setQuery(del: KmpProfilePersonalDataDelete) = this.ap
     requestProfile.profileId = del.profileId ?: ""
     requestProfileId = del.profileId ?: ""
     stubCaseDelete = when (del.debug?.stub) {
-        KmpProfilePersonalDataDelete.StubCase.RUNNING -> ProfileStubDelete.SUCCESS
+        KmpProfilePersonalDataDelete.StubCase.SUCCESS -> ProfileStubDelete.SUCCESS
         else -> ProfileStubDelete.NONE
     }
     workMode = del.debug?.db.toModel()

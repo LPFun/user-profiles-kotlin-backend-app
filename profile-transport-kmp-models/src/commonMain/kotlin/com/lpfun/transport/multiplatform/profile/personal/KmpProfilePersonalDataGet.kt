@@ -17,6 +17,6 @@ data class KmpProfilePersonalDataGet(
     @Serializable
     enum class StubCase {
         NONE,
-        RUNNING
+        SUCCESS
     }
 }

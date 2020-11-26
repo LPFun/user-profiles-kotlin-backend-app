@@ -17,6 +17,6 @@ data class KmpProfileEducationDelete(
     @Serializable
     enum class StubCase {
         NONE,
-        RUNNING
+        SUCCESS
     }
 }

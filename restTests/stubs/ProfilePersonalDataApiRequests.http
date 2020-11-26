@@ -16,6 +16,9 @@ Content-Type: application/json
   "locationModel": {
     "country": "Test Country",
     "city": "Test City"
+  },
+  "debug": {
+    "stub": "SUCCESS"
   }
 }
 
@@ -35,6 +38,9 @@ Content-Type: application/json
   "locationModel": {
     "country": "Test Country",
     "city": "Test City"
+  },
+  "debug": {
+    "stub": "SUCCESS"
   }
 }
 
@@ -44,5 +50,8 @@ DELETE http://localhost:8080/profile/personal/
 Content-Type: application/json
 
 {
-  "profileId": "12345"
+  "profileId": "12345",
+  "debug": {
+    "stub": "SUCCESS"
+  }
 }

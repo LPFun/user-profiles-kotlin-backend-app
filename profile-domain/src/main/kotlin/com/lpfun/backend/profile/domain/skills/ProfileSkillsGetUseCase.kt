@@ -6,6 +6,7 @@ import com.lpfun.backend.common.profile.model.error.GeneralError
 import com.lpfun.backend.common.profile.model.profile.base.ProfileContextStatus
 import com.lpfun.backend.common.profile.model.profile.skills.ProfileSkillsContext
 import com.lpfun.backend.common.profile.repository.IProfileSkillsAndTechRepository
+import com.lpfun.backend.profile.domain.skills.handlers.setupWorkMode
 import com.lpfun.backend.profile.domain.skills.stubs.stubGet
 
 class ProfileSkillsGetUseCase(
@@ -21,6 +22,9 @@ class ProfileSkillsGetUseCase(
         val chain = cor<ProfileSkillsContext> {
             // Запуск пайплайна
             execute { responseProfileStatus = ProfileContextStatus.RUNNING }
+
+            // Установка режима работы
+            execute(setupWorkMode)
 
             // Валидация
 

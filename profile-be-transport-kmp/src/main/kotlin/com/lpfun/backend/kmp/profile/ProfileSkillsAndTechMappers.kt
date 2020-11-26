@@ -15,7 +15,7 @@ fun ProfileSkillsContext.setQuery(get: KmpProfileSkillsAndTechGet) = this.apply 
     requestProfile.profileId = get.profileId ?: ""
     requestProfileId = get.profileId ?: ""
     stubCaseGet = when (get.debug?.stub) {
-        KmpProfileSkillsAndTechGet.StubCase.RUNNING -> ProfileStubGet.SUCCESS
+        KmpProfileSkillsAndTechGet.StubCase.SUCCESS -> ProfileStubGet.SUCCESS
         else -> ProfileStubGet.NONE
     }
     workMode = get.debug?.db.toModel()
@@ -27,14 +27,14 @@ fun ProfileSkillsContext.setQuery(save: KmpProfileSkillsAndTechSave) = this.appl
         is KmpProfileSkillsAndTechCreate -> {
             workMode = save.debug?.db.toModel()
             stubCaseCreate = when (save.debug?.stub) {
-                KmpProfileSkillsAndTechCreate.StubCase.RUNNING -> ProfileStubCreate.SUCCESS
+                KmpProfileSkillsAndTechCreate.StubCase.SUCCESS -> ProfileStubCreate.SUCCESS
                 else -> ProfileStubCreate.NONE
             }
         }
         is KmpProfileSkillsAndTechUpdate -> {
             workMode = save.debug?.db.toModel()
             stubCaseUpdate = when (save.debug?.stub) {
-                KmpProfileSkillsAndTechUpdate.StubCase.RUNNING -> ProfileStubUpdate.SUCCESS
+                KmpProfileSkillsAndTechUpdate.StubCase.SUCCESS -> ProfileStubUpdate.SUCCESS
                 else -> ProfileStubUpdate.NONE
             }
         }
@@ -45,7 +45,7 @@ fun ProfileSkillsContext.setQuery(delete: KmpProfileSkillsAndTechDelete) = this.
     requestProfile.profileId = delete.profileId ?: ""
     requestProfileId = delete.profileId ?: ""
     stubCaseDelete = when (delete.debug?.stub) {
-        KmpProfileSkillsAndTechDelete.StubCase.RUNNING -> ProfileStubDelete.SUCCESS
+        KmpProfileSkillsAndTechDelete.StubCase.SUCCESS -> ProfileStubDelete.SUCCESS
         else -> ProfileStubDelete.NONE
     }
     workMode = delete.debug?.db.toModel()

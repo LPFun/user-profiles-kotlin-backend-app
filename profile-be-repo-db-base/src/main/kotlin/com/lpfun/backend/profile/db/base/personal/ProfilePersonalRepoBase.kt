@@ -8,7 +8,7 @@ import org.jetbrains.exposed.sql.addLogger
 import org.jetbrains.exposed.sql.transactions.transaction
 import java.util.*
 
-class ProfilePersonalRepoBase : IProfilePersonalDataRepository {
+open class ProfilePersonalRepoBase : IProfilePersonalDataRepository {
 
     override suspend fun get(id: String): ProfilePersonalData {
         return transaction {

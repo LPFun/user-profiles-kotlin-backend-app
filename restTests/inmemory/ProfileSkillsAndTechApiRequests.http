@@ -1,0 +1,66 @@
+GET http://localhost:8080/profile/skills?id=a9d77992-3e96-4010-bc35-ab7b8b88da40
+test:inmemory
+Content-Type: application/json
+
+###
+
+POST http://localhost:8080/profile/skills/
+Content-Type: application/json
+
+{
+  "specialization": {
+    "category": "Test Category",
+    "subCategory": "Test Sub Category"
+  },
+  "operatingSystems": [
+    {
+      "operatingSystem": "Test System"
+    }
+  ],
+  "dataBases": [
+    {
+      "dataBase": "Test Data Base"
+    }
+  ],
+  "debug": {
+    "db": "TEST"
+  }
+}
+
+###
+
+PUT http://localhost:8080/profile/skills/
+Content-Type: application/json
+
+{
+  "id": "a9d77992-3e96-4010-bc35-ab7b8b88da40",
+  "specialization": {
+    "category": "Updated Category",
+    "subCategory": "Updated Category"
+  },
+  "operatingSystems": [
+    {
+      "operatingSystem": "Updated Operating System"
+    }
+  ],
+  "dataBases": [
+    {
+      "dataBase": "Updated Data Base"
+    }
+  ],
+  "debug": {
+    "db": "TEST"
+  }
+}
+
+###
+
+DELETE http://localhost:8080/profile/skills/
+Content-Type: application/json
+
+{
+  "profileId": "a9d77992-3e96-4010-bc35-ab7b8b88da40",
+  "debug": {
+    "db": "TEST"
+  }
+}

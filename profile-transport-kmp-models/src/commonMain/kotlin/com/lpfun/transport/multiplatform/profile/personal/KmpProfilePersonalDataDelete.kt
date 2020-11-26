@@ -17,6 +17,6 @@ data class KmpProfilePersonalDataDelete(
     @Serializable
     enum class StubCase {
         NONE,
-        RUNNING
+        SUCCESS
     }
 }

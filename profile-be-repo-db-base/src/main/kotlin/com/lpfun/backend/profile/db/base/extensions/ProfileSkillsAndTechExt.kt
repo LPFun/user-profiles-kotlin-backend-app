@@ -13,14 +13,12 @@ fun ProfileOperatingSystemEntity.toModel() =
 fun ProfileDataBaseEntity.toModel() =
     DataBaseModel(id = profileId.toString(), dataBase = dataBase)
 
-fun ProfileSpecializationEntity?.toSpecializationModel(): SpecializationModel {
-    return this?.let {
-        SpecializationModel(
-            it.category,
-            it.subCategory
-        )
-    } ?: SpecializationModel.NONE
-}
+fun ProfileSpecializationEntity?.toSpecializationModel(): SpecializationModel = this?.let {
+    SpecializationModel(
+        it.category,
+        it.subCategory
+    )
+} ?: SpecializationModel.NONE
 
 fun Iterable<ProfileDataBaseEntity>.toDataBasesModel(): MutableSet<DataBaseModel> {
     val list = mutableSetOf<DataBaseModel>()

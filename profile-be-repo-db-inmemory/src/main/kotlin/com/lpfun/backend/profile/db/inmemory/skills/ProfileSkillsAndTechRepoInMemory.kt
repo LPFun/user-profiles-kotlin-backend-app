@@ -1,19 +1,20 @@
 package com.lpfun.backend.profile.db.inmemory.skills
 
 import com.lpfun.backend.common.profile.model.dsl.skills.profileSkills
-import com.lpfun.backend.common.profile.repository.IProfileSkillsAndTechRepository
+import com.lpfun.backend.common.profile.model.profile.skills.ProfileSkillsAndTech
 import com.lpfun.backend.profile.db.base.skills.*
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.transaction
 import java.util.*
 
-class ProfileSkillsAndTechRepoInMemory(db: Database? = null) :
-    IProfileSkillsAndTechRepository by ProfileSkillsAndTechRepoBase() {
-    init {
+class ProfileSkillsAndTechRepoInMemory(
+    private val db: Database? = null
+) : ProfileSkillsAndTechRepoBase() {
+    private fun init() {
         db?.let {
             transaction(it) {
                 addLogger(StdOutSqlLogger)
-                SchemaUtils.create(
+                SchemaUtils.createMissingTablesAndColumns(
                     ProfileSkillsAndTechTable,
                     ProfileSpecializationTable,
                     ProfileOperatingSystemTable,
@@ -22,6 +23,26 @@ class ProfileSkillsAndTechRepoInMemory(db: Database? = null) :
                 setInitialData()
             }
         }
+    }
+
+    override suspend fun get(id: String): ProfileSkillsAndTech {
+        init()
+        return super.get(id)
+    }
+
+    override suspend fun create(profile: ProfileSkillsAndTech): ProfileSkillsAndTech {
+        init()
+        return super.create(profile)
+    }
+
+    override suspend fun update(profile: ProfileSkillsAndTech): ProfileSkillsAndTech {
+        init()
+        return super.update(profile)
+    }
+
+    override suspend fun delete(id: String): ProfileSkillsAndTech {
+        init()
+        return super.delete(id)
     }
 
     private fun setInitialData() {

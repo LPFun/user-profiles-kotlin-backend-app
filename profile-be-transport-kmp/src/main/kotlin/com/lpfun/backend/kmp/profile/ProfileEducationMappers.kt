@@ -16,7 +16,7 @@ fun ProfileEducationContext.setQuery(get: KmpProfileEducationGet) = this.apply {
     requestProfile.profileId = get.profileId ?: ""
     requestProfileId = get.profileId ?: ""
     stubCaseGet = when (get.debug?.stub) {
-        KmpProfileEducationGet.StubCase.RUNNING -> ProfileStubGet.SUCCESS
+        KmpProfileEducationGet.StubCase.SUCCESS -> ProfileStubGet.SUCCESS
         else -> ProfileStubGet.NONE
     }
     workMode = get.debug?.db.toModel()
@@ -28,14 +28,14 @@ fun ProfileEducationContext.setQuery(save: KmpProfileEducationSave) = this.apply
         is KmpProfileEducationCreate -> {
             workMode = save.debug?.db.toModel()
             stubCaseCreate = when (save.debug?.stub) {
-                KmpProfileEducationCreate.StubCase.RUNNING -> ProfileStubCreate.SUCCESS
+                KmpProfileEducationCreate.StubCase.SUCCESS -> ProfileStubCreate.SUCCESS
                 else -> ProfileStubCreate.NONE
             }
         }
         is KmpProfileEducationUpdate -> {
             workMode = save.debug?.db.toModel()
             stubCaseUpdate = when (save.debug?.stub) {
-                KmpProfileEducationUpdate.StubCase.RUNNING -> ProfileStubUpdate.SUCCESS
+                KmpProfileEducationUpdate.StubCase.SUCCESS -> ProfileStubUpdate.SUCCESS
                 else -> ProfileStubUpdate.NONE
             }
         }
@@ -46,7 +46,7 @@ fun ProfileEducationContext.setQuery(del: KmpProfileEducationDelete) = this.appl
     requestProfile.profileId = del.profileId ?: ""
     requestProfileId = del.profileId ?: ""
     stubCaseDelete = when (del.debug?.stub) {
-        KmpProfileEducationDelete.StubCase.RUNNING -> com.lpfun.backend.common.profile.model.profile.base.stub.ProfileStubDelete.SUCCESS
+        KmpProfileEducationDelete.StubCase.SUCCESS -> com.lpfun.backend.common.profile.model.profile.base.stub.ProfileStubDelete.SUCCESS
         else -> com.lpfun.backend.common.profile.model.profile.base.stub.ProfileStubDelete.NONE
     }
     workMode = del.debug?.db.toModel()

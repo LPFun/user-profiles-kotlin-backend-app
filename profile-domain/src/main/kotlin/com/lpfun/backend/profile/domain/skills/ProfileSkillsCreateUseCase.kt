@@ -33,7 +33,6 @@ class ProfileSkillsCreateUseCase(
             // Обработка стабов
             execute(stubCreate)
 
-
             // Обращение к БД
             handler {
                 condition { responseProfileStatus == ProfileContextStatus.RUNNING }

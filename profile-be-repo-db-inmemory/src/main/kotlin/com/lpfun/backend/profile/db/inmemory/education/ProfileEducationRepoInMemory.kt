@@ -1,19 +1,20 @@
 package com.lpfun.backend.profile.db.inmemory.education
 
 import com.lpfun.backend.common.profile.model.dsl.education.profileEducation
-import com.lpfun.backend.common.profile.repository.IProfileEducationRepository
+import com.lpfun.backend.common.profile.model.profile.education.ProfileEducation
 import com.lpfun.backend.profile.db.base.education.*
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.transaction
 import java.util.*
 
-class ProfileEducationRepoInMemory(db: Database? = null) :
-    IProfileEducationRepository by ProfileEducationRepositoryBase() {
-    init {
+class ProfileEducationRepoInMemory(private val db: Database? = null) :
+    ProfileEducationRepositoryBase() {
+
+    private fun init() {
         db?.let {
             transaction(it) {
                 addLogger(StdOutSqlLogger)
-                SchemaUtils.create(
+                SchemaUtils.createMissingTablesAndColumns(
                     ProfileEducationTable,
                     MainEducationTable,
                     AdditionalEducationTable
@@ -24,7 +25,27 @@ class ProfileEducationRepoInMemory(db: Database? = null) :
         }
     }
 
-    fun setInitialData() {
+    override suspend fun get(id: String): ProfileEducation {
+        init()
+        return super.get(id)
+    }
+
+    override suspend fun create(profile: ProfileEducation): ProfileEducation {
+        init()
+        return super.create(profile)
+    }
+
+    override suspend fun update(profile: ProfileEducation): ProfileEducation {
+        init()
+        return super.update(profile)
+    }
+
+    override suspend fun delete(id: String): ProfileEducation {
+        init()
+        return super.delete(id)
+    }
+
+    private fun setInitialData() {
         val profileEducationTest = profileEducation {
             id = "test-id"
             +mainEducation {

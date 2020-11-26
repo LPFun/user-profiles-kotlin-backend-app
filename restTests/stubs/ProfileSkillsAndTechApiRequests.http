@@ -1,8 +1,5 @@
 GET http://localhost:8080/profile/skills?id=111
-
-###
-
-GET http://localhost:8080/profile/skills?id=112
+test:stub
 
 ###
 
@@ -15,11 +12,18 @@ Content-Type: application/json
     "subCategory": "Test Sub Category"
   },
   "operatingSystems": [
-    "Test System"
+    {
+      "operatingSystem": "Test System"
+    }
   ],
   "dataBases": [
-    "Test Data Base"
-  ]
+    {
+      "dataBase": "Test Data Base"
+    }
+  ],
+  "debug": {
+    "stub": "SUCCESS"
+  }
 }
 
 ###
@@ -28,16 +32,24 @@ PUT http://localhost:8080/profile/skills/
 Content-Type: application/json
 
 {
+  "id": "test-id",
   "specialization": {
-    "category": "Update Category",
-    "subCategory": "Update Sub Category"
+    "category": "Test Category",
+    "subCategory": "Test Sub Category"
   },
   "operatingSystems": [
-    "Update System"
+    {
+      "operatingSystem": "Test System"
+    }
   ],
   "dataBases": [
-    "Update Data Base"
-  ]
+    {
+      "dataBase": "Test Data Base"
+    }
+  ],
+  "debug": {
+    "stub": "SUCCESS"
+  }
 }
 
 ###
@@ -46,5 +58,8 @@ DELETE http://localhost:8080/profile/skills/
 Content-Type: application/json
 
 {
-  "profileId": "111"
+  "profileId": "test-id",
+  "debug": {
+    "stub": "SUCCESS"
+  }
 }

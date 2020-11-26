@@ -34,6 +34,6 @@ data class KmpProfilePersonalDataCreate(
     @Serializable
     enum class StubCase {
         NONE,
-        RUNNING
+        SUCCESS
     }
 }

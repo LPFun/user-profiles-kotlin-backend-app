@@ -35,6 +35,6 @@ data class KmpProfilePersonalDataUpdate(
     @Serializable
     enum class StubCase {
         NONE,
-        RUNNING
+        SUCCESS
     }
 }

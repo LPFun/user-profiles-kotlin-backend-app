@@ -46,7 +46,7 @@ fun ApplicationRequest.mapToProfileEducationGetRequest() = KmpProfileEducationGe
     profileId = this.queryParameters["id"],
     debug = KmpProfileEducationGet.Debug().also {
         when (this.headers["test"]) {
-            "test" -> it.stub = KmpProfileEducationGet.StubCase.RUNNING
+            "stub" -> it.stub = KmpProfileEducationGet.StubCase.SUCCESS
             "inmemory" -> it.db = KmpProfileDbMode.TEST
         }
     }
@@ -56,7 +56,7 @@ fun ApplicationRequest.mapToProfilePersonalGetRequest() = KmpProfilePersonalData
     profileId = this.queryParameters["id"],
     debug = KmpProfilePersonalDataGet.Debug().also {
         when (this.headers["test"]) {
-            "test" -> it.stub = KmpProfilePersonalDataGet.StubCase.RUNNING
+            "stub" -> it.stub = KmpProfilePersonalDataGet.StubCase.SUCCESS
             "inmemory" -> it.db = KmpProfileDbMode.TEST
         }
     }
@@ -66,7 +66,7 @@ fun ApplicationRequest.mapToProfileSkillsGetRequest() = KmpProfileSkillsAndTechG
     profileId = this.queryParameters["id"],
     debug = KmpProfileSkillsAndTechGet.Debug().also {
         when (this.headers["test"]) {
-            "test" -> it.stub = KmpProfileSkillsAndTechGet.StubCase.RUNNING
+            "stub" -> it.stub = KmpProfileSkillsAndTechGet.StubCase.SUCCESS
             "inmemory" -> it.db = KmpProfileDbMode.TEST
         }
     }
