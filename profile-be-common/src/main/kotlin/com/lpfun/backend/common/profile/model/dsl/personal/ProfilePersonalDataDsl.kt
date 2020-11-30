@@ -35,7 +35,8 @@ class ProfilePersonalDataDsl(
     }
 }
 
-fun profilePersonalData(conf: ProfilePersonalDataDsl.() -> Unit) = ProfilePersonalDataDsl().apply(conf).run {
+fun profilePersonalData(conf: ProfilePersonalDataDsl.() -> Unit) = ProfilePersonalDataDsl().run {
+    conf()
     ProfilePersonalData(
         profileId = id,
         firstName = name.first,

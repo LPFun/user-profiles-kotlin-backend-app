@@ -20,7 +20,7 @@ class ProfileEducationRouteTest {
     fun getProfileEducationTest() {
         withTestApplication({ module(testing = true) }) {
             handleRequest(HttpMethod.Get, "/profile/education?id=123") {
-                addHeader("test", "stub")
+                addHeader("stub", "success")
             }.apply {
                 val getResponse = Json.decodeFromString(
                     KmpProfileEducationResponse.serializer(),

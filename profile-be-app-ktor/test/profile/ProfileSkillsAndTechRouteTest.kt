@@ -32,7 +32,7 @@ class ProfileSkillsAndTechRouteTest {
     fun getProfileSkillsAndTechRouteTest() {
         withTestApplication({ module(testing = true) }) {
             handleRequest(HttpMethod.Get, "$uri?id=111") {
-                addHeader("test", "stub")
+                addHeader("stub", "success")
             }.apply {
                 val responseObj = getResponseObj(response.content)
                 assertEquals(HttpStatusCode.OK, response.status())

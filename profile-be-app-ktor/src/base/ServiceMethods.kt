@@ -14,6 +14,10 @@ import com.lpfun.transport.multiplatform.profile.skills.KmpProfileSkillsAndTechG
 import com.lpfun.transport.multiplatform.profile.skills.KmpProfileSkillsAndTechResponse
 import io.ktor.request.*
 
+val STUB_KEY = "stub"
+val STUB_SUCCESS_KEY = "success"
+val IN_MEMORY_KEY = "test"
+val IN_MEMORY_VALUE = "inmemory"
 
 inline fun ProfileEducationContext.request(block: ProfileEducationContext.() -> Unit): KmpProfileEducationResponse {
     try {
@@ -45,9 +49,9 @@ inline fun ProfilePersonalContext.request(block: ProfilePersonalContext.() -> Un
 fun ApplicationRequest.mapToProfileEducationGetRequest() = KmpProfileEducationGet(
     profileId = this.queryParameters["id"],
     debug = KmpProfileEducationGet.Debug().also {
-        when (this.headers["test"]) {
-            "stub" -> it.stub = KmpProfileEducationGet.StubCase.SUCCESS
-            "inmemory" -> it.db = KmpProfileDbMode.TEST
+        if (this.headers[IN_MEMORY_KEY] == IN_MEMORY_VALUE) it.db = KmpProfileDbMode.TEST
+        when (this.headers[STUB_KEY]) {
+            STUB_SUCCESS_KEY -> KmpProfileEducationGet.StubCase.SUCCESS
         }
     }
 )
@@ -55,9 +59,9 @@ fun ApplicationRequest.mapToProfileEducationGetRequest() = KmpProfileEducationGe
 fun ApplicationRequest.mapToProfilePersonalGetRequest() = KmpProfilePersonalDataGet(
     profileId = this.queryParameters["id"],
     debug = KmpProfilePersonalDataGet.Debug().also {
-        when (this.headers["test"]) {
-            "stub" -> it.stub = KmpProfilePersonalDataGet.StubCase.SUCCESS
-            "inmemory" -> it.db = KmpProfileDbMode.TEST
+        if (this.headers[IN_MEMORY_KEY] == IN_MEMORY_VALUE) it.db = KmpProfileDbMode.TEST
+        when (this.headers[STUB_KEY]) {
+            STUB_SUCCESS_KEY -> it.stub = KmpProfilePersonalDataGet.StubCase.SUCCESS
         }
     }
 )
@@ -65,9 +69,9 @@ fun ApplicationRequest.mapToProfilePersonalGetRequest() = KmpProfilePersonalData
 fun ApplicationRequest.mapToProfileSkillsGetRequest() = KmpProfileSkillsAndTechGet(
     profileId = this.queryParameters["id"],
     debug = KmpProfileSkillsAndTechGet.Debug().also {
-        when (this.headers["test"]) {
-            "stub" -> it.stub = KmpProfileSkillsAndTechGet.StubCase.SUCCESS
-            "inmemory" -> it.db = KmpProfileDbMode.TEST
+        if (this.headers[IN_MEMORY_KEY] == IN_MEMORY_VALUE) it.db = KmpProfileDbMode.TEST
+        when (this.headers[STUB_KEY]) {
+            STUB_SUCCESS_KEY -> it.stub = KmpProfileSkillsAndTechGet.StubCase.SUCCESS
         }
     }
 )

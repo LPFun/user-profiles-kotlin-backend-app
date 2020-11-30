@@ -31,7 +31,8 @@ class ProfileEducationDsl(
     }
 }
 
-fun profileEducation(conf: ProfileEducationDsl.() -> Unit): ProfileEducation = ProfileEducationDsl().apply(conf).run() {
+fun profileEducation(conf: ProfileEducationDsl.() -> Unit): ProfileEducation = ProfileEducationDsl().run() {
+    conf()
     ProfileEducation(
         profileId = id,
         mainEducation = mainEducation.toModel(),

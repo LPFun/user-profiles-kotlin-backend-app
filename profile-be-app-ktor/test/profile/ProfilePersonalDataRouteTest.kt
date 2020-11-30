@@ -19,7 +19,7 @@ class ProfilePersonalDataRouteTest {
     fun testGet() {
         withTestApplication({ module(testing = true) }) {
             handleRequest(HttpMethod.Get, "profile/personal?id=12345") {
-                addHeader("test", "stub")
+                addHeader("stub", "success")
             }.apply {
                 val responseObj = Json.decodeFromString(
                     KmpProfilePersonalDataResponse.serializer(),

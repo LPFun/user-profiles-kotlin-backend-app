@@ -28,7 +28,8 @@ class ProfileSkillsDsl(
     }
 }
 
-fun profileSkills(conf: ProfileSkillsDsl.() -> Unit) = ProfileSkillsDsl().apply(conf).run {
+fun profileSkills(conf: ProfileSkillsDsl.() -> Unit) = ProfileSkillsDsl().run {
+    conf()
     ProfileSkillsAndTech(
         profileId = id,
         specialization = SpecializationModel(specialization.category, specialization.subCategory),
