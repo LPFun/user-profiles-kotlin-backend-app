@@ -1,5 +1,6 @@
 package com.lpfun.transport.multiplatform.profile.education
 
+import com.lpfun.transport.multiplatform.profile.KmpProfileDbMode
 import com.lpfun.transport.multiplatform.profile.education.model.KmpAdditionalEducationModel
 import com.lpfun.transport.multiplatform.profile.education.model.KmpEducationModel
 import kotlinx.serialization.Serializable
@@ -17,11 +18,12 @@ data class KmpProfileEducationUpdate(
     @Serializable
     class Debug {
         var stub: StubCase? = null
+        var db: KmpProfileDbMode? = null
     }
 
     @Serializable
     enum class StubCase {
         NONE,
-        RUNNING
+        SUCCESS
     }
 }

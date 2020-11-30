@@ -1,0 +1,60 @@
+GET http://localhost:8080/profile/personal?id=test-id
+test:inmemory
+Content-Type: application/json
+
+###
+
+POST http://localhost:8080/profile/personal/
+Content-Type: application/json
+
+{
+  "firstName": "Test",
+  "middleName": "Test",
+  "lastName": "Test",
+  "displayName": "Test Test",
+  "phone": "+12345",
+  "email": "Test@test.com",
+  "bday": "2000-01-01",
+  "locationModel": {
+    "country": "Test Country",
+    "city": "Test City"
+  },
+  "debug": {
+    "db": "TEST"
+  }
+}
+
+###
+
+PUT http://localhost:8080/profile/personal/
+Content-Type: application/json
+
+{
+  "profileId": "test-id",
+  "firstName": "Test1",
+  "middleName": "Test1",
+  "lastName": "Test1",
+  "displayName": "Test1 Test1",
+  "phone": "+12345",
+  "email": "Test@test.com",
+  "bday": "2000-01-01",
+  "locationModel": {
+    "country": "Test Country",
+    "city": "Test City"
+  },
+  "debug": {
+    "db": "TEST"
+  }
+}
+
+###
+
+DELETE http://localhost:8080/profile/personal/
+Content-Type: application/json
+
+{
+  "profileId": "test-id",
+  "debug": {
+    "db": "TEST"
+  }
+}

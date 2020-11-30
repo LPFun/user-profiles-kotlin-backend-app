@@ -1,8 +1,8 @@
 package com.lpfun.backend.kmp.profile
 
-import com.lpfun.backend.common.model.profile.education.AdditionalEducationModel
-import com.lpfun.backend.common.model.profile.education.EducationModel
-import com.lpfun.backend.common.model.profile.education.ProfileEducation
+import com.lpfun.backend.common.profile.model.profile.education.AdditionalEducationModel
+import com.lpfun.backend.common.profile.model.profile.education.EducationModel
+import com.lpfun.backend.common.profile.model.profile.education.ProfileEducation
 import com.lpfun.transport.multiplatform.profile.education.KmpProfileEducationUpdate
 import com.lpfun.transport.multiplatform.profile.education.model.KmpAdditionalEducationModel
 import com.lpfun.transport.multiplatform.profile.education.model.KmpEducationModel

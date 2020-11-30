@@ -1,10 +1,11 @@
 package com.lpfun.base
 
-import com.lpfun.backend.common.model.error.InternalServerError
-import com.lpfun.backend.common.model.profile.education.ProfileEducationContext
-import com.lpfun.backend.common.model.profile.personal.ProfilePersonalContext
-import com.lpfun.backend.common.model.profile.skills.ProfileSkillsContext
+import com.lpfun.backend.common.profile.model.error.InternalServerError
+import com.lpfun.backend.common.profile.model.profile.education.ProfileEducationContext
+import com.lpfun.backend.common.profile.model.profile.personal.ProfilePersonalContext
+import com.lpfun.backend.common.profile.model.profile.skills.ProfileSkillsContext
 import com.lpfun.backend.kmp.profile.resultItem
+import com.lpfun.transport.multiplatform.profile.KmpProfileDbMode
 import com.lpfun.transport.multiplatform.profile.education.KmpProfileEducationGet
 import com.lpfun.transport.multiplatform.profile.education.KmpProfileEducationResponse
 import com.lpfun.transport.multiplatform.profile.personal.KmpProfilePersonalDataGet
@@ -13,6 +14,10 @@ import com.lpfun.transport.multiplatform.profile.skills.KmpProfileSkillsAndTechG
 import com.lpfun.transport.multiplatform.profile.skills.KmpProfileSkillsAndTechResponse
 import io.ktor.request.*
 
+val STUB_KEY = "stub"
+val STUB_SUCCESS_KEY = "success"
+val IN_MEMORY_KEY = "test"
+val IN_MEMORY_VALUE = "inmemory"
 
 inline fun ProfileEducationContext.request(block: ProfileEducationContext.() -> Unit): KmpProfileEducationResponse {
     try {
@@ -44,21 +49,29 @@ inline fun ProfilePersonalContext.request(block: ProfilePersonalContext.() -> Un
 fun ApplicationRequest.mapToProfileEducationGetRequest() = KmpProfileEducationGet(
     profileId = this.queryParameters["id"],
     debug = KmpProfileEducationGet.Debug().also {
-        it.stub = if (this.headers["test"] == "test") KmpProfileEducationGet.StubCase.RUNNING else null
+        if (this.headers[IN_MEMORY_KEY] == IN_MEMORY_VALUE) it.db = KmpProfileDbMode.TEST
+        when (this.headers[STUB_KEY]) {
+            STUB_SUCCESS_KEY -> KmpProfileEducationGet.StubCase.SUCCESS
+        }
     }
 )
 
 fun ApplicationRequest.mapToProfilePersonalGetRequest() = KmpProfilePersonalDataGet(
     profileId = this.queryParameters["id"],
     debug = KmpProfilePersonalDataGet.Debug().also {
-        it.stub = if (this.headers["test"] == "test") KmpProfilePersonalDataGet.StubCase.RUNNING else null
+        if (this.headers[IN_MEMORY_KEY] == IN_MEMORY_VALUE) it.db = KmpProfileDbMode.TEST
+        when (this.headers[STUB_KEY]) {
+            STUB_SUCCESS_KEY -> it.stub = KmpProfilePersonalDataGet.StubCase.SUCCESS
+        }
     }
-
 )
 
 fun ApplicationRequest.mapToProfileSkillsGetRequest() = KmpProfileSkillsAndTechGet(
     profileId = this.queryParameters["id"],
     debug = KmpProfileSkillsAndTechGet.Debug().also {
-        it.stub = if (this.headers["test"] == "test") KmpProfileSkillsAndTechGet.StubCase.RUNNING else null
+        if (this.headers[IN_MEMORY_KEY] == IN_MEMORY_VALUE) it.db = KmpProfileDbMode.TEST
+        when (this.headers[STUB_KEY]) {
+            STUB_SUCCESS_KEY -> it.stub = KmpProfileSkillsAndTechGet.StubCase.SUCCESS
+        }
     }
 )

@@ -1,9 +1,9 @@
 package com.lpfun.backend.common.model.dsl
 
-import com.lpfun.backend.common.model.dsl.education.profileEducation
-import com.lpfun.backend.common.model.extensions.applyRequest
-import com.lpfun.backend.common.model.profile.education.ProfileEducation
-import com.lpfun.backend.common.model.profile.education.ProfileEducationContext
+import com.lpfun.backend.common.profile.model.dsl.education.profileEducation
+import com.lpfun.backend.common.profile.model.extensions.applyRequest
+import com.lpfun.backend.common.profile.model.profile.education.ProfileEducation
+import com.lpfun.backend.common.profile.model.profile.education.ProfileEducationContext
 import kotlin.test.Test
 import kotlin.test.assertEquals
 

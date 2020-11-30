@@ -16,6 +16,7 @@ object Deps {
     val ktor = Ktor
     val kodein = Kodein
     val logging = Logging
+    val database = Database
 
     object Versions {
         const val kotlinDatetime = "0.1.0"
@@ -28,6 +29,9 @@ object Deps {
         const val profileTransportKmpModels = ":profile-transport-kmp-models"
         const val profileBeTransportKmp = ":profile-be-transport-kmp"
         const val profileDomain = ":profile-domain"
+        const val profileDataBase = ":profile-be-repo-db"
+        const val profileInMemoryDB = ":profile-be-repo-db-inmemory"
+        const val profileDBBase = ":profile-be-repo-db-base"
     }
 
     object Kotlinx {
@@ -53,6 +57,18 @@ object Deps {
     object Logging {
         private const val logbackVersion = "1.2.1"
         const val logbackClassic = "ch.qos.logback:logback-classic:$logbackVersion"
+    }
+
+    object Database {
+        private const val exposedVersion = "0.28.1"
+        const val h2 = "com.h2database:h2:1.4.200"
+        const val exposedCore = "org.jetbrains.exposed:exposed-core:$exposedVersion"
+        const val exposedDao = "org.jetbrains.exposed:exposed-dao:$exposedVersion"
+        const val exposedJdbc = "org.jetbrains.exposed:exposed-jdbc:$exposedVersion"
+        const val postgreSql = "org.postgresql:postgresql:42.2.18"
+        const val postgreSqlTestContainers = "org.testcontainers:postgresql:1.14.3"
+        const val hikari = "com.zaxxer:HikariCP:3.4.5"
+        const val flywayCore = "org.flywaydb:flyway-core:7.1.1"
     }
 
 }

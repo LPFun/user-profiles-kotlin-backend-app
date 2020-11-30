@@ -1,7 +1,9 @@
 package com.lpfun.backend.kmp.profile
 
-import com.lpfun.backend.common.model.error.IProfileError
-import com.lpfun.backend.common.model.profile.base.BaseProfileContext
+import com.lpfun.backend.common.WorkMode
+import com.lpfun.backend.common.profile.model.error.IProfileError
+import com.lpfun.backend.common.profile.model.profile.base.BaseProfileContext
+import com.lpfun.transport.multiplatform.profile.KmpProfileDbMode
 import com.lpfun.transport.multiplatform.profile.KmpProfileError
 import com.lpfun.transport.multiplatform.profile.KmpProfileResponseStatus
 
@@ -25,3 +27,9 @@ fun BaseProfileContext.kmpStatus() = when {
 }
 
 fun String?.toModelString() = this?.takeIf { it.isNotBlank() } ?: ""
+
+fun KmpProfileDbMode?.toModel() = when (this) {
+    KmpProfileDbMode.TEST -> WorkMode.TEST
+    KmpProfileDbMode.PROD -> WorkMode.PROD
+    else -> WorkMode.DEFAULT
+}

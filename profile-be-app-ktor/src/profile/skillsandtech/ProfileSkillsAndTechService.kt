@@ -1,6 +1,6 @@
 package com.lpfun.profile.skillsandtech
 
-import com.lpfun.backend.common.model.profile.skills.ProfileSkillsContext
+import com.lpfun.backend.common.profile.model.profile.skills.ProfileSkillsContext
 import com.lpfun.backend.kmp.profile.setQuery
 import com.lpfun.backend.profile.domain.skills.ProfileSkillsCrud
 import com.lpfun.base.request
@@ -25,6 +25,6 @@ class ProfileSkillsAndTechService(
     }
 
     suspend fun delete(query: KmpProfileSkillsAndTechDelete) = ProfileSkillsContext().request {
-        crud.update(setQuery(query))
+        crud.delete(setQuery(query))
     }
 }

@@ -1,12 +1,12 @@
 package com.lpfun.backend.profile.domain
 
-import com.lpfun.backend.common.model.dsl.education.profileEducation
-import com.lpfun.backend.common.model.profile.base.stub.ProfileStubCreate
-import com.lpfun.backend.common.model.profile.base.stub.ProfileStubDelete
-import com.lpfun.backend.common.model.profile.base.stub.ProfileStubUpdate
-import com.lpfun.backend.common.model.profile.education.AdditionalEducationModel
-import com.lpfun.backend.common.model.profile.education.EducationModel
-import com.lpfun.backend.common.model.profile.education.ProfileEducationContext
+import com.lpfun.backend.common.profile.model.dsl.education.profileEducation
+import com.lpfun.backend.common.profile.model.profile.base.stub.ProfileStubCreate
+import com.lpfun.backend.common.profile.model.profile.base.stub.ProfileStubDelete
+import com.lpfun.backend.common.profile.model.profile.base.stub.ProfileStubUpdate
+import com.lpfun.backend.common.profile.model.profile.education.AdditionalEducationModel
+import com.lpfun.backend.common.profile.model.profile.education.EducationModel
+import com.lpfun.backend.common.profile.model.profile.education.ProfileEducationContext
 import com.lpfun.backend.profile.domain.education.ProfileEducationCrud
 import kotlinx.coroutines.runBlocking
 import kotlin.test.Test

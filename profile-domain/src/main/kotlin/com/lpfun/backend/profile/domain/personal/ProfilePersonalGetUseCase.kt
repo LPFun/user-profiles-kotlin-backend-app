@@ -2,14 +2,21 @@ package com.lpfun.backend.profile.domain.personal
 
 import com.lpfun.backend.common.cor.IExec
 import com.lpfun.backend.common.cor.cor
-import com.lpfun.backend.common.model.dsl.personal.profilePersonalData
-import com.lpfun.backend.common.model.profile.base.ProfileContextStatus
-import com.lpfun.backend.common.model.profile.base.stub.ProfileStubGet
-import com.lpfun.backend.common.model.profile.personal.ProfilePersonalContext
+import com.lpfun.backend.common.profile.model.error.GeneralError
+import com.lpfun.backend.common.profile.model.profile.base.ProfileContextStatus
+import com.lpfun.backend.common.profile.model.profile.personal.ProfilePersonalContext
+import com.lpfun.backend.common.profile.repository.IProfilePersonalDataRepository
+import com.lpfun.backend.profile.domain.personal.handlers.responsePrepareHandler
+import com.lpfun.backend.profile.domain.personal.handlers.setupWorkMode
+import com.lpfun.backend.profile.domain.personal.stubs.stubProfilePersonalGet
 
-class ProfilePersonalGetUseCase : IExec<ProfilePersonalContext> {
+class ProfilePersonalGetUseCase(
+    private val repo: IProfilePersonalDataRepository,
+    private val testRepo: IProfilePersonalDataRepository
+) : IExec<ProfilePersonalContext> {
     override suspend fun execute(ctx: ProfilePersonalContext) = chain.execute(ctx.apply {
-
+        repository = repo
+        testRepository = testRepo
     })
 
     companion object {
@@ -18,43 +25,29 @@ class ProfilePersonalGetUseCase : IExec<ProfilePersonalContext> {
                 responseProfileStatus = ProfileContextStatus.RUNNING
             }
 
-            // Обработка стабов
-            processor {
-                condition { stubCaseGet != ProfileStubGet.NONE }
-                handler {
-                    condition { stubCaseGet == ProfileStubGet.SUCCESS }
-                    exec {
-                        responseProfile = profilePersonalData {
-                            id = requestProfile.profileId
-                            name {
-                                first = "John"
-                                second = "Junior"
-                                last = "Smith"
-                                display = "John Smith"
-                            }
-                            contacts {
-                                phone = "+1234"
-                                email = "mail@mail.com"
-                            }
-                            location {
-                                country = "Test Country"
-                                city = "Test City"
-                            }
-                        }
-                        responseProfileStatus = ProfileContextStatus.FINISHING
-                    }
-                }
-            }
+            // Установка режима работы
+            execute(setupWorkMode)
 
             // Валидация
 
-            // Обращение к БД и обработка
+            // Обработка стабов
+            execute(stubProfilePersonalGet)
 
-            // Подготовка ответа
-            execute {
-                responseProfileStatus = ProfileContextStatus.SUCCESS
+            // Обращение к БД и обработка
+            handler {
+                condition { responseProfileStatus == ProfileContextStatus.RUNNING }
+                exec {
+                    responseProfile = repository.get(requestProfile.profileId)
+                    responseProfileStatus = ProfileContextStatus.SUCCESS
+                }
+                error {
+                    responseProfileStatus = ProfileContextStatus.ERROR
+                    errors.add(GeneralError(code = "repo-get-error", e = it))
+                }
             }
 
+            // Подготовка ответа
+            execute(responsePrepareHandler)
         }
     }
 }

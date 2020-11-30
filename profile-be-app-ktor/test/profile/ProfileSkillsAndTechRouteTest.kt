@@ -5,6 +5,8 @@ import com.lpfun.transport.multiplatform.profile.skills.KmpProfileSkillsAndTechC
 import com.lpfun.transport.multiplatform.profile.skills.KmpProfileSkillsAndTechDelete
 import com.lpfun.transport.multiplatform.profile.skills.KmpProfileSkillsAndTechResponse
 import com.lpfun.transport.multiplatform.profile.skills.KmpProfileSkillsAndTechUpdate
+import com.lpfun.transport.multiplatform.profile.skills.model.KmpDataBaseModel
+import com.lpfun.transport.multiplatform.profile.skills.model.KmpOperatingSystemModel
 import io.ktor.http.*
 import io.ktor.server.testing.*
 import kotlinx.serialization.json.Json
@@ -30,7 +32,7 @@ class ProfileSkillsAndTechRouteTest {
     fun getProfileSkillsAndTechRouteTest() {
         withTestApplication({ module(testing = true) }) {
             handleRequest(HttpMethod.Get, "$uri?id=111") {
-                addHeader("test", "test")
+                addHeader("stub", "success")
             }.apply {
                 val responseObj = getResponseObj(response.content)
                 assertEquals(HttpStatusCode.OK, response.status())
@@ -45,9 +47,9 @@ class ProfileSkillsAndTechRouteTest {
             handleRequest(HttpMethod.Post, uri) {
                 addHeaderContentTypeJson()
                 val requestBody = KmpProfileSkillsAndTechCreate(
-                    operatingSystems = mutableSetOf("Test System"),
+                    operatingSystems = mutableSetOf(KmpOperatingSystemModel(operatingSystem = "Test System")),
                     debug = KmpProfileSkillsAndTechCreate.Debug().apply {
-                        stub = KmpProfileSkillsAndTechCreate.StubCase.RUNNING
+                        stub = KmpProfileSkillsAndTechCreate.StubCase.SUCCESS
                     }
                 )
                 val body = Json.encodeToString(KmpProfileSkillsAndTechCreate.serializer(), requestBody)
@@ -55,7 +57,7 @@ class ProfileSkillsAndTechRouteTest {
             }.apply {
                 val responseObj = getResponseObj(response.content)
                 assertEquals(HttpStatusCode.OK, response.status())
-                assertEquals(mutableSetOf("Test System"), responseObj.data?.operatingSystems)
+                assertEquals("Test System", responseObj.data?.operatingSystems?.first()?.operatingSystem)
                 assertNotEquals("", responseObj.data?.profileId)
             }
         }
@@ -67,9 +69,9 @@ class ProfileSkillsAndTechRouteTest {
             handleRequest(HttpMethod.Put, uri) {
                 addHeaderContentTypeJson()
                 val requestBody = KmpProfileSkillsAndTechUpdate(
-                    dataBases = mutableSetOf("Update Data Base"),
+                    dataBases = mutableSetOf(KmpDataBaseModel(dataBase = "Update Data Base")),
                     debug = KmpProfileSkillsAndTechUpdate.Debug().apply {
-                        stub = KmpProfileSkillsAndTechUpdate.StubCase.RUNNING
+                        stub = KmpProfileSkillsAndTechUpdate.StubCase.SUCCESS
                     }
                 )
                 val body = Json.encodeToString(KmpProfileSkillsAndTechUpdate.serializer(), requestBody)
@@ -77,7 +79,7 @@ class ProfileSkillsAndTechRouteTest {
             }.apply {
                 getResponseObj(response.content).run {
                     assertEquals(HttpStatusCode.OK, response.status())
-                    assertEquals("Update Data Base", data?.dataBases?.first())
+                    assertEquals("Update Data Base", data?.dataBases?.first()?.dataBase)
                 }
             }
         }
@@ -91,7 +93,7 @@ class ProfileSkillsAndTechRouteTest {
                 val requestBody = KmpProfileSkillsAndTechDelete(
                     profileId = "test-id",
                     debug = KmpProfileSkillsAndTechDelete.Debug().apply {
-                        stub = KmpProfileSkillsAndTechDelete.StubCase.RUNNING
+                        stub = KmpProfileSkillsAndTechDelete.StubCase.SUCCESS
                     }
                 )
                 val body = Json.encodeToString(KmpProfileSkillsAndTechDelete.serializer(), requestBody)
@@ -99,7 +101,7 @@ class ProfileSkillsAndTechRouteTest {
             }.apply {
                 getResponseObj(response.content).run {
                     assertEquals(HttpStatusCode.OK, response.status())
-                    assertEquals("", data?.profileId)
+                    assertEquals("test-id", data?.profileId)
                 }
             }
         }

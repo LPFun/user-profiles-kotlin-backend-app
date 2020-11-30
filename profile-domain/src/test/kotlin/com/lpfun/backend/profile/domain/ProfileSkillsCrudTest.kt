@@ -1,25 +1,24 @@
 package com.lpfun.backend.profile.domain
 
-import com.lpfun.backend.common.model.dsl.skills.profileSkills
-import com.lpfun.backend.common.model.profile.base.stub.ProfileStubCreate
-import com.lpfun.backend.common.model.profile.base.stub.ProfileStubDelete
-import com.lpfun.backend.common.model.profile.base.stub.ProfileStubGet
-import com.lpfun.backend.common.model.profile.base.stub.ProfileStubUpdate
-import com.lpfun.backend.common.model.profile.skills.ProfileSkillsContext
+import com.lpfun.backend.common.profile.model.dsl.skills.profileSkills
+import com.lpfun.backend.common.profile.model.profile.base.stub.ProfileStubCreate
+import com.lpfun.backend.common.profile.model.profile.base.stub.ProfileStubDelete
+import com.lpfun.backend.common.profile.model.profile.base.stub.ProfileStubGet
+import com.lpfun.backend.common.profile.model.profile.base.stub.ProfileStubUpdate
+import com.lpfun.backend.common.profile.model.profile.skills.ProfileSkillsContext
 import com.lpfun.backend.profile.domain.skills.ProfileSkillsCrud
 import kotlinx.coroutines.runBlocking
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
 internal class ProfileSkillsCrudTest {
+    val crud = ProfileSkillsCrud()
     @Test
     fun getProfileSkillsCrudTest() {
         val context = ProfileSkillsContext().apply {
             requestProfile.profileId = "test-id"
             stubCaseGet = ProfileStubGet.SUCCESS
         }
-
-        val crud = ProfileSkillsCrud()
 
         runBlocking {
             crud.get(context)
@@ -46,8 +45,6 @@ internal class ProfileSkillsCrudTest {
             stubCaseCreate = ProfileStubCreate.SUCCESS
         }
 
-        val crud = ProfileSkillsCrud()
-
         runBlocking {
             crud.create(context)
         }
@@ -69,7 +66,7 @@ internal class ProfileSkillsCrudTest {
             }
             stubCaseUpdate = ProfileStubUpdate.SUCCESS
         }
-        val crud = ProfileSkillsCrud()
+
         runBlocking {
             crud.update(context)
         }
@@ -83,7 +80,7 @@ internal class ProfileSkillsCrudTest {
             requestProfile.profileId = "test-id"
             stubCaseDelete = ProfileStubDelete.SUCCESS
         }
-        val crud = ProfileSkillsCrud()
+
         runBlocking {
             crud.delete(context)
         }

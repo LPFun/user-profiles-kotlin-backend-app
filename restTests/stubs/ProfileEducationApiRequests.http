@@ -1,0 +1,53 @@
+###
+GET http://localhost:8080/profile/education/?id=test-id
+test:stub
+Content-Type: application/json
+
+###
+
+PUT http://localhost:8080/profile/education/
+Content-Type: application/json
+
+{
+  "profileId": "test-id",
+  "additionalEducation": [
+    {
+      "nameOfInstitution": "OTUS",
+      "courseName": "Kotlin",
+      "yearOfCompletion": "2021"
+    }
+  ],
+  "debug": {
+    "stub": "SUCCESS"
+  }
+}
+
+###
+
+DELETE http://localhost:8080/profile/education/
+Content-Type: application/json
+
+{
+  "profileId": "test-id",
+  "debug": {
+    "stub": "SUCCESS"
+  }
+}
+
+###
+
+POST http://localhost:8080/profile/education/
+Content-Type: application/json
+
+{
+  "additionalEducation": [
+    {
+      "nameOfInstitution": "OTUS",
+      "courseName": "Kotlin",
+      "yearOfCompletion": "2020"
+    }
+  ],
+  "debug": {
+    "stub": "SUCCESS"
+  }
+}

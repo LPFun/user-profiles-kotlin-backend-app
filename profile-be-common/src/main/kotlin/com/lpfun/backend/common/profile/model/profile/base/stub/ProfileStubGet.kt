@@ -1,0 +1,6 @@
+package com.lpfun.backend.common.profile.model.profile.base.stub
+
+enum class ProfileStubGet {
+    NONE,
+    SUCCESS,
+}

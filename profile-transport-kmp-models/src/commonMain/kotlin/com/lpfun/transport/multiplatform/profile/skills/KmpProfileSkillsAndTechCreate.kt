@@ -1,13 +1,16 @@
 package com.lpfun.transport.multiplatform.profile.skills
 
+import com.lpfun.transport.multiplatform.profile.KmpProfileDbMode
+import com.lpfun.transport.multiplatform.profile.skills.model.KmpDataBaseModel
+import com.lpfun.transport.multiplatform.profile.skills.model.KmpOperatingSystemModel
 import com.lpfun.transport.multiplatform.profile.skills.model.KmpSpecializationModel
 import kotlinx.serialization.Serializable
 
 @Serializable
 data class KmpProfileSkillsAndTechCreate(
     override var specialization: KmpSpecializationModel? = null,
-    override var operatingSystems: MutableSet<String>? = null,
-    override var dataBases: MutableSet<String>? = null,
+    override var operatingSystems: MutableSet<KmpOperatingSystemModel>? = null,
+    override var dataBases: MutableSet<KmpDataBaseModel>? = null,
     var debug: Debug? = null
 ) : KmpProfileSkillsAndTechSave(
     specialization = specialization,
@@ -17,11 +20,12 @@ data class KmpProfileSkillsAndTechCreate(
     @Serializable
     class Debug {
         var stub: StubCase? = null
+        var db: KmpProfileDbMode? = null
     }
 
     @Serializable
     enum class StubCase {
         NONE,
-        RUNNING
+        SUCCESS
     }
 }

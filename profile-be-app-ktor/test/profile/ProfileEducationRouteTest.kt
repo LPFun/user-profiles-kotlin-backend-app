@@ -20,7 +20,7 @@ class ProfileEducationRouteTest {
     fun getProfileEducationTest() {
         withTestApplication({ module(testing = true) }) {
             handleRequest(HttpMethod.Get, "/profile/education?id=123") {
-                addHeader("test", "test")
+                addHeader("stub", "success")
             }.apply {
                 val getResponse = Json.decodeFromString(
                     KmpProfileEducationResponse.serializer(),
@@ -28,6 +28,7 @@ class ProfileEducationRouteTest {
                 )
                 assertEquals(HttpStatusCode.OK, response.status())
                 assertEquals("123", getResponse.data?.profileId)
+                assertEquals("Stub Course", getResponse.data?.additionalEducation?.first()?.courseName)
             }
         }
     }
@@ -39,10 +40,11 @@ class ProfileEducationRouteTest {
                 addHeader("Content-Type", "application/json")
                 val requestBody = KmpProfileEducationCreate(
                     debug = KmpProfileEducationCreate.Debug().apply {
-                        stub = KmpProfileEducationCreate.StubCase.RUNNING
+                        stub = KmpProfileEducationCreate.StubCase.SUCCESS
                     },
                     additionalEducation = mutableListOf(
                         KmpAdditionalEducationModel(
+                            id = "test-id",
                             nameOfInstitution = "OTUS",
                             courseName = "Kotlin",
                             yearOfCompletion = "2020"
@@ -60,6 +62,7 @@ class ProfileEducationRouteTest {
                 assertEquals(
                     mutableListOf(
                         KmpAdditionalEducationModel(
+                            id = "test-id",
                             nameOfInstitution = "OTUS",
                             courseName = "Kotlin",
                             yearOfCompletion = "2020"
@@ -78,13 +81,14 @@ class ProfileEducationRouteTest {
                 val requestBody = KmpProfileEducationUpdate(
                     additionalEducation = mutableListOf(
                         KmpAdditionalEducationModel(
+                            id = "test-id",
                             nameOfInstitution = "OTUS",
                             courseName = "Kotlin",
                             yearOfCompletion = "2021"
                         )
                     ),
                     debug = KmpProfileEducationUpdate.Debug().apply {
-                        stub = KmpProfileEducationUpdate.StubCase.RUNNING
+                        stub = KmpProfileEducationUpdate.StubCase.SUCCESS
                     }
                 )
                 val updateRequestBody = Json.encodeToString(KmpProfileEducationUpdate.serializer(), requestBody)
@@ -99,6 +103,7 @@ class ProfileEducationRouteTest {
                 assertEquals(
                     mutableListOf(
                         KmpAdditionalEducationModel(
+                            id = "test-id",
                             nameOfInstitution = "OTUS",
                             courseName = "Kotlin",
                             yearOfCompletion = "2021"
@@ -117,7 +122,7 @@ class ProfileEducationRouteTest {
                 val requestBody = KmpProfileEducationDelete(
                     profileId = "test-id",
                     debug = KmpProfileEducationDelete.Debug().apply {
-                        stub = KmpProfileEducationDelete.StubCase.RUNNING
+                        stub = KmpProfileEducationDelete.StubCase.SUCCESS
                     }
                 )
                 val deleteRequestBody = Json.encodeToString(KmpProfileEducationDelete.serializer(), requestBody)
