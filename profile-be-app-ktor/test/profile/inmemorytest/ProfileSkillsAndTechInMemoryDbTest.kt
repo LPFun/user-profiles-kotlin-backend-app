@@ -31,7 +31,6 @@ internal class ProfileSkillsAndTechInMemoryDbTest {
         }
     }
 
-
     @Test
     fun createProfileSkillsAndTechRouteTest() {
         withTestApplication({ module(testing = true) }) {

@@ -17,13 +17,14 @@ import io.ktor.serialization.*
 import io.ktor.server.netty.*
 import org.kodein.di.instance
 import org.kodein.di.ktor.di
+import org.slf4j.LoggerFactory
 
 fun main(args: Array<String>): Unit = EngineMain.main(args)
 
 @Suppress("unused") // Referenced in application.conf
 @JvmOverloads
 fun Application.module(testing: Boolean = false) {
-
+    val logger = LoggerFactory.getLogger(::main::class.java)
     di {
         import(profileModule)
     }
@@ -48,9 +49,9 @@ fun Application.module(testing: Boolean = false) {
 
     routing {
         route("/profile") {
-            profileEducationRoute(educationService)
-            profilePersonalDataRoute(personalDataService)
-            profileSkillsAndTechRoute(skillsAndTechService)
+            profileEducationRoute(educationService, logger)
+            profilePersonalDataRoute(personalDataService, logger)
+            profileSkillsAndTechRoute(skillsAndTechService, logger)
         }
         get("/") {
             call.respondText("HELLO WORLD!", contentType = ContentType.Text.Plain)

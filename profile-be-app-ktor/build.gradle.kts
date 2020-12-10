@@ -33,6 +33,7 @@ dependencies {
     implementation(project(Deps.profileModules.profileDomain))
     implementation(project(Deps.profileModules.profileDataBase))
     implementation(project(Deps.profileModules.profileInMemoryDB))
+    implementation(project(Deps.profileModules.profileLogger))
     // Ktor
     implementation(Deps.ktor.serverNetty)
     implementation(Deps.ktor.clientCore)
@@ -44,8 +45,9 @@ dependencies {
     // Kodein
     implementation(Deps.kodein.di)
     implementation(Deps.kodein.ktorServerJvm)
-
-    implementation(Deps.logging.logbackClassic)
+    //Logger
+    implementation(Deps.logger.logbackClassic)
+    implementation(Deps.logger.logbackEncoder)
 
     testImplementation(Deps.ktor.serverTests)
 }

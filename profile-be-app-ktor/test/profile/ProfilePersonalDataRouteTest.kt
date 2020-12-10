@@ -27,6 +27,7 @@ class ProfilePersonalDataRouteTest {
                 )
                 assertEquals(HttpStatusCode.OK, response.status())
                 assertEquals("12345", responseObj.data?.profileId)
+                assertEquals("John", responseObj.data?.firstName)
             }
         }
     }
