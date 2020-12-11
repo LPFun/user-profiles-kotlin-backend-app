@@ -6,8 +6,6 @@ plugins {
 group = "com.lpfun"
 version = "0.1"
 
-
-
 allprojects {
     repositories {
         mavenCentral()

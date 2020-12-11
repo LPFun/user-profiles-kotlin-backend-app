@@ -20,7 +20,6 @@ fun Route.profileSkillsAndTechRoute(service: ProfileSkillsAndTechService, logger
             ) { q, _ ->
                 service.get(q)
             }
-//            call.respond(service.get(call.request.mapToProfileSkillsGetRequest()))
         }
 
         post {
@@ -31,7 +30,6 @@ fun Route.profileSkillsAndTechRoute(service: ProfileSkillsAndTechService, logger
             ) { q, _ ->
                 service.create(q)
             }
-//            call.respond(service.create(call.receive()))
         }
 
         put {
@@ -42,7 +40,6 @@ fun Route.profileSkillsAndTechRoute(service: ProfileSkillsAndTechService, logger
             ) { q, _ ->
                 service.update(q)
             }
-//            call.respond(service.update(call.receive()))
         }
 
         delete {
@@ -53,7 +50,6 @@ fun Route.profileSkillsAndTechRoute(service: ProfileSkillsAndTechService, logger
             ) { q, _ ->
                 service.delete(q)
             }
-//            call.respond(service.delete(call.receive()))
         }
     }
 }

@@ -1,5 +1,6 @@
 package com.lpfun
 
+import com.lpfun.backend.profile.logger.di.LoggerParam
 import com.lpfun.di.profileModule
 import com.lpfun.profile.education.ProfileEducationService
 import com.lpfun.profile.education.profileEducationRoute
@@ -15,20 +16,19 @@ import io.ktor.response.*
 import io.ktor.routing.*
 import io.ktor.serialization.*
 import io.ktor.server.netty.*
+import org.kodein.di.factory
 import org.kodein.di.instance
 import org.kodein.di.ktor.di
-import org.slf4j.LoggerFactory
+import org.slf4j.Logger
 
 fun main(args: Array<String>): Unit = EngineMain.main(args)
 
 @Suppress("unused") // Referenced in application.conf
 @JvmOverloads
 fun Application.module(testing: Boolean = false) {
-    val logger = LoggerFactory.getLogger(::main::class.java)
     di {
         import(profileModule)
     }
-
     install(CORS) {
         method(HttpMethod.Get)
         method(HttpMethod.Put)
@@ -42,7 +42,8 @@ fun Application.module(testing: Boolean = false) {
     install(Compression) {
         gzip()
     }
-
+    val loggerFactory: (LoggerParam) -> Logger by di().factory()
+    val logger = loggerFactory(LoggerParam(::main::class.java))
     val educationService by di().instance<ProfileEducationService>()
     val personalDataService by di().instance<ProfilePersonalDataService>()
     val skillsAndTechService by di().instance<ProfileSkillsAndTechService>()
