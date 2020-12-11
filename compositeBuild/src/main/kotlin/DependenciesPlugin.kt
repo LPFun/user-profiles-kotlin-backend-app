@@ -17,6 +17,7 @@ object Deps {
     val kodein = Kodein
     val logger = Logger
     val database = Database
+    val kafka = Kafka
 
     object Versions {
         const val kotlinDatetime = "0.1.0"
@@ -62,6 +63,7 @@ object Deps {
         const val logbackClassic = "ch.qos.logback:logback-classic:$logbackVersion"
         const val slf4jApi = "org.slf4j:slf4j-api:$slf4jVersion"
         const val logbackEncoder = "net.logstash.logback:logstash-logback-encoder:$logbackEncoderVersion"
+        const val logbackKafkaAppender = "com.github.danielwegener:logback-kafka-appender:0.2.0-RC2"
     }
 
     object Database {
@@ -74,5 +76,9 @@ object Deps {
         const val postgreSqlTestContainers = "org.testcontainers:postgresql:1.14.3"
         const val hikari = "com.zaxxer:HikariCP:3.4.5"
         const val flywayCore = "org.flywaydb:flyway-core:7.1.1"
+    }
+
+    object Kafka {
+        const val kafkaClient = "org.apache.kafka:kafka-clients:2.5.1"
     }
 }
