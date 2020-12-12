@@ -1,17 +1,23 @@
 package com.lpfun.profile.education
 
+import com.lpfun.backend.profile.logger.di.LoggerParam
 import com.lpfun.base.mapToProfileEducationGetRequest
 import com.lpfun.base.request
+import com.lpfun.main
 import com.lpfun.transport.multiplatform.profile.education.KmpProfileEducationCreate
 import com.lpfun.transport.multiplatform.profile.education.KmpProfileEducationDelete
 import com.lpfun.transport.multiplatform.profile.education.KmpProfileEducationUpdate
 import io.ktor.application.*
 import io.ktor.request.*
 import io.ktor.routing.*
+import org.kodein.di.factory
+import org.kodein.di.ktor.di
 import org.slf4j.Logger
 
-fun Route.profileEducationRoute(service: ProfileEducationService, logger: Logger) {
+fun Route.profileEducationRoute(service: ProfileEducationService) {
     route("/education") {
+        val loggerFactory: (LoggerParam) -> Logger by di().factory()
+        val logger = loggerFactory(LoggerParam(::main::class.java))
         get {
             request(
                 logId = "profile-education-get",

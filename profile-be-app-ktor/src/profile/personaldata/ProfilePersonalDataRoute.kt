@@ -1,7 +1,9 @@
 package com.lpfun.profile.personaldata
 
+import com.lpfun.backend.profile.logger.di.LoggerParam
 import com.lpfun.base.mapToProfilePersonalGetRequest
 import com.lpfun.base.request
+import com.lpfun.main
 import com.lpfun.transport.multiplatform.profile.personal.KmpProfilePersonalDataCreate
 import com.lpfun.transport.multiplatform.profile.personal.KmpProfilePersonalDataDelete
 import com.lpfun.transport.multiplatform.profile.personal.KmpProfilePersonalDataResponse
@@ -9,10 +11,14 @@ import com.lpfun.transport.multiplatform.profile.personal.KmpProfilePersonalData
 import io.ktor.application.*
 import io.ktor.request.*
 import io.ktor.routing.*
+import org.kodein.di.factory
+import org.kodein.di.ktor.di
 import org.slf4j.Logger
 
-fun Route.profilePersonalDataRoute(service: ProfilePersonalDataService, logger: Logger) {
+fun Route.profilePersonalDataRoute(service: ProfilePersonalDataService) {
     route("/personal") {
+        val loggerFactory: (LoggerParam) -> Logger by di().factory()
+        val logger = loggerFactory(LoggerParam(::main::class.java))
         get {
             request(
                 "profile-personal-get",
