@@ -23,11 +23,9 @@ fun main(args: Array<String>): Unit = EngineMain.main(args)
 @Suppress("unused") // Referenced in application.conf
 @JvmOverloads
 fun Application.module(testing: Boolean = false) {
-
     di {
         import(profileModule)
     }
-
     install(CORS) {
         method(HttpMethod.Get)
         method(HttpMethod.Put)
@@ -41,7 +39,6 @@ fun Application.module(testing: Boolean = false) {
     install(Compression) {
         gzip()
     }
-
     val educationService by di().instance<ProfileEducationService>()
     val personalDataService by di().instance<ProfilePersonalDataService>()
     val skillsAndTechService by di().instance<ProfileSkillsAndTechService>()

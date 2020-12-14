@@ -1,40 +1,62 @@
 package com.lpfun.profile.personaldata
 
+import com.lpfun.backend.profile.logger.IProfileLogger
+import com.lpfun.backend.profile.logger.di.LoggerParam
 import com.lpfun.base.mapToProfilePersonalGetRequest
+import com.lpfun.base.request
+import com.lpfun.main
 import com.lpfun.transport.multiplatform.profile.personal.KmpProfilePersonalDataCreate
 import com.lpfun.transport.multiplatform.profile.personal.KmpProfilePersonalDataDelete
+import com.lpfun.transport.multiplatform.profile.personal.KmpProfilePersonalDataResponse
 import com.lpfun.transport.multiplatform.profile.personal.KmpProfilePersonalDataUpdate
 import io.ktor.application.*
-import io.ktor.http.*
 import io.ktor.request.*
-import io.ktor.response.*
 import io.ktor.routing.*
+import org.kodein.di.factory
+import org.kodein.di.ktor.di
 
 fun Route.profilePersonalDataRoute(service: ProfilePersonalDataService) {
     route("/personal") {
+        val loggerFactory: (LoggerParam) -> IProfileLogger by di().factory()
+        val logger = loggerFactory(LoggerParam(::main::class.java))
         get {
-            call.respond(service.get(call.request.mapToProfilePersonalGetRequest()))
+            request(
+                "profile-personal-get",
+                logger,
+                { call.request.mapToProfilePersonalGetRequest() },
+            ) { q, _ ->
+                service.get(q)
+            }
         }
 
         post {
-            val query = call.receiveOrNull<KmpProfilePersonalDataCreate>()
-            query?.let {
-                call.respond(service.create(it))
-            } ?: call.respond(HttpStatusCode.BadRequest)
+            request<KmpProfilePersonalDataCreate, KmpProfilePersonalDataResponse>(
+                "profile-personal-create",
+                logger,
+                { call.receive() },
+            ) { q, _ ->
+                service.create(q)
+            }
         }
 
         put {
-            val query = call.receiveOrNull<KmpProfilePersonalDataUpdate>()
-            query?.let {
-                call.respond(service.update(it))
-            } ?: call.respond(HttpStatusCode.BadRequest)
+            request<KmpProfilePersonalDataUpdate, KmpProfilePersonalDataResponse>(
+                "profile-personal-update",
+                logger,
+                { call.receive() }
+            ) { query, _ ->
+                service.update(query)
+            }
         }
 
         delete {
-            val query = call.receiveOrNull<KmpProfilePersonalDataDelete>()
-            query?.let {
-                call.respond(service.delete(query))
-            } ?: call.respond(HttpStatusCode.BadRequest)
+            request<KmpProfilePersonalDataDelete, KmpProfilePersonalDataResponse>(
+                "profile-personal-delete",
+                logger,
+                { call.receive() }
+            ) { query, _ ->
+                service.delete(query)
+            }
         }
     }
 }

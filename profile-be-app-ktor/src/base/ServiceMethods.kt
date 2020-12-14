@@ -1,18 +1,26 @@
 package com.lpfun.base
 
+import com.lpfun.backend.common.Constants
+import com.lpfun.backend.common.profile.model.error.GeneralError
 import com.lpfun.backend.common.profile.model.error.InternalServerError
 import com.lpfun.backend.common.profile.model.profile.education.ProfileEducationContext
 import com.lpfun.backend.common.profile.model.profile.personal.ProfilePersonalContext
 import com.lpfun.backend.common.profile.model.profile.skills.ProfileSkillsContext
 import com.lpfun.backend.kmp.profile.resultItem
+import com.lpfun.backend.profile.logger.IProfileLogger
 import com.lpfun.transport.multiplatform.profile.KmpProfileDbMode
+import com.lpfun.transport.multiplatform.profile.KmpProfileResponse
 import com.lpfun.transport.multiplatform.profile.education.KmpProfileEducationGet
 import com.lpfun.transport.multiplatform.profile.education.KmpProfileEducationResponse
 import com.lpfun.transport.multiplatform.profile.personal.KmpProfilePersonalDataGet
 import com.lpfun.transport.multiplatform.profile.personal.KmpProfilePersonalDataResponse
 import com.lpfun.transport.multiplatform.profile.skills.KmpProfileSkillsAndTechGet
 import com.lpfun.transport.multiplatform.profile.skills.KmpProfileSkillsAndTechResponse
+import io.ktor.application.*
 import io.ktor.request.*
+import io.ktor.response.*
+import io.ktor.util.pipeline.*
+import java.util.*
 
 val STUB_KEY = "stub"
 val STUB_SUCCESS_KEY = "success"
@@ -46,12 +54,46 @@ inline fun ProfilePersonalContext.request(block: ProfilePersonalContext.() -> Un
     return resultItem()
 }
 
+suspend inline fun <reified T : Any, reified K : KmpProfileResponse> PipelineContext<Unit, ApplicationCall>.request(
+    logId: String,
+    logger: IProfileLogger,
+    crossinline q: suspend () -> T,
+    crossinline block: suspend (T, String) -> K
+) {
+    val requestId = call.request.headers[Constants.requestIdHeader] ?: UUID.randomUUID().toString()
+    try {
+        logger.doLoggingSusp(logId, requestId = requestId) {
+            val query = q.invoke()
+            logger.info("Query for $logId, query {}", "requestId" to requestId, "data" to query)
+            val response = block(query, requestId)
+            call.response.headers.append(Constants.requestIdHeader, requestId)
+            call.respond(response)
+            logger.info("Response for $logId, query {}", "requestId" to requestId, "data" to response)
+        }
+    } catch (e: Throwable) {
+        logger.doLoggingSusp("$logId-error", requestId) {
+            val res = when (K::class) {
+                KmpProfilePersonalDataResponse::class -> ProfilePersonalContext().apply {
+                    errors = mutableListOf(GeneralError(code = "$logId-parse-error", e = e))
+                }.resultItem()
+                KmpProfileEducationResponse::class -> ProfileEducationContext().apply {
+                    errors = mutableListOf(GeneralError(code = "$logId-parse-error", e = e))
+                }.resultItem()
+                else -> ProfileSkillsContext().apply {
+                    errors = mutableListOf(GeneralError(code = "$logId-parse-error", e = e))
+                }.resultItem()
+            }
+            call.respond(res)
+        }
+    }
+}
+
 fun ApplicationRequest.mapToProfileEducationGetRequest() = KmpProfileEducationGet(
     profileId = this.queryParameters["id"],
     debug = KmpProfileEducationGet.Debug().also {
         if (this.headers[IN_MEMORY_KEY] == IN_MEMORY_VALUE) it.db = KmpProfileDbMode.TEST
         when (this.headers[STUB_KEY]) {
-            STUB_SUCCESS_KEY -> KmpProfileEducationGet.StubCase.SUCCESS
+            STUB_SUCCESS_KEY -> it.stub = KmpProfileEducationGet.StubCase.SUCCESS
         }
     }
 )

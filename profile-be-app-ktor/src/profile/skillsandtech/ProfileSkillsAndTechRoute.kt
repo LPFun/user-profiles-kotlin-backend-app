@@ -1,27 +1,61 @@
 package com.lpfun.profile.skillsandtech
 
+import com.lpfun.backend.profile.logger.IProfileLogger
+import com.lpfun.backend.profile.logger.di.LoggerParam
 import com.lpfun.base.mapToProfileSkillsGetRequest
+import com.lpfun.base.request
+import com.lpfun.main
+import com.lpfun.transport.multiplatform.profile.skills.KmpProfileSkillsAndTechCreate
+import com.lpfun.transport.multiplatform.profile.skills.KmpProfileSkillsAndTechDelete
+import com.lpfun.transport.multiplatform.profile.skills.KmpProfileSkillsAndTechUpdate
 import io.ktor.application.*
 import io.ktor.request.*
-import io.ktor.response.*
 import io.ktor.routing.*
+import org.kodein.di.factory
+import org.kodein.di.ktor.di
 
 fun Route.profileSkillsAndTechRoute(service: ProfileSkillsAndTechService) {
     route("/skills") {
+        val loggerFactory: (LoggerParam) -> IProfileLogger by di().factory()
+        val logger = loggerFactory(LoggerParam(::main::class.java))
         get {
-            call.respond(service.get(call.request.mapToProfileSkillsGetRequest()))
+            request(
+                logId = "profile-skills-get",
+                logger = logger,
+                q = { call.request.mapToProfileSkillsGetRequest() }
+            ) { q, _ ->
+                service.get(q)
+            }
         }
 
         post {
-            call.respond(service.create(call.receive()))
+            request(
+                logId = "profile-skills-create",
+                logger = logger,
+                q = { call.receive<KmpProfileSkillsAndTechCreate>() }
+            ) { q, _ ->
+                service.create(q)
+            }
         }
 
         put {
-            call.respond(service.update(call.receive()))
+            request(
+                logId = "profile-skills-create",
+                logger = logger,
+                q = { call.receive<KmpProfileSkillsAndTechUpdate>() }
+            ) { q, _ ->
+                service.update(q)
+            }
         }
 
         delete {
-            call.respond(service.delete(call.receive()))
+            request(
+                logId = "profile-skills-create",
+                logger = logger,
+                q = { call.receive<KmpProfileSkillsAndTechDelete>() }
+            ) { q, _ ->
+                service.delete(q)
+            }
         }
     }
 }

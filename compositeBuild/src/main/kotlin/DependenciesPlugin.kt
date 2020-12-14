@@ -15,8 +15,9 @@ object Deps {
     val profileModules = ProfileModules
     val ktor = Ktor
     val kodein = Kodein
-    val logging = Logging
+    val logger = Logger
     val database = Database
+    val kafka = Kafka
 
     object Versions {
         const val kotlinDatetime = "0.1.0"
@@ -32,6 +33,7 @@ object Deps {
         const val profileDataBase = ":profile-be-repo-db"
         const val profileInMemoryDB = ":profile-be-repo-db-inmemory"
         const val profileDBBase = ":profile-be-repo-db-base"
+        const val profileLogger = ":log-lib"
     }
 
     object Kotlinx {
@@ -54,9 +56,14 @@ object Deps {
         const val ktorServerJvm = "org.kodein.di:kodein-di-framework-ktor-server-jvm:$kodeinVersion"
     }
 
-    object Logging {
+    object Logger {
         private const val logbackVersion = "1.2.1"
+        private const val slf4jVersion = "1.7.30"
+        private const val logbackEncoderVersion = "6.4"
         const val logbackClassic = "ch.qos.logback:logback-classic:$logbackVersion"
+        const val slf4jApi = "org.slf4j:slf4j-api:$slf4jVersion"
+        const val logbackEncoder = "net.logstash.logback:logstash-logback-encoder:$logbackEncoderVersion"
+        const val logbackKafkaAppender = "com.github.danielwegener:logback-kafka-appender:0.2.0-RC2"
     }
 
     object Database {
@@ -71,4 +78,7 @@ object Deps {
         const val flywayCore = "org.flywaydb:flyway-core:7.1.1"
     }
 
+    object Kafka {
+        const val kafkaClient = "org.apache.kafka:kafka-clients:2.5.1"
+    }
 }
