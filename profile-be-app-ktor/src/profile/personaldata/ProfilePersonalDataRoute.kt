@@ -1,5 +1,6 @@
 package com.lpfun.profile.personaldata
 
+import com.lpfun.backend.profile.logger.IProfileLogger
 import com.lpfun.backend.profile.logger.di.LoggerParam
 import com.lpfun.base.mapToProfilePersonalGetRequest
 import com.lpfun.base.request
@@ -13,11 +14,10 @@ import io.ktor.request.*
 import io.ktor.routing.*
 import org.kodein.di.factory
 import org.kodein.di.ktor.di
-import org.slf4j.Logger
 
 fun Route.profilePersonalDataRoute(service: ProfilePersonalDataService) {
     route("/personal") {
-        val loggerFactory: (LoggerParam) -> Logger by di().factory()
+        val loggerFactory: (LoggerParam) -> IProfileLogger by di().factory()
         val logger = loggerFactory(LoggerParam(::main::class.java))
         get {
             request(

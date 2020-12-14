@@ -7,8 +7,7 @@ import com.lpfun.backend.common.profile.model.profile.education.ProfileEducation
 import com.lpfun.backend.common.profile.model.profile.personal.ProfilePersonalContext
 import com.lpfun.backend.common.profile.model.profile.skills.ProfileSkillsContext
 import com.lpfun.backend.kmp.profile.resultItem
-import com.lpfun.backend.profile.logger.ProfileLogger.kv
-import com.lpfun.backend.profile.logger.doLoggingSusp
+import com.lpfun.backend.profile.logger.IProfileLogger
 import com.lpfun.transport.multiplatform.profile.KmpProfileDbMode
 import com.lpfun.transport.multiplatform.profile.KmpProfileResponse
 import com.lpfun.transport.multiplatform.profile.education.KmpProfileEducationGet
@@ -21,7 +20,6 @@ import io.ktor.application.*
 import io.ktor.request.*
 import io.ktor.response.*
 import io.ktor.util.pipeline.*
-import org.slf4j.Logger
 import java.util.*
 
 val STUB_KEY = "stub"
@@ -58,7 +56,7 @@ inline fun ProfilePersonalContext.request(block: ProfilePersonalContext.() -> Un
 
 suspend inline fun <reified T : Any, reified K : KmpProfileResponse> PipelineContext<Unit, ApplicationCall>.request(
     logId: String,
-    logger: Logger,
+    logger: IProfileLogger,
     crossinline q: suspend () -> T,
     crossinline block: suspend (T, String) -> K
 ) {
@@ -66,11 +64,11 @@ suspend inline fun <reified T : Any, reified K : KmpProfileResponse> PipelineCon
     try {
         logger.doLoggingSusp(logId, requestId = requestId) {
             val query = q.invoke()
-            logger.info("Query for $logId, query {}", kv("requestId", requestId), kv("data", query))
+            logger.info("Query for $logId, query {}", "requestId" to requestId, "data" to query)
             val response = block(query, requestId)
             call.response.headers.append(Constants.requestIdHeader, requestId)
             call.respond(response)
-            logger.info("Response for $logId, query {}", kv("requestId", requestId), kv("data", response))
+            logger.info("Response for $logId, query {}", "requestId" to requestId, "data" to response)
         }
     } catch (e: Throwable) {
         logger.doLoggingSusp("$logId-error", requestId) {
