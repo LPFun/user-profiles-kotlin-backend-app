@@ -21,6 +21,8 @@ dependencies {
     //Logger
     implementation(Deps.logger.slf4jApi)
     implementation(Deps.logger.logbackEncoder)
+    implementation(Deps.logger.logbackKafkaAppender)
+    implementation(Deps.kafka.kafkaClient)
     //Kodein
     implementation(Deps.kodein.di)
 }

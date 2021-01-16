@@ -47,9 +47,6 @@ dependencies {
     implementation(Deps.kodein.ktorServerJvm)
     //Logger
     implementation(Deps.logger.logbackClassic)
-    implementation(Deps.logger.logbackEncoder)
-    implementation(Deps.logger.logbackKafkaAppender)
-    implementation(Deps.kafka.kafkaClient)
 
     testImplementation(Deps.ktor.serverTests)
 }

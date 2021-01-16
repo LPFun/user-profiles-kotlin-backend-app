@@ -6,7 +6,7 @@
         </encoder>
     </appender>
 
-    <appender name="kafkaAppender" class="com.github.danielwegener.logback.kafka.KafkaAppender">
+<!--    <appender name="kafkaAppender" class="com.github.danielwegener.logback.kafka.KafkaAppender">
         <encoder>
             <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
         </encoder>
@@ -46,7 +46,7 @@
 
     <appender name="asyncKafkaAppender" class="ch.qos.logback.classic.AsyncAppender">
         <appender-ref ref="kafkaAppender"/>
-    </appender>
+    </appender>-->
 
     <root level="info">
         <appender-ref ref="STDOUT"/>
